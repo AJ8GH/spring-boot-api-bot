@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class SessionController {
@@ -43,13 +44,16 @@ public class SessionController {
         String response = apiClient.loginCall(url);
 
         UserSession userSession = objectMapper.readValue(response, UserSession.class);
+
         userSessionRepository.save(userSession);
         return "redirect:/welcome";
     }
 
     @RequestMapping("/welcome")
     public String getWelcome(Model model) {
-        model.addAttribute("userSessions", userSessionRepository.findAll());
+        List<UserSession> userSessions = ((List<UserSession>) userSessionRepository.findAll());
+        UserSession userSession = userSessions.get(userSessions.size() - 1);
+        model.addAttribute("userSessions", userSession);
         return "welcome";
     }
 }
