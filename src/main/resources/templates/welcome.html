@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Betfair API Bot</title>
+    </head>
+    <body>
+        WELCOME
+        <tr th:each="userSession : ${userSessions}">
+            <td th:text="${userSession.id}"></td>
+            <td th:text="${userSession.status}"></td>
+            <td th:text="${userSession.error}"></td>
+            <td th:text="${userSession.product}"></td>
+            <td th:text="${userSession.token}"></td>
+            <td th:text="${userSession.appKey}"></td>
+        </tr>
+    </body>
+</html>
