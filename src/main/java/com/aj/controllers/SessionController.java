@@ -1,6 +1,7 @@
 package com.aj.controllers;
 
 import com.aj.api.ApiClient;
+import com.aj.api.UrlBuilder;
 import com.aj.models.UserSession;
 import com.aj.repositories.UserSessionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,20 +32,16 @@ public class SessionController {
     }
 
     @PostMapping("/sessions/new")
-    public String login(@RequestParam("username") String username,
-                        @RequestParam("password") String password)
+    public String login(
+            @RequestParam("username") String username,
+            @RequestParam("password") String password)
             throws IOException {
 
-        String usernameParam = "username=" + username;
-        String passwordParam = "password=" + password;
-        String query = "?" + usernameParam + "&" + passwordParam;
-        HttpUrl url = HttpUrl.parse("http://identitysso.nxt.com.betfair/api/login" + query);
-
         ApiClient apiClient = new ApiClient();
+        UrlBuilder urlBuilder = new UrlBuilder();
+        HttpUrl url = urlBuilder.createLoginUrl(username, password);
         String response = apiClient.loginCall(url);
-
         UserSession userSession = objectMapper.readValue(response, UserSession.class);
-
         userSessionRepository.save(userSession);
         return "redirect:/welcome";
     }
@@ -52,8 +49,11 @@ public class SessionController {
     @RequestMapping("/welcome")
     public String getWelcome(Model model) {
         List<UserSession> userSessions = ((List<UserSession>) userSessionRepository.findAll());
-        UserSession userSession = userSessions.get(userSessions.size() - 1);
-        model.addAttribute("userSessions", userSession);
-        return "welcome";
+        if (userSessions.size() > 0) {
+            UserSession userSession = userSessions.get(userSessions.size() - 1);
+            model.addAttribute("userSessions", userSession);
+            return "welcome";
+        }
+        return "redirect:/";
     }
 }

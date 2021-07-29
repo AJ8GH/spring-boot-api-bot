@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import javax.websocket.Session;
 import java.io.IOException;
 
-@Component
 public class ApiClient {
 
     private final String ACCEPT_HEADER = "Accept";
