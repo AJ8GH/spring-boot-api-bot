@@ -1,6 +1,11 @@
 package com.aj.models;
 
+import com.aj.BetfairApiBot1Application;
+
 import javax.persistence.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 @Entity
 public class UserSession {
@@ -15,11 +20,12 @@ public class UserSession {
     private String product;
     private String error;
 
-    public UserSession() {
+    public UserSession() throws IOException {
+        loadAppKey();
     }
 
-    public UserSession(String status, String token,
-                       String appKey, String product, String error) {
+    public UserSession(String status, String token, String appKey,
+                       String product, String error) {
         this.status = status;
         this.token = token;
         this.appKey = appKey;
@@ -85,5 +91,14 @@ public class UserSession {
                 ", product='" + product + '\'' +
                 ", error='" + error + '\'' +
                 '}';
+    }
+
+    private void loadAppKey() throws IOException {
+        Properties properties = new Properties();
+        InputStream inputStream = BetfairApiBot1Application.class
+                .getClassLoader().getResourceAsStream("application.properties");
+        properties.load(inputStream);
+
+        setAppKey(properties.getProperty("APP_KEY"));
     }
 }

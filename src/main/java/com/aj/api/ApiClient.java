@@ -1,10 +1,13 @@
 package com.aj.api;
 
+import com.aj.BetfairApiBot1Application;
 import com.aj.models.UserSession;
 import okhttp3.*;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 @Service
 public class ApiClient implements ApiClientService {
