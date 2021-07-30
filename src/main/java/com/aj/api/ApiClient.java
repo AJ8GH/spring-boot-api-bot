@@ -34,12 +34,32 @@ public class ApiClient implements ApiClientService {
         return CLIENT.newCall(request).execute().body().string();
     }
 
+    @Override
+    public String bettingCall(HttpUrl url, String body) throws IOException {
+        Request request = createBettingRequest(url, body);
+        return CLIENT.newCall(request).execute().body().string();
+    }
+
     private Request createLoginRequest(HttpUrl url) {
         return new Request.Builder()
                 .url(url)
                 .post(RequestBody.create("", MediaType.parse("")))
                 .addHeader(ACCEPT_HEADER, CONTENT_TYPE)
                 .addHeader(X_APPLICATION_HEADER, X_APPLICATION)
+                .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE)
+                .addHeader(X_IP_HEADER, X_IP)
+                .build();
+    }
+
+    private Request createBettingRequest(HttpUrl url, String body) {
+        MediaType mediaType = MediaType.parse(CONTENT_TYPE);
+        RequestBody requestBody = RequestBody.create(body, mediaType);
+        return new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .addHeader(ACCEPT_HEADER, CONTENT_TYPE)
+                .addHeader(X_AUTHENTICATION_HEADER, userSession.getToken())
+                .addHeader(X_APPLICATION_HEADER, userSession.getAppKey())
                 .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE)
                 .addHeader(X_IP_HEADER, X_IP)
                 .build();
