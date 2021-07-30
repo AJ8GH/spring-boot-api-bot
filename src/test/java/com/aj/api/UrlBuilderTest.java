@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UrlBuilderTest {
 
     @Test
-    void itReturnsCorrectLoginUrlWithUsernameAndPassword() {
+    void createLoginUrl() {
         UrlBuilder urlBuilder = new UrlBuilder();
 
         String LOGIN_ENDPOINT = "http://identitysso.nxt.com.betfair/api/login";
@@ -21,7 +21,7 @@ public class UrlBuilderTest {
     }
 
     @Test
-    void itReturnsTheBettingUrlWithCorrectOperation() {
+    void createBettingUrl() {
         UrlBuilder urlBuilder = new UrlBuilder();
 
         String BETTING_ENDPOINT="http://ang.nxt.internal/exchange/betting/rest/v1.0";

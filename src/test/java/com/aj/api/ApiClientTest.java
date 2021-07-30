@@ -53,8 +53,7 @@ public class ApiClientTest {
     }
 
     @Test
-    void itMakesBettingRequestWithCorrectBodyUrlAndHeaders()
-            throws IOException, InterruptedException {
+    void bettingCall() throws Exception {
 
         MockWebServer server = new MockWebServer();
         server.enqueue(new MockResponse().setBody("{ mock response }"));

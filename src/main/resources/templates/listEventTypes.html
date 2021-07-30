@@ -8,6 +8,8 @@
         <title>Document</title>
     </head>
     <body>
-        EVENT TYPES GO HERE
+        <div th:each="eventType : ${ eventTypes }">
+<!--            <p th:text="${ eventType.toString() }"></p>-->
+        </div>
     </body>
 </html>
