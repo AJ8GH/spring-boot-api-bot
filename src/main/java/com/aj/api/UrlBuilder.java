@@ -13,4 +13,9 @@ public class UrlBuilder implements UrlBuilderService {
         String query = "?" + usernameParam + "&" + passwordParam;
         return HttpUrl.parse(LOGIN_ENDPOINT + query);
     }
+
+    @Override
+    public HttpUrl createBettingUrl(String operation) {
+        return HttpUrl.parse(BETTING_ENDPOINT + operation);
+    }
 }

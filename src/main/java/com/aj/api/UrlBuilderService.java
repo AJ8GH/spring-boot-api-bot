@@ -4,6 +4,8 @@ import okhttp3.HttpUrl;
 
 public interface UrlBuilderService {
     public final String LOGIN_ENDPOINT = "http://identitysso.nxt.com.betfair/api/login";
+    public final String BETTING_ENDPOINT="http://ang.nxt.internal/exchange/betting/rest/v1.0";
+
     public final String EVENT_TYPES_OPERATION = "/listEventTypes/";
     public final String EVENTS_OPERATION = "/listEvents/";
     public final String MARKET_OPERATION = "/listMarketCatalogue/";
@@ -13,4 +15,5 @@ public interface UrlBuilderService {
     public final String CANCEL_ORDERS_OPERATION = "/cancelOrders/";
 
     public HttpUrl createLoginUrl(String username, String password);
+    public HttpUrl createBettingUrl(String operation);
 }
