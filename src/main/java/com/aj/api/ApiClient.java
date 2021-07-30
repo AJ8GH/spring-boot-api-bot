@@ -1,14 +1,15 @@
 package com.aj.api;
 
+import com.aj.models.UserSession;
 import okhttp3.*;
 import org.springframework.stereotype.Service;
 
-import javax.websocket.Session;
 import java.io.IOException;
 
 @Service
 public class ApiClient implements ApiClientService {
 
+    private static UserSession userSession;
     private final String ACCEPT_HEADER = "Accept";
     private final String X_APPLICATION_HEADER = "X-Application";
     private final String X_APPLICATION = "testAccountApp";
@@ -19,10 +20,12 @@ public class ApiClient implements ApiClientService {
     private final String X_IP = "127.0.0.1";
     private final OkHttpClient CLIENT = new OkHttpClient();
 
-    private Session session;
+    public static void setUserSession(UserSession userSession) {
+        ApiClient.userSession = userSession;
+    }
 
-    public void setSession(Session session) {
-        this.session = session;
+    public static UserSession getUserSession() {
+        return userSession;
     }
 
     @Override

@@ -9,5 +9,4 @@ public class BetfairApiBot1Application {
     public static void main(String[] args) {
         SpringApplication.run(BetfairApiBot1Application.class, args);
     }
-
 }

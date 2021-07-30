@@ -74,4 +74,16 @@ public class UserSession {
     public void setError(String error) {
         this.error = error;
     }
+
+    @Override
+    public String toString() {
+        return "UserSession{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+                ", token='" + token + '\'' +
+                ", appKey='" + appKey + '\'' +
+                ", product='" + product + '\'' +
+                ", error='" + error + '\'' +
+                '}';
+    }
 }

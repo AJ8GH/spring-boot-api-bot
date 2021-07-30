@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport"
@@ -9,11 +9,11 @@
     </head>
     <body>
         <h1>Betfair API Bot</h1>
+        <p>Welcome!</p>
+        <p>Menu</p>
 
-        <form action="/eventTypes/list" th:action="@{/sessions/new}" method="post">
-            <input type="text" name="username" placeholder="Username" class="username">
-            <input type="text" name="password" placeholder="Password" class="password">
-            <input type="submit" value="Login" class="login">
+        <form action="/eventTypes/list">
+            <input type="submit" value="View Event Types">
         </form>
     </body>
 </html>

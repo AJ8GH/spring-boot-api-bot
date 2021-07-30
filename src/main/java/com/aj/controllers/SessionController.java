@@ -1,5 +1,6 @@
 package com.aj.controllers;
 
+import com.aj.api.ApiClient;
 import com.aj.api.ApiClientService;
 import com.aj.api.UrlBuilder;
 import com.aj.models.UserSession;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -36,7 +39,14 @@ public class SessionController {
 
     @RequestMapping("/")
     public String getIndex() {
+        if (userSessionRepository.count() <= 0) return "redirect:/login";
         return "index";
+    }
+
+    @RequestMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("userSession", ApiClient.getUserSession());
+        return "login";
     }
 
     @PostMapping("/sessions/new")
@@ -45,21 +55,14 @@ public class SessionController {
             @RequestParam("password") String password)
             throws Exception {
 
-        HttpUrl url = urlBuilder.createLoginUrl(username, password);
-        String response = apiClient.loginCall(url);
+        String response = apiClient.loginCall(urlBuilder.createLoginUrl(username, password));
         UserSession userSession = objectMapper.readValue(response, UserSession.class);
         userSessionRepository.save(userSession);
-        return "redirect:/welcome";
-    }
+        ApiClient.setUserSession(userSession);
 
-    @RequestMapping("/welcome")
-    public String getWelcome(Model model) {
-        List<UserSession> userSessions = ((List<UserSession>) userSessionRepository.findAll());
-        if (userSessions.size() > 0) {
-            UserSession userSession = userSessions.get(userSessions.size() - 1);
-            model.addAttribute("userSessions", userSession);
-            return "welcome";
+        if (userSession.getStatus().equals("SUCCESS")) {
+            return "redirect:/";
         }
-        return "redirect:/";
+        return "redirect:/login";
     }
 }
