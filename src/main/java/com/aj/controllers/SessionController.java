@@ -1,6 +1,6 @@
 package com.aj.controllers;
 
-import com.aj.api.ApiClient;
+import com.aj.api.ApiClientService;
 import com.aj.api.UrlBuilder;
 import com.aj.models.UserSession;
 import com.aj.repositories.UserSessionRepository;
@@ -12,18 +12,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
 import java.util.List;
 
 @Controller
 public class SessionController {
 
     private final UserSessionRepository userSessionRepository;
+    private final ApiClientService apiClient;
     private final ObjectMapper objectMapper;
+    private final UrlBuilder urlBuilder;
 
-    public SessionController(UserSessionRepository userSessionRepository, ObjectMapper objectMapper) {
+    public SessionController(
+            UrlBuilder urlBuilder,
+            ApiClientService apiClient,
+            UserSessionRepository userSessionRepository,
+            ObjectMapper objectMapper) {
+
         this.userSessionRepository = userSessionRepository;
+        this.apiClient = apiClient;
         this.objectMapper = objectMapper;
+        this.urlBuilder = urlBuilder;
     }
 
     @RequestMapping("/")
@@ -35,10 +43,8 @@ public class SessionController {
     public String login(
             @RequestParam("username") String username,
             @RequestParam("password") String password)
-            throws IOException {
+            throws Exception {
 
-        ApiClient apiClient = new ApiClient();
-        UrlBuilder urlBuilder = new UrlBuilder();
         HttpUrl url = urlBuilder.createLoginUrl(username, password);
         String response = apiClient.loginCall(url);
         UserSession userSession = objectMapper.readValue(response, UserSession.class);

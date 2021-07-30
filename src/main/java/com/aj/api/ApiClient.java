@@ -1,12 +1,13 @@
 package com.aj.api;
 
 import okhttp3.*;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.websocket.Session;
 import java.io.IOException;
 
-public class ApiClient {
+@Service
+public class ApiClient implements ApiClientService {
 
     private final String ACCEPT_HEADER = "Accept";
     private final String X_APPLICATION_HEADER = "X-Application";
@@ -24,6 +25,7 @@ public class ApiClient {
         this.session = session;
     }
 
+    @Override
     public String loginCall(HttpUrl url) throws IOException {
         Request request = createLoginRequest(url);
         return CLIENT.newCall(request).execute().body().string();
