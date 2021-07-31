@@ -78,7 +78,7 @@ public class ApiClientTest {
         UrlBuilder urlBuilder = mock(UrlBuilder.class);
         RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
         when(urlBuilder.createBettingUrl(UrlBuilder.LIST_EVENT_TYPES)).thenReturn(baseUrl);
-        when(requestBodyBuilder.getEventTypesBody()).thenReturn("{event types body}");
+        when(requestBodyBuilder.eventTypesBody()).thenReturn("{event types body}");
 
         ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
         String response = apiClient.listEventTypes();
@@ -87,6 +87,29 @@ public class ApiClientTest {
         assertEquals(mockResponse, response);
         assertEquals(baseUrl, request.getRequestUrl());
         assertTrue(request.getBody().toString().contains("{event types body}"));
+        assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
+        assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
+        assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));
+        assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
+        assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));
+    }
+
+    @Test
+    void listCurrentOrders() throws Exception {
+        String mockResponse = "{list current orders response}";
+        server.enqueue(new MockResponse().setBody(mockResponse));
+        HttpUrl baseUrl = server.url("/listCurrentOrders");
+
+        UrlBuilder urlBuilder = mock(UrlBuilder.class);
+        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
+        when(urlBuilder.createBettingUrl(UrlBuilder.LIST_CURRENT_ORDERS)).thenReturn(baseUrl);
+
+        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
+        String response = apiClient.listCurrentOrders();
+        RecordedRequest request = server.takeRequest();
+
+        assertEquals(mockResponse, response);
+        assertEquals(baseUrl, request.getRequestUrl());
         assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
         assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
         assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));

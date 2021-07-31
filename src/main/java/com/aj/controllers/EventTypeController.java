@@ -6,6 +6,7 @@ import com.aj.repositories.EventTypeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
@@ -22,17 +23,23 @@ public class EventTypeController {
             EventTypeRepository eventTypeRepository,
             ApiClientService apiClient,
             ObjectMapper objectMapper) {
+
         this.apiClient = apiClient;
         this.objectMapper = objectMapper;
         this.eventTypeRepository = eventTypeRepository;
     }
 
-    @RequestMapping("/listEventTypes")
-    public String lEventTypes(Model model) throws IOException {
+    @PostMapping("/listEventTypes")
+    public String listEventTypes() throws IOException {
         String response = apiClient.listEventTypes();
         List<EventType> eventTypes = Arrays.asList(objectMapper.readValue(response, EventType[].class));
         eventTypeRepository.saveAll(eventTypes);
-        model.addAttribute("eventTypes", eventTypes);
+        return "redirect:/listEventTypes";
+    }
+
+    @RequestMapping("/listEventTypes")
+    public String listEventTypes(Model model) {
+        model.addAttribute("eventTypes", eventTypeRepository);
         return "listEventTypes";
     }
 }

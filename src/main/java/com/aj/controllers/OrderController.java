@@ -21,9 +21,11 @@ public class OrderController {
     private final ObjectMapper objectMapper;
     private final OrderRepository orderRepository;
 
-    public OrderController(ApiClientService apiClient,
-                           ObjectMapper objectMapper,
-                           OrderRepository orderRepository) {
+    public OrderController(
+            ApiClientService apiClient,
+            ObjectMapper objectMapper,
+            OrderRepository orderRepository) {
+
         this.apiClient = apiClient;
         this.objectMapper = objectMapper;
         this.orderRepository = orderRepository;
