@@ -2,7 +2,6 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClient;
 import com.aj.api.ApiClientService;
-import com.aj.api.UrlBuilder;
 import com.aj.models.UserSession;
 import com.aj.repositories.UserSessionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,10 +17,8 @@ public class SessionController {
     private final UserSessionRepository userSessionRepository;
     private final ApiClientService apiClient;
     private final ObjectMapper objectMapper;
-    private final UrlBuilder urlBuilder;
 
     public SessionController(
-            UrlBuilder urlBuilder,
             ApiClientService apiClient,
             UserSessionRepository userSessionRepository,
             ObjectMapper objectMapper) {
@@ -29,7 +26,6 @@ public class SessionController {
         this.userSessionRepository = userSessionRepository;
         this.apiClient = apiClient;
         this.objectMapper = objectMapper;
-        this.urlBuilder = urlBuilder;
     }
 
     @RequestMapping("/")
@@ -50,14 +46,12 @@ public class SessionController {
             @RequestParam("password") String password)
             throws Exception {
 
-        String response = apiClient.loginCall(urlBuilder.createLoginUrl(username, password));
+        String response = apiClient.login(username, password);
         UserSession userSession = objectMapper.readValue(response, UserSession.class);
         userSessionRepository.save(userSession);
         ApiClient.setUserSession(userSession);
 
-        if (userSession.getStatus().equals("SUCCESS")) {
-            return "redirect:/";
-        }
+        if (userSession.getStatus().equals("SUCCESS")) return "redirect:/";
         return "redirect:/login";
     }
 }

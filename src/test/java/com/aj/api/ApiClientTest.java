@@ -5,7 +5,7 @@ import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 
@@ -23,67 +23,74 @@ public class ApiClientTest {
     private final String CONTENT_TYPE_VALUE = "application/json";
     private final String X_IP_HEADER = "X-IP";
     private final String X_IP_VALUE = "127.0.0.1";
+    private static final String APP_KEY = "APP_KEY";
+    private static final String TOKEN = "TOKEN";
+    private MockWebServer server;
 
-    @Test
-    void loginCall() throws Exception {
+    @BeforeAll
+    public static void setUserSession() {
+        UserSession userSession = mock(UserSession.class);
+        when(userSession.getToken()).thenReturn(TOKEN);
+        when(userSession.getAppKey()).thenReturn(APP_KEY);
+        ApiClient.setUserSession(userSession);
+    }
 
-        MockWebServer server = new MockWebServer();
-        String expectedResponse = "test response - request has been made";
-        server.enqueue(new MockResponse().setBody(expectedResponse));
+    @BeforeEach
+    public void setUp() throws IOException {
+        server = new MockWebServer();
         server.start();
+    }
 
-        ApiClient apiClient = new ApiClient();
-        HttpUrl baseUrl = server.url("/test-url");
-
-        String actualResponse = apiClient.loginCall(baseUrl);
-
-        RecordedRequest request = server.takeRequest();
-        HttpUrl requestUrl = request.getRequestUrl();
-        String xApplication = request.getHeader(X_APPLICATION_HEADER);
-        String contentType = request.getHeader(CONTENT_TYPE_HEADER);
-        String accept = request.getHeader(ACCEPT_HEADER);
-        String xIp = request.getHeader(X_IP_HEADER);
-
-        assertEquals(expectedResponse, actualResponse);
-        assertEquals(baseUrl, requestUrl);
-        assertEquals(X_APPLICATION_VALUE, xApplication);
-        assertEquals(CONTENT_TYPE_VALUE, contentType);
-        assertEquals(ACCEPT_VALUE, accept);
-        assertEquals(X_IP_VALUE, xIp);
+    @AfterEach
+    public void tearDown() throws IOException {
+        server.shutdown();
     }
 
     @Test
-    void bettingCall() throws Exception {
+    void login() throws Exception {
+        String mockResponse = "{login response}";
+        server.enqueue(new MockResponse().setBody(mockResponse));
+        HttpUrl baseUrl = server.url("?username=username&password=password");
 
-        MockWebServer server = new MockWebServer();
-        server.enqueue(new MockResponse().setBody("{ mock response }"));
-        server.start();
+        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
+        UrlBuilder urlBuilder = mock(UrlBuilder.class);
+        when(urlBuilder.createLoginUrl("username", "password"))
+                .thenReturn(baseUrl);
 
-        String body = "{\"filter\":{}}";
-        HttpUrl baseUrl = server.url("/test-url");
-
-        ApiClient apiClient = new ApiClient();
-        UserSession userSession = mock(UserSession.class);
-        when(userSession.getToken()).thenReturn("SESSION_TOKEN");
-        when(userSession.getAppKey()).thenReturn("APP_KEY");
-        ApiClient.setUserSession(userSession);
-
-        apiClient.bettingCall(baseUrl, body);
-
+        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
+        String response = apiClient.login("username", "password");
         RecordedRequest request = server.takeRequest();
-        HttpUrl requestUrl = request.getRequestUrl();
-        String xAuthentication = request.getHeader(X_AUTHENTICATION_HEADER);
-        String xApplication = request.getHeader(X_APPLICATION_HEADER);
-        String contentType = request.getHeader(CONTENT_TYPE_HEADER);
-        String accept = request.getHeader(ACCEPT_HEADER);
-        String xIp = request.getHeader(X_IP_HEADER);
 
-        assertTrue(request.getBody().toString().contains(body));
-        assertEquals(baseUrl, requestUrl);
-        assertEquals("SESSION_TOKEN", xAuthentication);
-        assertEquals("APP_KEY", xApplication);
-        assertTrue(contentType.contains(CONTENT_TYPE_VALUE));
-        assertEquals(ACCEPT_VALUE, accept);
-        assertEquals(X_IP_VALUE, xIp);
+        assertEquals(mockResponse, response);
+        assertEquals(baseUrl, request.getRequestUrl());
+        assertEquals(X_APPLICATION_VALUE, request.getHeader(X_APPLICATION_HEADER));
+        assertEquals(CONTENT_TYPE_VALUE, request.getHeader(CONTENT_TYPE_HEADER));
+        assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
+        assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));
+    }
+
+    @Test
+    void listEventTypes() throws Exception {
+        String mockResponse = "{list event types response}";
+        server.enqueue(new MockResponse().setBody(mockResponse));
+        HttpUrl baseUrl = server.url("/listEventTypes");
+
+        UrlBuilder urlBuilder = mock(UrlBuilder.class);
+        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
+        when(urlBuilder.createBettingUrl(UrlBuilder.LIST_EVENT_TYPES)).thenReturn(baseUrl);
+        when(requestBodyBuilder.getEventTypesBody()).thenReturn("{event types body}");
+
+        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
+        String response = apiClient.listEventTypes();
+        RecordedRequest request = server.takeRequest();
+
+        assertEquals(mockResponse, response);
+        assertEquals(baseUrl, request.getRequestUrl());
+        assertTrue(request.getBody().toString().contains("{event types body}"));
+        assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
+        assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
+        assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));
+        assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
+        assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));
     }
 }

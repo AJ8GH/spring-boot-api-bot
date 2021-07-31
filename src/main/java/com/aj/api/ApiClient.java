@@ -1,18 +1,20 @@
 package com.aj.api;
 
-import com.aj.BetfairApiBot1Application;
 import com.aj.models.UserSession;
 import okhttp3.*;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 @Service
 public class ApiClient implements ApiClientService {
 
     private static UserSession userSession;
+
+    private final UrlBuilder urlBuilder;
+    private final RequestBodyBuilder requestBodyBuilder;
+    private final OkHttpClient CLIENT = new OkHttpClient();
+
     private final String ACCEPT_HEADER = "Accept";
     private final String X_APPLICATION_HEADER = "X-Application";
     private final String X_APPLICATION = "testAccountApp";
@@ -21,7 +23,12 @@ public class ApiClient implements ApiClientService {
     private final String CONTENT_TYPE = "application/json";
     private final String X_IP_HEADER = "X-IP";
     private final String X_IP = "127.0.0.1";
-    private final OkHttpClient CLIENT = new OkHttpClient();
+
+    public ApiClient(UrlBuilder urlBuilder,
+            RequestBodyBuilder requestBodyBuilder) {
+        this.urlBuilder = urlBuilder;
+        this.requestBodyBuilder = requestBodyBuilder;
+    }
 
     public static void setUserSession(UserSession userSession) {
         ApiClient.userSession = userSession;
@@ -31,15 +38,16 @@ public class ApiClient implements ApiClientService {
         return userSession;
     }
 
-    @Override
-    public String loginCall(HttpUrl url) throws IOException {
-        Request request = createLoginRequest(url);
+    public String listEventTypes() throws IOException {
+        HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENT_TYPES);
+        String body = requestBodyBuilder.getEventTypesBody();
+        Request request = createBettingRequest(url, body);
         return CLIENT.newCall(request).execute().body().string();
     }
 
-    @Override
-    public String bettingCall(HttpUrl url, String body) throws IOException {
-        Request request = createBettingRequest(url, body);
+    public String login(String username, String password) throws IOException {
+        HttpUrl url = urlBuilder.createLoginUrl(username, password);
+        Request request = createLoginRequest(url);
         return CLIENT.newCall(request).execute().body().string();
     }
 
