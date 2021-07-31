@@ -41,9 +41,8 @@ public class SessionController {
     }
 
     @PostMapping("/sessions/new")
-    public String login(
-            @RequestParam("username") String username,
-            @RequestParam("password") String password)
+    public String login(@RequestParam("username") String username,
+                        @RequestParam("password") String password)
             throws Exception {
 
         String response = apiClient.login(username, password);

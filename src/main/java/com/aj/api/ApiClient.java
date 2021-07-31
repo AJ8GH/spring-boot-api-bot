@@ -38,6 +38,12 @@ public class ApiClient implements ApiClientService {
         return userSession;
     }
 
+    public String login(String username, String password) throws IOException {
+        HttpUrl url = urlBuilder.createLoginUrl(username, password);
+        Request request = createLoginRequest(url);
+        return CLIENT.newCall(request).execute().body().string();
+    }
+
     public String listEventTypes() throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENT_TYPES);
         String body = requestBodyBuilder.getEventTypesBody();
@@ -45,10 +51,9 @@ public class ApiClient implements ApiClientService {
         return CLIENT.newCall(request).execute().body().string();
     }
 
-    public String login(String username, String password) throws IOException {
-        HttpUrl url = urlBuilder.createLoginUrl(username, password);
-        Request request = createLoginRequest(url);
-        return CLIENT.newCall(request).execute().body().string();
+    @Override
+    public String listCurrentOrders() throws IOException {
+        return null;
     }
 
     private Request createLoginRequest(HttpUrl url) {
