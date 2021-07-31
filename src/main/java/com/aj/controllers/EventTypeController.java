@@ -28,7 +28,7 @@ public class EventTypeController {
     }
 
     @RequestMapping("/listEventTypes")
-    public String getEventTypes(Model model) throws IOException {
+    public String listEventTypes(Model model) throws IOException {
         String response = apiClient.listEventTypes();
         List<EventType> eventTypes = Arrays.asList(objectMapper.readValue(response, EventType[].class));
         eventTypeRepository.saveAll(eventTypes);
