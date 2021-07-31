@@ -8,6 +8,8 @@
         <title>Document</title>
     </head>
     <body>
-        BETS GO HERE
+        <div th:each="bet : ${ bets }">
+            <p th:text="${ bet.toString() }"></p>
+        </div>
     </body>
 </html>
