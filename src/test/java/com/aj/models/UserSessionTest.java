@@ -2,6 +2,8 @@ package com.aj.models;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserSessionTest {
@@ -27,14 +29,6 @@ class UserSessionTest {
     }
 
     @Test
-    void setAppKey() {
-        UserSession userSession = new UserSession();
-        userSession.setAppKey("appKey");
-
-        assertEquals("appKey", userSession.getAppKey());
-    }
-
-    @Test
     void testToString() {
         UserSession userSession = new UserSession();
         String expectedOutput = "UserSession{" +
@@ -45,9 +39,16 @@ class UserSessionTest {
                 ", product='" + userSession.getProduct() + '\'' +
                 ", error='" + userSession.getError() + '\'' +
                 '}';
+
+        assertEquals(expectedOutput, userSession.toString());
     }
 
     @Test
-    void loadAppKey() {
+    void loadAppKey() throws IOException {
+        UserSession userSession = new UserSession();
+        userSession.setProps("test.properties");
+        userSession.loadAppKey();
+
+        assertEquals("appKey", userSession.getAppKey());
     }
 }

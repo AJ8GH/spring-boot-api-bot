@@ -19,6 +19,7 @@ public class UserSession {
     private String appKey;
     private String product;
     private String error;
+    private String props = "application.properties";
 
     public UserSession() {
     }
@@ -80,6 +81,10 @@ public class UserSession {
         this.error = error;
     }
 
+    public void setProps(String props) {
+        this.props = props;
+    }
+
     @Override
     public String toString() {
         return "UserSession{" +
@@ -95,7 +100,7 @@ public class UserSession {
     public void loadAppKey() throws IOException {
         Properties properties = new Properties();
         InputStream inputStream = BetfairApiBot1Application.class
-                .getClassLoader().getResourceAsStream("application.properties");
+                .getClassLoader().getResourceAsStream(props);
         properties.load(inputStream);
 
         setAppKey(properties.getProperty("APP_KEY"));
