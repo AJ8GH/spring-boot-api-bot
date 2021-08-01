@@ -15,6 +15,8 @@
             <p th:text="${ userSession.getError() }"></p>
         </div>
 
+        <h2>Login to get started</h2>
+
         <form action="/eventTypes/list" th:action="@{/sessions/new}" method="post">
             <input type="text" name="username" placeholder="Username" class="username">
             <input type="text" name="password" placeholder="Password" class="password">
