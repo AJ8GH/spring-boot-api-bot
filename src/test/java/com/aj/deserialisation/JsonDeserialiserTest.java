@@ -30,7 +30,7 @@ class JsonDeserialiserTest {
         assertEquals("mockToken", userSession.getToken());
         assertEquals("testAccountApp", userSession.getProduct());
         assertEquals("SUCCESS", userSession.getStatus());
-        assertEquals("SUCCESS", userSession.getStatus());
+        assertEquals("", userSession.getError());
     }
 
     @Test

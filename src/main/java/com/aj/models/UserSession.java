@@ -20,7 +20,7 @@ public class UserSession {
     private String product;
     private String error;
 
-    public UserSession() throws IOException {
+    public UserSession() {
     }
 
     public UserSession(String status, String token, String appKey,

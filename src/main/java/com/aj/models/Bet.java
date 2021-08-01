@@ -25,7 +25,8 @@ public class Bet {
     public Bet() {
     }
 
-    public Bet(String marketId, Integer selectionId, Double price, Double size, String side, Double bspLiability, String status) {
+    public Bet(String marketId, Integer selectionId, Double price, Double size,
+               String side, Double bspLiability, String status) {
         this.marketId = marketId;
         this.selectionId = selectionId;
         this.price = price;

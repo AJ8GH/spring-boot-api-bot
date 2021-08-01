@@ -28,8 +28,8 @@ public class EventType {
 
     @JsonProperty("eventType")
     private void unpackNested(Map<String, Object> eventType) {
-        this.id = Long.valueOf((String) eventType.get("id"));
-        this.name = (String) eventType.get("name");
+        setId(Long.valueOf((String) eventType.get("id")));
+        setName((String) eventType.get("name"));
     }
 
     public Long getId() {
