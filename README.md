@@ -2,6 +2,8 @@ Betfair Exchange API Bot
 ========================
 
 [![Build Status](https://app.travis-ci.com/AJ8GH/spring-boot-api-bot.svg?branch=main)](https://app.travis-ci.com/AJ8GH/spring-boot-api-bot)
+[![Maintainability](https://api.codeclimate.com/v1/badges/53b09461685bd87a395c/maintainability)](https://codeclimate.com/github/AJ8GH/spring-boot-api-bot/maintainability)
+[![codecov](https://codecov.io/gh/AJ8GH/spring-boot-api-bot/branch/main/graph/badge.svg?token=PCEGI1SPQ2)](https://codecov.io/gh/AJ8GH/spring-boot-api-bot)
 
 Web app designed to interact with Betfair's Developer API. Built using Java 11 and Spring Boot.
 
