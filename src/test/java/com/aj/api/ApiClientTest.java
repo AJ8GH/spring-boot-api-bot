@@ -27,16 +27,13 @@ public class ApiClientTest {
     private static final String TOKEN = "TOKEN";
     private MockWebServer server;
 
-    @BeforeAll
-    public static void setUserSession() {
+    @BeforeEach
+    public void setUp() throws IOException {
         UserSession userSession = mock(UserSession.class);
         when(userSession.getToken()).thenReturn(TOKEN);
         when(userSession.getAppKey()).thenReturn(APP_KEY);
         ApiClient.setUserSession(userSession);
-    }
 
-    @BeforeEach
-    public void setUp() throws IOException {
         server = new MockWebServer();
         server.start();
     }
