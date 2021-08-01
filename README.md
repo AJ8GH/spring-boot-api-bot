@@ -12,6 +12,16 @@ Clone this repository
 git@github.com:AJ8GH/spring-boot-api-bot.git
 ```
 
+Create a properties file called `application.properties` under the resources directory 
+`betfair-api-bot-1/com/aj/main/resources/application.properties`.
+
+Define your app key
+
+```properties
+# application.properties
+APP_KEY=yourAppKey
+```
+
 Navigate to the project root and run a clean and install using Maven:
 
 ```shell
@@ -25,6 +35,24 @@ Tests can be run from the root of the project using:
 
 ```shell
 mvn test
+```
+
+## Running the app
+
+Start the server with:
+
+```shell
+mvn spring-boot:run
+```
+
+Then go to local host in your browser, the default port will be 8080:
+
+http://localhost:8080/
+
+If needed a different port can be specified in `application.properties`:
+
+```properties
+server.port=yourSpecifiedPort
 ```
 
 ## Purpose
@@ -56,7 +84,7 @@ Each controller handles mapping requests for their corresponding domain:
 
 ### CI
 
-Travis CI runs a build on each push.
+Travis CI runs a build on each push, sending test coverage stats to codecov on a successful build.
 
 ## Dependencies
 
