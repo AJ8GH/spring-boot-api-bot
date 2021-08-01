@@ -47,7 +47,14 @@ public class ApiClient implements ApiClientService {
 
     public String listEventTypes() throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENT_TYPES);
-        String body = requestBodyBuilder.eventTypesBody();
+        String body = requestBodyBuilder.listEventTypesBody();
+        Request request = createBettingRequest(url, body);
+        return CLIENT.newCall(request).execute().body().string();
+    }
+
+    public String listEvents(long eventTypeId) throws IOException {
+        HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENTS);
+        String body = requestBodyBuilder.listEventsBody(eventTypeId);
         Request request = createBettingRequest(url, body);
         return CLIENT.newCall(request).execute().body().string();
     }

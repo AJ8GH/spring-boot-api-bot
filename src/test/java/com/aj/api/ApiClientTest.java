@@ -10,8 +10,7 @@ import org.junit.jupiter.api.*;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ApiClientTest {
     private final String ACCEPT_HEADER = "Accept";
@@ -82,7 +81,7 @@ public class ApiClientTest {
         UrlBuilder urlBuilder = mock(UrlBuilder.class);
         RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
         when(urlBuilder.createBettingUrl(UrlBuilder.LIST_EVENT_TYPES)).thenReturn(baseUrl);
-        when(requestBodyBuilder.eventTypesBody()).thenReturn("{event types body}");
+        when(requestBodyBuilder.listEventTypesBody()).thenReturn("{event types body}");
 
         ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
         String response = apiClient.listEventTypes();
@@ -116,6 +115,32 @@ public class ApiClientTest {
         assertEquals(baseUrl, request.getRequestUrl());
         assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
         assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
+        assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));
+        assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
+        assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));
+    }
+
+    @Test
+    void listEvents() throws Exception {
+        String mockResponse = "{list events response}";
+        server.enqueue(new MockResponse().setBody(mockResponse));
+        HttpUrl baseUrl = server.url("/listEvents");
+
+        UrlBuilder urlBuilder = mock(UrlBuilder.class);
+        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
+        when(urlBuilder.createBettingUrl(UrlBuilder.LIST_EVENTS)).thenReturn(baseUrl);
+        when(requestBodyBuilder.listEventsBody(1L)).thenReturn("{list events body}");
+
+        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
+        String response = apiClient.listEvents(1L);
+        RecordedRequest request = server.takeRequest();
+
+        verify(requestBodyBuilder).listEventsBody(1L);
+        assertEquals(mockResponse, response);
+        assertEquals(baseUrl, request.getRequestUrl());
+        assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
+        assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
+        assertTrue(request.getBody().toString().contains("{list events body}"));
         assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));
         assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
         assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));

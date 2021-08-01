@@ -36,7 +36,12 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
             "}";
 
     @Override
-    public String eventTypesBody() {
+    public String listEventTypesBody() {
         return EVENT_TYPES_BODY;
+    }
+
+    @Override
+    public String listEventsBody(long eventTypeId) {
+        return String.format(EVENTS_BODY, eventTypeId);
     }
 }

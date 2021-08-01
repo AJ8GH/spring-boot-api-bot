@@ -1,14 +1,10 @@
 package com.aj.api;
 
-import okhttp3.HttpUrl;
-
 import java.io.IOException;
 
 public interface ApiClientService {
-
     public String login(String username, String password) throws IOException;
-
     public String listEventTypes() throws IOException;
-
+    public String listEvents(long eventTypeId) throws IOException;
     public String listCurrentOrders() throws IOException;
 }
