@@ -1,6 +1,7 @@
 package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
+import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.models.EventType;
 import com.aj.repositories.EventTypeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,22 +20,22 @@ import java.util.List;
 public class EventTypeController {
     private final EventTypeRepository eventTypeRepository;
     private final ApiClientService apiClient;
-    private final ObjectMapper objectMapper;
+    private final JsonDeserialiser jsonDeserialiser;
 
     public EventTypeController(
             EventTypeRepository eventTypeRepository,
             ApiClientService apiClient,
-            ObjectMapper objectMapper) {
+            JsonDeserialiser jsonDeserialiser) {
 
         this.apiClient = apiClient;
-        this.objectMapper = objectMapper;
+        this.jsonDeserialiser = jsonDeserialiser;
         this.eventTypeRepository = eventTypeRepository;
     }
 
     @RequestMapping("/listEventTypes")
     public String listEventTypes(Model model) throws IOException {
         String response = apiClient.listEventTypes();
-        List<EventType> eventTypes = Arrays.asList(objectMapper.readValue(response, EventType[].class));
+        List<EventType> eventTypes = jsonDeserialiser.mapToEventTypeList(response);
         eventTypeRepository.saveAll(eventTypes);
         model.addAttribute("eventTypes", eventTypes);
         return "listEventTypes";

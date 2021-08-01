@@ -2,9 +2,9 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClient;
 import com.aj.api.ApiClientService;
+import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.models.UserSession;
 import com.aj.repositories.UserSessionRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class SessionController {
+public class UserSessionController {
 
     private final UserSessionRepository userSessionRepository;
     private final ApiClientService apiClient;
-    private final ObjectMapper objectMapper;
+    private final JsonDeserialiser jsonDeserialiser;
 
-    public SessionController(
+    public UserSessionController(
             ApiClientService apiClient,
             UserSessionRepository userSessionRepository,
-            ObjectMapper objectMapper) {
+            JsonDeserialiser jsonDeserialiser) {
 
         this.userSessionRepository = userSessionRepository;
         this.apiClient = apiClient;
-        this.objectMapper = objectMapper;
+        this.jsonDeserialiser = jsonDeserialiser;
     }
 
     @RequestMapping("/")
@@ -46,7 +46,7 @@ public class SessionController {
             throws Exception {
 
         String response = apiClient.login(username, password);
-        UserSession userSession = objectMapper.readValue(response, UserSession.class);
+        UserSession userSession = jsonDeserialiser.mapToObject(response, UserSession.class);
         userSessionRepository.save(userSession);
         ApiClient.setUserSession(userSession);
 

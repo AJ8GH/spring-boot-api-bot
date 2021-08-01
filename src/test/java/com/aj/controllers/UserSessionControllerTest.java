@@ -13,16 +13,23 @@ import static org.hamcrest.Matchers.containsString;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class SessionControllerTest {
+class UserSessionControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void getIndex() throws Exception {
+    void testLogIn() throws Exception {
         mockMvc.perform(get("/login"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Betfair API Bot")))
                 .andExpect(content().string(containsString("Login to get started")));
+    }
+
+    @Test
+    void testIndexRouteWithNoSession() throws Exception {
+        mockMvc.perform(get("/"))
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/login"));
     }
 }
