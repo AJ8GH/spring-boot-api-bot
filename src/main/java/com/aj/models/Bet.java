@@ -115,7 +115,7 @@ public class Bet {
 
     @JsonProperty("priceSize")
     private void unpackNested(Map<String, Object> priceSize) {
-        this.price = ((Double) priceSize.get("price"));
-        this.size = ((Double) priceSize.get("size"));
+        setPrice((Double) priceSize.get("price"));
+        setSize((Double) priceSize.get("size"));
     }
 }

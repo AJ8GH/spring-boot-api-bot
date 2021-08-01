@@ -61,5 +61,17 @@ class JsonDeserialiserTest {
         assertEquals(13495803, bets.get(0).getSelectionId());
         assertEquals(3.0, bets.get(0).getPrice());
         assertEquals(0.1, bets.get(0).getSize());
+        assertEquals("BACK", bets.get(0).getSide());
+        assertEquals(0.0, bets.get(0).getBspLiability());
+        assertEquals("EXECUTABLE", bets.get(0).getStatus());
+
+        assertEquals(10883651820L, bets.get(1).getBetId());
+        assertEquals("1.179344408", bets.get(1).getMarketId());
+        assertEquals(34, bets.get(1).getSelectionId());
+        assertEquals(2.0, bets.get(1).getPrice());
+        assertEquals(1.0, bets.get(1).getSize());
+        assertEquals("LAY", bets.get(1).getSide());
+        assertEquals(0.0, bets.get(1).getBspLiability());
+        assertEquals("EXECUTABLE", bets.get(1).getStatus());
     }
 }
