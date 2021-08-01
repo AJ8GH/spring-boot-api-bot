@@ -42,13 +42,13 @@ public class EventController {
         return "listEventTypes";
     }
 
-    @RequestMapping("/listEvents{eventTypeId}")
+    @RequestMapping("/listEvents/{eventTypeId}")
     public String listEvents(@PathVariable("eventTypeId") long eventTypeId,
                              Model model) throws IOException {
         String response = apiClient.listEvents(eventTypeId);
-        // List<Event> events = jsonDeserialiser.mapToEventList(response);
-        // eventRepository.saveAll(events);
-        // model.addAttribute("events", events);
+        List<Event> events = jsonDeserialiser.mapToEventList(response);
+        eventRepository.saveAll(events);
+        model.addAttribute("events", events);
         return "listEvents";
     }
 }

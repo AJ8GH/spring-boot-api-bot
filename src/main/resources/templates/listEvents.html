@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport"
@@ -8,6 +8,11 @@
         <title>Betfair API Bot</title>
     </head>
     <body>
-        EVENTS GO HERE
+        <div th:each="event : ${ events }">
+            <p th:text="${ event.toString() }"></p>
+            <a href="#">
+                <button>View Markets</button>
+            </a>
+        </div>
     </body>
 </html>

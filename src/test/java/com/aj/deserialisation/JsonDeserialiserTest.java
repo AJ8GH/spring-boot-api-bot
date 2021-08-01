@@ -2,6 +2,7 @@ package com.aj.deserialisation;
 
 import com.aj.helpers.ListOrdersResponse;
 import com.aj.models.Bet;
+import com.aj.models.Event;
 import com.aj.models.EventType;
 import com.aj.models.UserSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -51,7 +52,7 @@ class JsonDeserialiserTest {
     }
 
     @Test
-    void mapToOrders() throws IOException {
+    void mapToBetList() throws IOException {
         String json = ListOrdersResponse.JSON;
 
         List<Bet> bets = jsonDeserialiser.mapToBetList(json);
@@ -73,5 +74,32 @@ class JsonDeserialiserTest {
         assertEquals("LAY", bets.get(1).getSide());
         assertEquals(0.0, bets.get(1).getBspLiability());
         assertEquals("EXECUTABLE", bets.get(1).getStatus());
+    }
+
+    @Test
+    void mapToEvents() throws IOException {
+        String json = "[{\"event\":{\"id\":\"29865702\",\"name\":\"" +
+                "Newcastle v West Ham\",\"countryCode\":\"GB\",\"timezone\":\"" +
+                "GMT\",\"openDate\":\"2021-08-15T13:00:00.000Z\"},\"marketCount" +
+                "\":5},{\"event\":{\"id\":\"29865701\",\"name\":\"Everton v " +
+                "Southampton\",\"countryCode\":\"GB\",\"timezone\":\"GMT\",\"" +
+                "openDate\":\"2021-06-22T16:15:00.000Z\"},\"marketCount\":6}]";
+
+        List<Event> events = jsonDeserialiser.mapToEventList(json);
+
+        assertEquals(29865702L, events.get(0).getId());
+        assertEquals("Newcastle v West Ham", events.get(0).getName());
+        assertEquals("GB", events.get(0).getCountryCode());
+        assertEquals("GMT", events.get(0).getTimezone());
+        assertEquals("2021-08-15T13:00:00.000Z", events.get(0).getOpenDate());
+        assertEquals(5, events.get(0).getMarketCount());
+
+        assertEquals(29865701L, events.get(1).getId());
+        assertEquals("Everton v Southampton", events.get(1).getName());
+        assertEquals("GB", events.get(1).getCountryCode());
+        assertEquals("GMT", events.get(1).getTimezone());
+        assertEquals("2021-06-22T16:15:00.000Z", events.get(1).getOpenDate());
+        assertEquals(6, events.get(1).getMarketCount());
+
     }
 }

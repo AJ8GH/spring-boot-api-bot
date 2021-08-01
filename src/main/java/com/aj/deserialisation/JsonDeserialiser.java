@@ -1,6 +1,7 @@
 package com.aj.deserialisation;
 
 import com.aj.models.Bet;
+import com.aj.models.Event;
 import com.aj.models.EventType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,5 +35,10 @@ public class JsonDeserialiser implements DeserialisationService {
         String content = String.join("", json.split("\\[|\\]")[1]);
         String jsonArray = "[" + content + "]";
         return Arrays.asList(objectMapper.readValue(jsonArray, Bet[].class));
+    }
+
+    @Override
+    public List<Event> mapToEventList(String json) throws JsonProcessingException {
+        return Arrays.asList(objectMapper.readValue(json, Event[].class));
     }
 }
