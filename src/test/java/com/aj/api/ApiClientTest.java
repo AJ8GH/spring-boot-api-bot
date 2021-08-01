@@ -47,6 +47,13 @@ public class ApiClientTest {
     }
 
     @Test
+    public void getUserSession() throws IOException {
+        UserSession userSession = new UserSession();
+        ApiClient.setUserSession(userSession);
+        assertEquals(userSession, ApiClient.getUserSession());
+    }
+
+    @Test
     void login() throws Exception {
         String mockResponse = "{login response}";
         server.enqueue(new MockResponse().setBody(mockResponse));
