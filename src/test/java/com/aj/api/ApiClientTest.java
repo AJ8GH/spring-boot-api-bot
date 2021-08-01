@@ -45,7 +45,7 @@ public class ApiClientTest {
 
     @Test
     public void getUserSession() throws IOException {
-        UserSession userSession = new UserSession();
+        UserSession userSession = mock(UserSession.class);
         ApiClient.setUserSession(userSession);
         assertEquals(userSession, ApiClient.getUserSession());
     }
