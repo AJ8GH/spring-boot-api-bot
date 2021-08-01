@@ -6,6 +6,8 @@ import com.aj.repositories.BetRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
@@ -17,16 +19,16 @@ public class BetController {
 
     private final ApiClientService apiClient;
     private final ObjectMapper objectMapper;
-    private final BetRepository orderRepository;
+    private final BetRepository betRepository;
 
     public BetController(
             ApiClientService apiClient,
             ObjectMapper objectMapper,
-            BetRepository orderRepository) {
+            BetRepository betRepository) {
 
         this.apiClient = apiClient;
         this.objectMapper = objectMapper;
-        this.orderRepository = orderRepository;
+        this.betRepository = betRepository;
     }
 
     @RequestMapping("/listCurrentOrders")
@@ -35,7 +37,7 @@ public class BetController {
         String data = String.join("", response.split("\\[|\\]")[1]);
         String jsonArray = "[" + data + "]";
         List<Bet> bets = Arrays.asList(objectMapper.readValue(jsonArray, Bet[].class));
-        orderRepository.saveAll(bets);
+        betRepository.saveAll(bets);
         model.addAttribute("bets", bets);
         return "listCurrentOrders";
     }

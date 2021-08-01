@@ -8,11 +8,10 @@
         <title>Betfair API Bot - List Event Types</title>
     </head>
     <body>
+        <h1>Event Types</h1>
         <div th:unless="${ eventTypes.size() == 0 }">
             <div th:each="eventType : ${ eventTypes }">
-                <p th:text="${ eventType.id }"></p>
-                <p th:text="${ eventType.name }"></p>
-                <p th:text="${ eventType.marketCount }"></p><br>
+                <p th:text="${ eventType.toString() }"></p>
             </div>
         </div>
     </body>

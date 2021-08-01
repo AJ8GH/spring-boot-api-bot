@@ -6,9 +6,11 @@ import com.aj.repositories.EventTypeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.persistence.GeneratedValue;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -29,17 +31,12 @@ public class EventTypeController {
         this.eventTypeRepository = eventTypeRepository;
     }
 
-    @PostMapping("/listEventTypes")
-    public String listEventTypes() throws IOException {
+    @RequestMapping("/listEventTypes")
+    public String listEventTypes(Model model) throws IOException {
         String response = apiClient.listEventTypes();
         List<EventType> eventTypes = Arrays.asList(objectMapper.readValue(response, EventType[].class));
         eventTypeRepository.saveAll(eventTypes);
-        return "redirect:/listEventTypes";
-    }
-
-    @RequestMapping("/listEventTypes")
-    public String listEventTypes(Model model) {
-        model.addAttribute("eventTypes", eventTypeRepository);
+        model.addAttribute("eventTypes", eventTypes);
         return "listEventTypes";
     }
 }
