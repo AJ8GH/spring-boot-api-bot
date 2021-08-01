@@ -21,7 +21,6 @@ public class UserSession {
     private String error;
 
     public UserSession() throws IOException {
-        loadAppKey();
     }
 
     public UserSession(String status, String token, String appKey,
@@ -93,7 +92,7 @@ public class UserSession {
                 '}';
     }
 
-    private void loadAppKey() throws IOException {
+    public void loadAppKey() throws IOException {
         Properties properties = new Properties();
         InputStream inputStream = BetfairApiBot1Application.class
                 .getClassLoader().getResourceAsStream("application.properties");

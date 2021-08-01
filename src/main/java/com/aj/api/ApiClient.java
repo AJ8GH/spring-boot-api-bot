@@ -30,7 +30,8 @@ public class ApiClient implements ApiClientService {
         this.requestBodyBuilder = requestBodyBuilder;
     }
 
-    public static void setUserSession(UserSession userSession) {
+    public static void setUserSession(UserSession userSession) throws IOException {
+        userSession.loadAppKey();
         ApiClient.userSession = userSession;
     }
 
