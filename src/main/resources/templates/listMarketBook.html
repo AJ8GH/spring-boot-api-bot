@@ -14,10 +14,10 @@
             <p th:text="${ marketBook.toString() }"></p>
             <div th:each="runner : ${ marketBook.getRunners() }">
                 <p th:text="${ runner.toString() }"></p>
+                <a href="@{/bet/new/}">
+                    <button>Place A Bet</button>
+                </a>
             </div>
-            <a href="">
-                <button>Place A Bet</button>
-            </a>
         </div>
     </body>
 </html>
