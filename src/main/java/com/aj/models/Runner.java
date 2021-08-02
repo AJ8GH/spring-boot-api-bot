@@ -13,8 +13,8 @@ public class Runner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private Long selectionId;
-
     private String runnerName;
     private Double handicap;
     private Integer sortPriority;
@@ -26,6 +26,14 @@ public class Runner {
         this.runnerName = runnerName;
         this.handicap = handicap;
         this.sortPriority = sortPriority;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getSelectionId() {

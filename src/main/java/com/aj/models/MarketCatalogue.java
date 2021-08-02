@@ -8,12 +8,13 @@ public class MarketCatalogue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(unique = true)
     private String marketId;
     private String marketName;
     private Double totalMatched;
 
-    @OneToMany
-    @JoinColumn(name = "market_catalogue_id")
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Runner> runners;
 
     public MarketCatalogue() {
@@ -23,6 +24,14 @@ public class MarketCatalogue {
         this.marketName = marketName;
         this.totalMatched = totalMatched;
         this.runners = runners;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getMarketId() {

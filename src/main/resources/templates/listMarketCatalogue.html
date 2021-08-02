@@ -9,6 +9,13 @@
     </head>
     <body>
         <h1>Market Catalogue</h1>
-        MARKET CATALOGUE GOES HERE
+        <div th:unless="${ marketCatalogue.size() < 0 }">
+            <div th:each="market : ${ marketCatalogue }">
+                <p th:text="${ market.toString() }"></p>
+                <a href="">
+                    <button>View Best Prices</button>
+                </a>
+            </div>
+        </div>
     </body>
 </html>
