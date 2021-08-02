@@ -61,6 +61,12 @@
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>3.11.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

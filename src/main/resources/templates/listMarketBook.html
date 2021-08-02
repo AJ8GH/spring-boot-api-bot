@@ -9,6 +9,15 @@
     </head>
     <body>
         <h1>Market Book</h1>
-        MARKET BOOK GOES HERE
+        <div th:unless="${ marketBook == null }">
+            <p th:text="${ marketBook.getMarketId() }"></p>
+            <p th:text="${ marketBook.toString() }"></p>
+            <div th:each="runner : ${ marketBook.getRunners() }">
+                <p th:text="${ runner.toString() }"></p>
+            </div>
+            <a href="">
+                <button>Place A Bet</button>
+            </a>
+        </div>
     </body>
 </html>

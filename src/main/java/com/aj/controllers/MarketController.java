@@ -2,6 +2,7 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
 import com.aj.deserialisation.JsonDeserialiser;
+import com.aj.models.MarketBook;
 import com.aj.models.MarketCatalogue;
 import com.aj.models.Runner;
 import com.aj.repositories.MarketCatalogueRepository;
@@ -48,6 +49,8 @@ public class MarketController {
     public String listMarketBook(@PathVariable("marketId") String marketId,
                                  Model model) throws IOException {
         String response = apiClient.listMarketBook(marketId);
+        MarketBook marketBook = jsonDeserialiser.mapToMarketBook(response);
+        model.addAttribute("marketBook", marketBook);
         return "listMarketBook";
     }
 }

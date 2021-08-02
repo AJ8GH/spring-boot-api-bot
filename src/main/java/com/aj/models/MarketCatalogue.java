@@ -9,7 +9,7 @@ public class MarketCatalogue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(unique = true)
+    // @Column(unique = true)
     private String marketId;
     private String marketName;
     private Double totalMatched;

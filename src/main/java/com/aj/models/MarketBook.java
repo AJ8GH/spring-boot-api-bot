@@ -1,25 +1,35 @@
 package com.aj.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
-public class MarketBook {
+@JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
+public @Getter
+@Setter
+@ToString
+@AllArgsConstructor
+class MarketBook {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String marketId;
+    private String status;
+    private Boolean complete;
+    private Integer numberOfActiveRunners;
+    private Double totalMatched;
+    private Double totalAvailable;
+    @OneToMany
+    @ToString.Exclude
+    private List<Runner> runners;
 
-    public MarketBook() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        return 1403351128;
     }
 }

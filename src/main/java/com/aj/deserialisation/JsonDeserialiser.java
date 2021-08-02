@@ -1,9 +1,6 @@
 package com.aj.deserialisation;
 
-import com.aj.models.Bet;
-import com.aj.models.Event;
-import com.aj.models.EventType;
-import com.aj.models.MarketCatalogue;
+import com.aj.models.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -41,6 +38,11 @@ public class JsonDeserialiser implements DeserialisationService {
     @Override
     public List<MarketCatalogue> mapToMarketCatalogue(String json) throws JsonProcessingException {
         return Arrays.asList(objectMapper.readValue(json, MarketCatalogue[].class));
+    }
+
+    @Override
+    public MarketBook mapToMarketBook(String json) throws JsonProcessingException {
+        return objectMapper.readValue(json, MarketBook[].class)[0];
     }
 
     @Override

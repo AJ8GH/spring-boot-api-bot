@@ -1,5 +1,6 @@
 package com.aj.deserialisation;
 
+import com.aj.helpers.ListMarketBookResponse;
 import com.aj.helpers.ListMarketCatalogueResponse;
 import com.aj.helpers.ListOrdersResponse;
 import com.aj.models.*;
@@ -8,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -117,11 +119,37 @@ class JsonDeserialiserTest {
         List<Runner> runners = marketCatalogueList.get(0).getRunners();
         assertEquals(4699138, runners.get(0).getSelectionId());
         assertEquals("Under 0.5 Goals",runners.get(0).getRunnerName());
-        assertEquals(1, runners.get(0).getSortPriority());
 
         runners = marketCatalogueList.get(1).getRunners();
         assertEquals(47973, runners.get(1).getSelectionId());
         assertEquals("Over 2.5 Goals",runners.get(1).getRunnerName());
-        assertEquals(2, runners.get(1).getSortPriority());
+    }
+
+    @Test
+    void testMapToMarketBook() throws JsonProcessingException {
+        String json = ListMarketBookResponse.JSON;
+
+        MarketBook marketBook = jsonDeserialiser.mapToMarketBook(json);
+        assertEquals("1.179465437", marketBook.getMarketId());
+        assertEquals("OPEN", marketBook.getStatus());
+        assertEquals(true, marketBook.getComplete());
+        assertEquals(19, marketBook.getNumberOfActiveRunners());
+        assertEquals(0.0, marketBook.getTotalMatched());
+        assertEquals(0.0, marketBook.getTotalAvailable());
+
+
+        json = ListMarketBookResponse.JSON_WITH_PRICES;
+
+        marketBook = jsonDeserialiser.mapToMarketBook(json);
+
+        assertEquals(57405, marketBook.getRunners().get(0).getSelectionId());
+        assertEquals(57407, marketBook.getRunners().get(1).getSelectionId());
+        // assertEquals(0, marketBook.getRunners().get(0).getAvailableToBack().size());
+        // assertEquals(0, marketBook.getRunners().get(1).getAvailableToBack().size());
+        // assertEquals(3.0, marketBook.getRunners().get(0).getAvailableToLay().get(0).getPrice());
+        // assertEquals(3.0, marketBook.getRunners().get(1).getAvailableToLay().get(0).getPrice());
+        // assertEquals(6.0, marketBook.getRunners().get(0).getAvailableToLay().get(0).getSize());
+        // assertEquals(6.0, marketBook.getRunners().get(1).getAvailableToLay().get(0).getSize());
+
     }
 }
