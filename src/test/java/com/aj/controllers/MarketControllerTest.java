@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class EventControllerTest {
+public class MarketControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -27,18 +27,10 @@ public class EventControllerTest {
     JsonDeserialiser jsonDeserialiser;
 
     @Test
-    void testListEventTypes() throws Exception {
-        mockMvc.perform(get("/listEventTypes"))
+    void testListMarketCatalogue() throws Exception {
+        mockMvc.perform(get("/listMarketCatalogue/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("listEventTypes"))
-                .andExpect(content().string(containsString("Event Types")));
-    }
-
-    @Test
-    void testListEvents() throws Exception {
-        mockMvc.perform(get("/listEvents/1"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("listEvents"))
-                .andExpect(content().string(containsString("Events")));
+                .andExpect(view().name("listMarketCatalogue"))
+                .andExpect(content().string(containsString("Market Catalogue")));
     }
 }
