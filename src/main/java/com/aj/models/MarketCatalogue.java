@@ -8,7 +8,7 @@ public class MarketCatalogue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long marketId;
+    private String marketId;
     private String marketName;
     private Double totalMatched;
 
@@ -25,11 +25,11 @@ public class MarketCatalogue {
         this.runners = runners;
     }
 
-    public Long getMarketId() {
+    public String getMarketId() {
         return marketId;
     }
 
-    public void setMarketId(Long marketId) {
+    public void setMarketId(String marketId) {
         this.marketId = marketId;
     }
 

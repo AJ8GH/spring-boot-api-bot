@@ -1,10 +1,8 @@
 package com.aj.deserialisation;
 
+import com.aj.helpers.ListMarketCatalogueResponse;
 import com.aj.helpers.ListOrdersResponse;
-import com.aj.models.Bet;
-import com.aj.models.Event;
-import com.aj.models.EventType;
-import com.aj.models.UserSession;
+import com.aj.models.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -18,7 +16,7 @@ class JsonDeserialiserTest {
     JsonDeserialiser jsonDeserialiser = new JsonDeserialiser(new ObjectMapper());
 
     @Test
-    void mapToSessionObject() throws JsonProcessingException {
+    void testMapToSessionObject() throws JsonProcessingException {
         String json = "{\n" +
                 "    \"token\": \"mockToken\",\n" +
                 "    \"product\": \"testAccountApp\",\n" +
@@ -35,7 +33,7 @@ class JsonDeserialiserTest {
     }
 
     @Test
-    void mapToEventTypeList() throws JsonProcessingException {
+    void testMapToEventTypeList() throws JsonProcessingException {
         String json = "[{\"eventType\":{\"id\":\"1\",\"name\":\"" +
                 "Soccer\"},\"marketCount\":92},{\"eventType\":{\"id\"" +
                 ":\"7522\",\"name\":\"Basketball\"},\"marketCount\":25}]";
@@ -52,7 +50,7 @@ class JsonDeserialiserTest {
     }
 
     @Test
-    void mapToBetList() throws IOException {
+    void testMapToBetList() throws IOException {
         String json = ListOrdersResponse.JSON;
 
         List<Bet> bets = jsonDeserialiser.mapToBetList(json);
@@ -77,7 +75,7 @@ class JsonDeserialiserTest {
     }
 
     @Test
-    void mapToEvents() throws IOException {
+    void testMapToEventList() throws IOException {
         String json = "[{\"event\":{\"id\":\"29865702\",\"name\":\"" +
                 "Newcastle v West Ham\",\"countryCode\":\"GB\",\"timezone\":\"" +
                 "GMT\",\"openDate\":\"2021-08-15T13:00:00.000Z\"},\"marketCount" +
@@ -100,6 +98,30 @@ class JsonDeserialiserTest {
         assertEquals("GMT", events.get(1).getTimezone());
         assertEquals("2021-06-22T16:15:00.000Z", events.get(1).getOpenDate());
         assertEquals(6, events.get(1).getMarketCount());
+    }
 
+    @Test
+    void testMapToMarketCatalogue() throws JsonProcessingException {
+        String json = ListMarketCatalogueResponse.JSON;
+
+        List<MarketCatalogue> marketCatalogueList = jsonDeserialiser.mapToMarketCatalogue(json);
+
+        assertEquals("1.179345011", marketCatalogueList.get(0).getMarketId());
+        assertEquals("Over/Under 0.5 Goals", marketCatalogueList.get(0).getMarketName());
+        assertEquals(0.0, marketCatalogueList.get(0).getTotalMatched());
+
+        assertEquals("1.179345012", marketCatalogueList.get(1).getMarketId());
+        assertEquals("Over/Under 2.5 goals", marketCatalogueList.get(1).getMarketName());
+        assertEquals(0.0, marketCatalogueList.get(1).getTotalMatched());
+
+        List<Runner> runners = marketCatalogueList.get(0).getRunners();
+        assertEquals(4699138, runners.get(0).getSelectionId());
+        assertEquals("Under 0.5 Goals",runners.get(0).getRunnerName());
+        assertEquals(1, runners.get(0).getSortPriority());
+
+        runners = marketCatalogueList.get(1).getRunners();
+        assertEquals(47973, runners.get(1).getSelectionId());
+        assertEquals("Over 2.5 Goals",runners.get(1).getRunnerName());
+        assertEquals(2, runners.get(1).getSortPriority());
     }
 }

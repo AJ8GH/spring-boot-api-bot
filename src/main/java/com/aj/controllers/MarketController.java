@@ -34,7 +34,7 @@ public class MarketController {
                                       Model model) throws IOException {
 
         String response = apiClient.listMarketCatalogue(eventId);
-        // List<Market> markets = jsonDeserialiser.mapToMarketList(response);
+        List<MarketCatalogue> marketCatalogueList = jsonDeserialiser.mapToMarketCatalogue(response);
         // marketRepository.saveAll(markets);
         // model.addAttribute("markets", markets);
 

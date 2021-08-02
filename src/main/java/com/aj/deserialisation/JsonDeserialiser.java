@@ -3,6 +3,7 @@ package com.aj.deserialisation;
 import com.aj.models.Bet;
 import com.aj.models.Event;
 import com.aj.models.EventType;
+import com.aj.models.MarketCatalogue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,11 @@ public class JsonDeserialiser implements DeserialisationService {
         String content = String.join("", json.split("\\[|\\]")[1]);
         String jsonArray = "[" + content + "]";
         return Arrays.asList(objectMapper.readValue(jsonArray, Bet[].class));
+    }
+
+    @Override
+    public List<MarketCatalogue> mapToMarketCatalogue(String json) throws JsonProcessingException {
+        return Arrays.asList(objectMapper.readValue(json, MarketCatalogue[].class));
     }
 
     @Override
