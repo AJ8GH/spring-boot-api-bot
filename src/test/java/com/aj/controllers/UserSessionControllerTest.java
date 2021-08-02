@@ -8,8 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.websocket.Session;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.containsString;
@@ -34,6 +32,7 @@ class UserSessionControllerTest {
     void testIndexRouteWithoutSession() throws Exception {
         UserSession userSession = new UserSession();
         userSession.setStatus("FAIL");
+        userSession.setProps("test.properties");
         ApiClient.setUserSession(userSession);
 
         mockMvc.perform(get("/"))
@@ -45,6 +44,7 @@ class UserSessionControllerTest {
     void testIndexRouteWithSession() throws Exception {
         UserSession userSession = new UserSession();
         userSession.setStatus("SUCCESS");
+        userSession.setProps("test.properties");
         ApiClient.setUserSession(userSession);
 
         mockMvc.perform(get("/"))
