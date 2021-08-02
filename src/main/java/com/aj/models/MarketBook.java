@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-class MarketBook {
+public class MarketBook {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
