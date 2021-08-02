@@ -9,10 +9,8 @@ import java.util.Map;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Setter
 @ToString
 public class Bet {
 
