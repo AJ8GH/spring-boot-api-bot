@@ -10,7 +10,8 @@ import javax.persistence.Id;
 import java.util.Map;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString

@@ -9,10 +9,10 @@ import java.util.List;
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
-public @Getter
+@AllArgsConstructor
+@Getter
 @Setter
 @ToString
-@AllArgsConstructor
 class MarketBook {
 
     @Id
