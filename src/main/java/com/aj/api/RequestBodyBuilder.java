@@ -5,15 +5,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class RequestBodyBuilder implements RequestBodyBuilderService {
 
-    private final String EVENT_TYPES_BODY = "{\"filter\":{}}";
+    private final String LIST_EVENT_TYPES_BODY = "{\"filter\":{}}";
 
-    private final String EVENTS_BODY = "{\"filter\":{\"eventTypeIds\":[%s]}}";
+    private final String LIST_EVENTS_BODY = "{\"filter\":{\"eventTypeIds\":[%s]}}";
 
-    private final String MARKET_CATALOGUE_BODY =
+    private final String LIST_MARKET_CATALOGUE_BODY =
             "{\"filter\":{\"eventIds\":[%s]},\"marketProjection\": " +
             "[\"RUNNER_DESCRIPTION\"],\"maxResults\":\"200\"}";
 
-    private final String MARKET_BOOK_BODY =
+    private final String LIST_MARKET_BOOK_BODY =
             "{\"marketIds\": [%s],\"priceProjection\"" +
             ": {\"priceData\": [\"EX_BEST_OFFERS\", \"EX_TRADED\"]," +
             "\"virtualise\": \"true\"}}}";
@@ -37,11 +37,16 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
 
     @Override
     public String listEventTypesBody() {
-        return EVENT_TYPES_BODY;
+        return LIST_EVENT_TYPES_BODY;
     }
 
     @Override
     public String listEventsBody(long eventTypeId) {
-        return String.format(EVENTS_BODY, eventTypeId);
+        return String.format(LIST_EVENTS_BODY, eventTypeId);
+    }
+
+    @Override
+    public String listMarketCatalogueBody(long eventId) {
+        return String.format(LIST_MARKET_CATALOGUE_BODY, eventId);
     }
 }

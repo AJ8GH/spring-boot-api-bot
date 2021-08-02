@@ -50,7 +50,7 @@ public class ApiClientTest {
     }
 
     @Test
-    void login() throws Exception {
+    void testLogin() throws Exception {
         String mockResponse = "{login response}";
         server.enqueue(new MockResponse().setBody(mockResponse));
         HttpUrl baseUrl = server.url("?username=username&password=password");
@@ -73,7 +73,7 @@ public class ApiClientTest {
     }
 
     @Test
-    void listEventTypes() throws Exception {
+    void testListEventTypes() throws Exception {
         String mockResponse = "{list event types response}";
         server.enqueue(new MockResponse().setBody(mockResponse));
         HttpUrl baseUrl = server.url("/listEventTypes");
@@ -98,7 +98,7 @@ public class ApiClientTest {
     }
 
     @Test
-    void listCurrentOrders() throws Exception {
+    void testListCurrentOrders() throws Exception {
         String mockResponse = "{list current orders response}";
         server.enqueue(new MockResponse().setBody(mockResponse));
         HttpUrl baseUrl = server.url("/listCurrentOrders");
@@ -121,7 +121,7 @@ public class ApiClientTest {
     }
 
     @Test
-    void listEvents() throws Exception {
+    void testListEvents() throws Exception {
         String mockResponse = "{list events response}";
         server.enqueue(new MockResponse().setBody(mockResponse));
         HttpUrl baseUrl = server.url("/listEvents");
@@ -141,6 +141,34 @@ public class ApiClientTest {
         assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
         assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
         assertTrue(request.getBody().toString().contains("{list events body}"));
+        assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));
+        assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
+        assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));
+    }
+
+    @Test
+    void testListMarketCatalogue() throws Exception {
+        String mockResponse = "{list market catalogue response}";
+        server.enqueue(new MockResponse().setBody(mockResponse));
+        HttpUrl baseUrl = server.url("/listMarketCatalogue");
+
+        UrlBuilder urlBuilder = mock(UrlBuilder.class);
+        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
+        when(urlBuilder.createBettingUrl(UrlBuilder.LIST_MARKET_CATALOGUE)).thenReturn(baseUrl);
+        when(requestBodyBuilder.listMarketCatalogueBody(999L)).thenReturn("{list market catalogue body}");
+
+        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
+        String response = apiClient.listMarketCatalogue(999L);
+        RecordedRequest request = server.takeRequest();
+
+        verify(requestBodyBuilder).listMarketCatalogueBody(999L);
+        verify(urlBuilder).createBettingUrl(UrlBuilder.LIST_MARKET_CATALOGUE);
+
+        assertEquals(mockResponse, response);
+        assertEquals(baseUrl, request.getRequestUrl());
+        assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
+        assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
+        assertTrue(request.getBody().toString().contains("{list market catalogue body}"));
         assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));
         assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
         assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));
