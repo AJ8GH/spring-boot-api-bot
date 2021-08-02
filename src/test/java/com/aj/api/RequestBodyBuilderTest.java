@@ -33,4 +33,16 @@ public class RequestBodyBuilderTest {
                 "]},\"marketProjection\": [\"RUNNER_DESCRIPTION\"]," +
                 "\"maxResults\":\"200\"}";
     }
+
+    @Test
+    void testListMarketBookBody() {
+        RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
+        String marketId = "1.23456789";
+
+        String body = "{\"marketIds\": [" + marketId + "],\"priceProjection\"" +
+                ": {\"priceData\": [\"EX_BEST_OFFERS\", \"EX_TRADED\"]," +
+                "\"virtualise\": \"true\"}}}";
+
+        assertEquals(body, requestBodyBuilder.listMarketBookBody(marketId));
+    }
 }

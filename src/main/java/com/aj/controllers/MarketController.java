@@ -38,16 +38,16 @@ public class MarketController {
                                       Model model) throws IOException {
 
         String response = apiClient.listMarketCatalogue(eventId);
-
-        System.out.println(response);
-
         List<MarketCatalogue> marketCatalogueList = jsonDeserialiser.mapToMarketCatalogue(response);
         marketCatalogueRepository.saveAll(marketCatalogueList);
-        // for (MarketCatalogue market : marketCatalogueList) {
-        //     runnerRepository.saveAll(market.getRunners());
-        // }
         model.addAttribute("marketCatalogue", marketCatalogueList);
-
         return "listMarketCatalogue";
+    }
+
+    @RequestMapping("/listMarketBook/{marketId}")
+    public String listMarketBook(@PathVariable("marketId") String marketId,
+                                 Model model) throws IOException {
+        String response = apiClient.listMarketBook(marketId);
+        return "listMarketBook";
     }
 }

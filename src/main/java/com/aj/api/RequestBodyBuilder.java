@@ -49,4 +49,9 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
     public String listMarketCatalogueBody(long eventId) {
         return String.format(LIST_MARKET_CATALOGUE_BODY, eventId);
     }
+
+    @Override
+    public String listMarketBookBody(String marketId) {
+        return String.format(LIST_MARKET_BOOK_BODY, marketId);
+    }
 }
