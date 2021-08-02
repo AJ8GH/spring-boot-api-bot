@@ -33,4 +33,12 @@ public class MarketControllerTest {
                 .andExpect(view().name("listMarketCatalogue"))
                 .andExpect(content().string(containsString("Market Catalogue")));
     }
+
+    @Test
+    void testListMarketBook() throws Exception {
+        mockMvc.perform(get("/listMarketBook/1.567"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("listMarketBook"))
+                .andExpect(content().string(containsString("Market Book")));
+    }
 }

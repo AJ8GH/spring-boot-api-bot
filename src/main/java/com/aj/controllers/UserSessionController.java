@@ -30,7 +30,10 @@ public class UserSessionController {
 
     @RequestMapping("/")
     public String getIndex() {
-        if (userSessionRepository.count() <= 0) return "redirect:/login";
+        if (ApiClient.getUserSession() == null ||
+                !ApiClient.getUserSession().getStatus().equals("SUCCESS")) {
+            return "redirect:/login";
+        }
         return "index";
     }
 
