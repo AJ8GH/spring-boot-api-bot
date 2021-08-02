@@ -19,7 +19,6 @@ public class UserSession {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String status;
     private String token;
     private String appKey;
@@ -32,7 +31,6 @@ public class UserSession {
         InputStream inputStream = BetfairApiBot1Application.class
                 .getClassLoader().getResourceAsStream(props);
         properties.load(inputStream);
-
         setAppKey(properties.getProperty("APP_KEY"));
     }
 }

@@ -23,4 +23,5 @@ public class Runner {
     private Long selectionId;
     private String runnerName;
     private Double handicap;
+
 }

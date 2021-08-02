@@ -28,8 +28,4 @@ class MarketBook {
     @ToString.Exclude
     private List<Runner> runners;
 
-    @Override
-    public int hashCode() {
-        return 1403351128;
-    }
 }

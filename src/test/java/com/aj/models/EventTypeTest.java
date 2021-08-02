@@ -8,23 +8,19 @@ class EventTypeTest {
 
     @Test
     void testToString() {
-        EventType eventType = new EventType();
+        EventType eventType = new EventType(9L, "Tennis", 99);
 
-        String expectedOutput = "EventType{" +
-                "id=" + eventType.getId() +
-                ", name='" + eventType.getName() + '\'' +
-                ", marketCount=" + eventType.getMarketCount() +
-                '}';
-
-        assertEquals(expectedOutput, eventType.toString());
+        assertTrue(eventType.toString().contains(eventType.getId().toString()));
+        assertTrue(eventType.toString().contains(eventType.getName()));
+        assertTrue(eventType.toString().contains(eventType.getMarketCount().toString()));
     }
 
     @Test
     void testEventType() {
-        EventType eventType = new EventType("Tennis", 99);
+        EventType eventType = new EventType(9L, "Tennis", 99);
 
         assertEquals("Tennis", eventType.getName());
         assertEquals(99, eventType.getMarketCount());
-        assertNull(eventType.getId());
+        assertEquals(9L, eventType.getId());
     }
 }

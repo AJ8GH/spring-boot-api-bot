@@ -8,26 +8,22 @@ class BetTest {
 
     @Test
     void testToString() {
-        Bet bet = new Bet();
+        Bet bet = new Bet(0L, "1.0", 2, 3.0, 4.0, "BACK", 5.0, "EXECUTABLE");
 
-        String expectedOutput = "Bet{" +
-                "betId=" + bet.getBetId() +
-                ", marketId='" + bet.getMarketId() + '\'' +
-                ", selectionId=" + bet.getSelectionId() +
-                ", price=" + bet.getPrice() +
-                ", size=" + bet.getSize() +
-                ", side='" + bet.getSide() + '\'' +
-                ", bspLiability=" + bet.getBspLiability() +
-                ", status='" + bet.getStatus() + '\'' +
-                '}';
-
-        assertEquals(expectedOutput, bet.toString());
+        assertTrue(bet.toString().contains(bet.getBetId().toString()));
+        assertTrue(bet.toString().contains(bet.getMarketId()));
+        assertTrue(bet.toString().contains(bet.getSelectionId().toString()));
+        assertTrue(bet.toString().contains(bet.getPrice().toString()));
+        assertTrue(bet.toString().contains(bet.getSize().toString()));
+        assertTrue(bet.toString().contains(bet.getSide()));
+        assertTrue(bet.toString().contains(bet.getStatus()));
+        assertTrue(bet.toString().contains(bet.getBspLiability().toString()));
     }
 
     @Test void testBet() {
-        Bet bet = new Bet("1.0", 2, 3.0, 4.0, "BACK", 5.0, "EXECUTABLE");
+        Bet bet = new Bet(0L, "1.0", 2, 3.0, 4.0, "BACK", 5.0, "EXECUTABLE");
 
-        assertNull(bet.getBetId());
+        assertEquals(0L, bet.getBetId());
         assertEquals("1.0", bet.getMarketId());
         assertEquals(2, bet.getSelectionId());
         assertEquals(3.0, bet.getPrice());
