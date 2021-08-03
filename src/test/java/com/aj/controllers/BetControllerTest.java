@@ -33,4 +33,12 @@ public class BetControllerTest {
                 .andExpect(view().name("listCurrentOrders"))
                 .andExpect(content().string(containsString("Current Bets")));
     }
+
+    @Test
+    void testPlaceBet() throws Exception {
+        mockMvc.perform(get("/placeOrders"))
+        .andExpect(status().isOk())
+        .andExpect(view().name("placeOrders"))
+        .andExpect(content().string(containsString("Place Bet")));
+    }
 }

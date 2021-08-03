@@ -36,4 +36,9 @@ public class BetController {
         model.addAttribute("bets", bets);
         return "listCurrentOrders";
     }
+
+    @RequestMapping("/placeOrders")
+    public String placeOrders(Model model) throws IOException {
+        return "placeOrders";
+    }
 }

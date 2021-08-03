@@ -15,6 +15,11 @@
                 <a th:href="@{/listMarketBook/{marketId}(marketId=${market.getMarketId()})}">
                     <button>View Best Prices</button>
                 </a>
+                <div th:unless="${ market.getRunners().size() == 0 }">
+                    <div th:each="runner : ${ market.getRunners() }">
+                        <p th:text="${ runner.toString() }"></p>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

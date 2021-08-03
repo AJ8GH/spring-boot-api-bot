@@ -14,7 +14,16 @@
             <p th:text="${ marketBook.toString() }"></p>
             <div th:each="runner : ${ marketBook.getRunners() }">
                 <p th:text="${ runner.toString() }"></p>
-                <a href="@{/bet/new/}">
+                <div th:each="price : ${ runner.getAvailableToBack() }">
+                    <p th:text="${ price.toString() }"></p>
+                </div>
+                <div th:each="price : ${ runner.getAvailableToLay() }">
+                    <p th:text="${ price.toString() }"></p>
+                </div>
+                <div th:each="price : ${ runner.getTradedVolume() }">
+                    <p th:text="${ price.toString() }"></p>
+                </div>
+                <a th:href="@{/bets/new/{marketId}/{selectionId}(selectionId=${runner.getSelectionId()}, marketId=${marketBook.getMarketId()})}">
                     <button>Place A Bet</button>
                 </a>
             </div>
