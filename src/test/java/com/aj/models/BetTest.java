@@ -8,7 +8,7 @@ class BetTest {
 
     @Test
     void testToString() {
-        Bet bet = new Bet(0L, "1.0", 2, 3.0, 4.0, "BACK", 5.0, "EXECUTABLE");
+        Bet bet = new Bet(1L, 0L, "1.0", 2, 3.0, 4.0, "BACK", 5.0, "EXECUTABLE");
 
         assertTrue(bet.toString().contains(bet.getBetId().toString()));
         assertTrue(bet.toString().contains(bet.getMarketId()));
@@ -21,8 +21,9 @@ class BetTest {
     }
 
     @Test void testBet() {
-        Bet bet = new Bet(0L, "1.0", 2, 3.0, 4.0, "BACK", 5.0, "EXECUTABLE");
+        Bet bet = new Bet(1L, 0L, "1.0", 2, 3.0, 4.0, "BACK", 5.0, "EXECUTABLE");
 
+        assertEquals(1L, bet.getId());
         assertEquals(0L, bet.getBetId());
         assertEquals("1.0", bet.getMarketId());
         assertEquals(2, bet.getSelectionId());

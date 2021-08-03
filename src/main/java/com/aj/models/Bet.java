@@ -18,6 +18,7 @@ public class Bet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private Long betId;
     private String marketId;
     private Integer selectionId;

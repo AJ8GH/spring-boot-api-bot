@@ -67,4 +67,18 @@ public class RequestBodyBuilderTest {
         assertEquals(body, requestBodyBuilder.placeOrdersBody(
                 marketId, selectionId, side, size, price));
     }
+
+    @Test
+    void testCancelOrdersBody() {
+        var requestBodyBuilder = new RequestBodyBuilder();
+
+        long betId = 234234L;
+        String marketId = "1.837454";
+
+        String body = "{\"marketId\": \"" + marketId + "\"," +
+                "\"instructions\": [{\"betId\": " + betId + "," +
+                "\"sizeReduction\": null}]}";
+
+        assertEquals(body, requestBodyBuilder.cancelOrdersBody(marketId, betId));
+    }
 }

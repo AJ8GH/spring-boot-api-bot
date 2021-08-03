@@ -56,10 +56,19 @@ public class BetController {
                               @RequestParam("selectionId") long selectionId,
                               @RequestParam("side") String side) throws IOException {
         String response = apiClient.placeOrders(marketId, selectionId, side, size, price);
-        System.out.println(response);
-
         model.addAttribute("response", response);
-
+        // TODO - redirect to a get route and bet response model
         return "betOutcome";
+    }
+
+    @PostMapping("/cancelOrders")
+    public String cancelOrders(Model model,
+                               @RequestParam("marketId") String marketId,
+                               @RequestParam("betId") long betId)
+            throws IOException {
+        String response = apiClient.cancelOrders(marketId, betId);
+        model.addAttribute("response", response);
+        // TODO - redirect to a get route and create cancel response model
+        return "cancelOutcome";
     }
 }

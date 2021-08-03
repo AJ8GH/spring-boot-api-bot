@@ -96,6 +96,13 @@ public class ApiClient implements ApiClientService {
         return CLIENT.newCall(request).execute().body().string();
     }
 
+    public String cancelOrders(String marketId, long betId) throws IOException {
+        HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.CANCEL_ORDERS);
+        String body = requestBodyBuilder.cancelOrdersBody(marketId, betId);
+        Request request = createBettingRequest(url, body);
+        return CLIENT.newCall(request).execute().body().string();
+    }
+
     private Request createLoginRequest(HttpUrl url) {
         return new Request.Builder()
                 .url(url)

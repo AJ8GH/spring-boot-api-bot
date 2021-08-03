@@ -26,15 +26,9 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
             "\"limitOrder\": {\"size\": %s," +
             "\"price\": %s}}]}";
 
-    private final String CANCEL_ORDERS_BODY = "{\n" +
-            "    \"marketId\": \"%s\",\n" +
-            "    \"instructions\":\n" +
-            "        [\n" +
-            "            {\n" +
-            "                \"betId\": \"%s\"\n" +
-            "            }\n" +
-            "        ]\n" +
-            "}";
+    private final String CANCEL_ORDERS_BODY = "{\"marketId\": \"%s\"," +
+            "\"instructions\": [{\"betId\": %s," +
+            "\"sizeReduction\": null}]}";
 
     @Override
     public String listEventTypesBody() {
@@ -61,5 +55,10 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
                                   String side, double size, double price) {
         return String.format(PLACE_ORDERS_BODY,
                 marketId, selectionId, side, size, price);
+    }
+
+    @Override
+    public String cancelOrdersBody(String marketId, long betId) {
+        return String.format(CANCEL_ORDERS_BODY, marketId, betId);
     }
 }

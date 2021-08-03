@@ -202,7 +202,7 @@ public class ApiClientTest {
     }
 
     @Test
-    void testPlaceBet() throws Exception {
+    void testPlaceOrders() throws Exception {
         server.enqueue(new MockResponse().setBody("{placeOrders response}"));
         HttpUrl baseUrl = server.url("/placeOrders");
 
@@ -225,6 +225,34 @@ public class ApiClientTest {
         assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
         assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
         assertTrue(request.getBody().toString().contains("{placeOrders body}"));
+        assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));
+        assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
+        assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));
+    }
+
+    @Test
+    void testCancelOrders() throws Exception {
+        server.enqueue(new MockResponse().setBody("{cancelOrders response}"));
+        HttpUrl baseUrl = server.url("/cancelOrders");
+
+        UrlBuilder urlBuilder = mock(UrlBuilder.class);
+        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
+
+        when(urlBuilder.createBettingUrl(urlBuilder.CANCEL_ORDERS)).thenReturn(baseUrl);
+        when(requestBodyBuilder.cancelOrdersBody("1.23", 77L)).thenReturn("{cancelOrders body}");
+
+        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
+        String response = apiClient.cancelOrders("1.23", 77L);
+        RecordedRequest request = server.takeRequest();
+
+        verify(requestBodyBuilder).cancelOrdersBody("1.23", 77L);
+        verify(urlBuilder).createBettingUrl(urlBuilder.CANCEL_ORDERS);
+
+        assertEquals("{cancelOrders response}", response);
+        assertEquals(baseUrl, request.getRequestUrl());
+        assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
+        assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
+        assertTrue(request.getBody().toString().contains("{cancelOrders body}"));
         assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));
         assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
         assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));
