@@ -20,6 +20,7 @@ public class MarketCatalogue {
     private String marketName;
     private Double totalMatched;
     @OneToMany(cascade = {CascadeType.ALL})
+    @ToString.Exclude
     private List<Runner> runners;
 
 }

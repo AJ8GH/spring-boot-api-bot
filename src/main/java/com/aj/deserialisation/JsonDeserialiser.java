@@ -49,4 +49,8 @@ public class JsonDeserialiser implements DeserialisationService {
     public List<Event> mapToEventList(String json) throws JsonProcessingException {
         return Arrays.asList(objectMapper.readValue(json, Event[].class));
     }
+
+    public List<Runner> mapToRunners(String json) throws JsonProcessingException {
+        return Arrays.asList(objectMapper.readValue(json, Runner[].class));
+    }
 }

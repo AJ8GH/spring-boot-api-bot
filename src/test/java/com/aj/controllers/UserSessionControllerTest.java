@@ -1,17 +1,18 @@
 package com.aj.controllers;
 
 import com.aj.api.ApiClient;
+import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.models.UserSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.containsString;
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -19,6 +20,12 @@ class UserSessionControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    ApiClient apiClient;
+
+    @MockBean
+    JsonDeserialiser jsonDeserialiser;
 
     @Test
     void testLogIn() throws Exception {

@@ -31,7 +31,6 @@ class MarketCatalogueTest {
         String toString = marketCatalogue.toString();
         assertTrue(toString.contains(marketCatalogue.getMarketId()));
         assertTrue(toString.contains(marketCatalogue.getMarketName()));
-        assertTrue(toString.contains(marketCatalogue.getRunners().toString()));
         assertTrue(toString.contains(marketCatalogue.getId().toString()));
         assertTrue(toString.contains(marketCatalogue.getTotalMatched().toString()));
     }
