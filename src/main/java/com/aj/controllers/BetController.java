@@ -62,9 +62,4 @@ public class BetController {
 
         return "betOutcome";
     }
-
-    // @RequestMapping("/betOutcome")
-    // public String betOutcome() {
-    //     return
-    // }
 }
