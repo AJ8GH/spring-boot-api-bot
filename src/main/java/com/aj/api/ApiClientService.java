@@ -9,4 +9,6 @@ public interface ApiClientService {
     public String listMarketCatalogue(long eventId) throws IOException;
     public String listMarketBook(String marketId) throws IOException;
     public String listCurrentOrders() throws IOException;
+    public String placeOrders(String marketId, long selectionId, String side,
+                              double size, double price) throws IOException;
 }

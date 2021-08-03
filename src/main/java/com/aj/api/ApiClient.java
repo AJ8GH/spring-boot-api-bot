@@ -85,6 +85,15 @@ public class ApiClient implements ApiClientService {
         return CLIENT.newCall(request).execute().body().string();
     }
 
+    @Override
+    public String placeOrders(String marketId, long selectionId, String side,
+                              double size, double price) throws IOException {
+        HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.PLACE_ORDERS);
+        String body = requestBodyBuilder.placeOrdersBody(marketId, selectionId, side, size, price);
+        Request request = createBettingRequest(url, body);
+        return CLIENT.newCall(request).execute().body().string();
+    }
+
     private Request createLoginRequest(HttpUrl url) {
         return new Request.Builder()
                 .url(url)

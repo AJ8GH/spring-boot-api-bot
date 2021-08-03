@@ -47,4 +47,24 @@ public class RequestBodyBuilderTest {
 
         assertEquals(body, requestBodyBuilder.listMarketBookBody(marketId));
     }
+
+    @Test
+    void testPlaceOrdersBody() {
+        RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
+
+        String marketId = "1.23456789";
+        long selectionId = 2345L;
+        String side = "BACK";
+        double price = 5.0;
+        double size = 7.0;
+
+        String body = "{\"marketId\": \"" + marketId + "\"," +
+                "\"instructions\": [{\"selectionId\": " + selectionId +
+                ",\"side\": \"" + side + "\",\"orderType\": \"LIMIT\"," +
+                "\"limitOrder\": {\"size\": " + size + "," +
+                "\"price\": " + price + "}}]}";
+
+        assertEquals(body, requestBodyBuilder.placeOrdersBody(
+                marketId, selectionId, side, size, price));
+    }
 }

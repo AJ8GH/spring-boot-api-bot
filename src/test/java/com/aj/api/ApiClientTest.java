@@ -80,7 +80,7 @@ public class ApiClientTest {
 
         UrlBuilder urlBuilder = mock(UrlBuilder.class);
         RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
-        when(urlBuilder.createBettingUrl(UrlBuilder.LIST_EVENT_TYPES)).thenReturn(baseUrl);
+        when(urlBuilder.createBettingUrl(urlBuilder.LIST_EVENT_TYPES)).thenReturn(baseUrl);
         when(requestBodyBuilder.listEventTypesBody()).thenReturn("{listEventTypes body}");
 
         ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
@@ -105,7 +105,7 @@ public class ApiClientTest {
 
         UrlBuilder urlBuilder = mock(UrlBuilder.class);
         RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
-        when(urlBuilder.createBettingUrl(UrlBuilder.LIST_CURRENT_ORDERS)).thenReturn(baseUrl);
+        when(urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS)).thenReturn(baseUrl);
 
         ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
         String response = apiClient.listCurrentOrders();
@@ -128,7 +128,7 @@ public class ApiClientTest {
 
         UrlBuilder urlBuilder = mock(UrlBuilder.class);
         RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
-        when(urlBuilder.createBettingUrl(UrlBuilder.LIST_EVENTS)).thenReturn(baseUrl);
+        when(urlBuilder.createBettingUrl(urlBuilder.LIST_EVENTS)).thenReturn(baseUrl);
         when(requestBodyBuilder.listEventsBody(1L)).thenReturn("{listEvents body}");
 
         ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
@@ -154,7 +154,7 @@ public class ApiClientTest {
 
         UrlBuilder urlBuilder = mock(UrlBuilder.class);
         RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
-        when(urlBuilder.createBettingUrl(UrlBuilder.LIST_MARKET_CATALOGUE)).thenReturn(baseUrl);
+        when(urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE)).thenReturn(baseUrl);
         when(requestBodyBuilder.listMarketCatalogueBody(999L)).thenReturn("{listMarketCatalogue body}");
 
         ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
@@ -162,7 +162,7 @@ public class ApiClientTest {
         RecordedRequest request = server.takeRequest();
 
         verify(requestBodyBuilder).listMarketCatalogueBody(999L);
-        verify(urlBuilder).createBettingUrl(UrlBuilder.LIST_MARKET_CATALOGUE);
+        verify(urlBuilder).createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
 
         assertEquals(mockResponse, response);
         assertEquals(baseUrl, request.getRequestUrl());
@@ -181,7 +181,7 @@ public class ApiClientTest {
 
         UrlBuilder urlBuilder = mock(UrlBuilder.class);
         RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
-        when(urlBuilder.createBettingUrl(UrlBuilder.LIST_MARKET_BOOK)).thenReturn(baseUrl);
+        when(urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_BOOK)).thenReturn(baseUrl);
         when(requestBodyBuilder.listMarketBookBody("1.23456789")).thenReturn("{listMarketBook body}");
 
         ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
@@ -189,13 +189,42 @@ public class ApiClientTest {
         RecordedRequest request = server.takeRequest();
 
         verify(requestBodyBuilder).listMarketBookBody("1.23456789");
-        verify(urlBuilder).createBettingUrl(UrlBuilder.LIST_MARKET_BOOK);
+        verify(urlBuilder).createBettingUrl(urlBuilder.LIST_MARKET_BOOK);
 
         assertEquals("{listMarketBook response}", response);
         assertEquals(baseUrl, request.getRequestUrl());
         assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
         assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
         assertTrue(request.getBody().toString().contains("{listMarketBook body}"));
+        assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));
+        assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
+        assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));
+    }
+
+    @Test
+    void testPlaceBet() throws Exception {
+        server.enqueue(new MockResponse().setBody("{placeOrders response}"));
+        HttpUrl baseUrl = server.url("/placeOrders");
+
+        UrlBuilder urlBuilder = mock(UrlBuilder.class);
+        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
+
+        when(urlBuilder.createBettingUrl(urlBuilder.PLACE_ORDERS)).thenReturn(baseUrl);
+        when(requestBodyBuilder.placeOrdersBody("1.23", 77L, "LAY", 2.0, 5.5))
+                .thenReturn("{placeOrders body}");
+
+        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
+        String response = apiClient.placeOrders("1.23", 77L, "LAY", 2.0, 5.5);
+        RecordedRequest request = server.takeRequest();
+
+        verify(requestBodyBuilder).placeOrdersBody("1.23", 77L, "LAY", 2.0, 5.5);
+        verify(urlBuilder).createBettingUrl(urlBuilder.PLACE_ORDERS);
+
+        assertEquals("{placeOrders response}", response);
+        assertEquals(baseUrl, request.getRequestUrl());
+        assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
+        assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
+        assertTrue(request.getBody().toString().contains("{placeOrders body}"));
         assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));
         assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
         assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));

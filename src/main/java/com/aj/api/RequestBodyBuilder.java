@@ -20,10 +20,10 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
 
     private final String PLACE_ORDERS_BODY =
             "{\"marketId\": \"%s\"," +
-            "\"instructions\": [{\"selectionId\": \"%s" +
-            "\",\"side\": \"%s\",\"orderType\": \"LIMIT\"," +
-            "\"limitOrder\": {\"size\": \"%s\"," +
-            "\"price\": \"%s\"}}]}";
+            "\"instructions\": [{\"selectionId\": %s" +
+            ",\"side\": \"%s\",\"orderType\": \"LIMIT\"," +
+            "\"limitOrder\": {\"size\": %s," +
+            "\"price\": %s}}]}";
 
     private final String CANCEL_ORDERS_BODY = "{\n" +
             "    \"marketId\": \"%s\",\n" +
@@ -53,5 +53,12 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
     @Override
     public String listMarketBookBody(String marketId) {
         return String.format(LIST_MARKET_BOOK_BODY, marketId);
+    }
+
+    @Override
+    public String placeOrdersBody(String marketId, long selectionId,
+                                  String side, double size, double price) {
+        return String.format(PLACE_ORDERS_BODY,
+                marketId, selectionId, side, size, price);
     }
 }
