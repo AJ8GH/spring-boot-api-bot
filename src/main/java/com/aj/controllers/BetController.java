@@ -57,7 +57,14 @@ public class BetController {
                               @RequestParam("side") String side) throws IOException {
         String response = apiClient.placeOrders(marketId, selectionId, side, size, price);
         System.out.println(response);
+
         model.addAttribute("response", response);
-        return "redirect:betConfirmation";
+
+        return "betOutcome";
     }
+
+    // @RequestMapping("/betOutcome")
+    // public String betOutcome() {
+    //     return
+    // }
 }
