@@ -17,7 +17,7 @@ public class ExchangePrice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private double price;
-    private double size;
+    private Long id;
+    private Double price;
+    private Double size;
 }
