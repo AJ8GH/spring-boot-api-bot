@@ -9,6 +9,16 @@
     </head>
     <body>
     <h1>Place Bet</h1>
-
+        <form th:action="@{/placeOrders}" method="post">
+            <input type="text" placeholder="Size" name="price">
+            <input type="text" placeholder="Price" name="size">
+            <select name="side">
+                <option value="BACK">Back</option>
+                <option value="LAY">Lay</option>
+            </select>
+            <input type="hidden" name="marketId" th:value="${marketId}">
+            <input type="hidden" name="selectionId" th:value="${selectionId}">
+            <input type="submit" value="Submit">
+        </form>
     </body>
 </html>

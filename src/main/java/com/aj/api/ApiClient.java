@@ -1,6 +1,8 @@
 package com.aj.api;
 
+import com.aj.models.Bet;
 import com.aj.models.UserSession;
+import lombok.Builder;
 import okhttp3.*;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class ApiClient implements ApiClientService {
     private final String X_IP = "127.0.0.1";
 
     public ApiClient(UrlBuilder urlBuilder,
-            RequestBodyBuilder requestBodyBuilder) {
+                     RequestBodyBuilder requestBodyBuilder) {
         this.urlBuilder = urlBuilder;
         this.requestBodyBuilder = requestBodyBuilder;
     }

@@ -1,5 +1,6 @@
 package com.aj.api;
 
+import lombok.Builder;
 import org.springframework.stereotype.Service;
 
 @Service

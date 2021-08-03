@@ -35,8 +35,8 @@ public class BetControllerTest {
     }
 
     @Test
-    void testPlaceBet() throws Exception {
-        mockMvc.perform(get("/placeOrders"))
+    void testNewBet() throws Exception {
+        mockMvc.perform(get("/bets/new/1.123/456"))
         .andExpect(status().isOk())
         .andExpect(view().name("placeOrders"))
         .andExpect(content().string(containsString("Place Bet")));
