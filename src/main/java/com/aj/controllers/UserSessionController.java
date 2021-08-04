@@ -5,6 +5,7 @@ import com.aj.api.ApiClientService;
 import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.models.UserSession;
 import com.aj.repositories.UserSessionRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,21 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@AllArgsConstructor
 public class UserSessionController {
-
     private final UserSessionRepository userSessionRepository;
     private final ApiClientService apiClient;
     private final JsonDeserialiser jsonDeserialiser;
-
-    public UserSessionController(
-            ApiClientService apiClient,
-            UserSessionRepository userSessionRepository,
-            JsonDeserialiser jsonDeserialiser) {
-
-        this.userSessionRepository = userSessionRepository;
-        this.apiClient = apiClient;
-        this.jsonDeserialiser = jsonDeserialiser;
-    }
 
     @RequestMapping("/")
     public String getIndex() {

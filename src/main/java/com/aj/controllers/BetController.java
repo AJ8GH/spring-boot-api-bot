@@ -4,6 +4,7 @@ import com.aj.api.ApiClientService;
 import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.models.Bet;
 import com.aj.repositories.BetRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,20 +16,11 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class BetController {
     private final ApiClientService apiClient;
     private final JsonDeserialiser jsonDeserialiser;
     private final BetRepository betRepository;
-
-    public BetController(
-            ApiClientService apiClient,
-            JsonDeserialiser jsonDeserialiser,
-            BetRepository betRepository) {
-
-        this.apiClient = apiClient;
-        this.jsonDeserialiser = jsonDeserialiser;
-        this.betRepository = betRepository;
-    }
 
     @RequestMapping("/listCurrentOrders")
     public String listCurrentBets(Model model) throws IOException {

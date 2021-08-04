@@ -3,19 +3,16 @@ package com.aj.deserialisation;
 import com.aj.models.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class JsonDeserialiser implements DeserialisationService {
-
     private final ObjectMapper objectMapper;
-
-    public JsonDeserialiser(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
 
     @Override
     public <T> T mapToObject(String json, Class<T> classType)
