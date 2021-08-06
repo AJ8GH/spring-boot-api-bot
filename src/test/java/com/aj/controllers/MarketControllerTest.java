@@ -2,6 +2,9 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClient;
 import com.aj.deserialisation.JsonDeserialiser;
+import com.aj.repositories.MarketBookRepository;
+import com.aj.repositories.MarketCatalogueRepository;
+import com.aj.repositories.RunnerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,16 +18,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MarketControllerTest {
+class MarketControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     ApiClient apiClient;
-
     @MockBean
     JsonDeserialiser jsonDeserialiser;
+    @MockBean
+    MarketBookRepository marketBookRepository;
+    @MockBean
+    RunnerRepository runnerRepository;
 
     @Test
     void testListMarketCatalogue() throws Exception {

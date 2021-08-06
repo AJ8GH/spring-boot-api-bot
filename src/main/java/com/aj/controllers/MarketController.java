@@ -40,11 +40,22 @@ public class MarketController {
                                  Model model) throws IOException {
         String response = apiClient.listMarketBook(marketId);
         MarketBook marketBook = jsonDeserialiser.mapToMarketBook(response);
-        for (MarketCatalogue market : marketCatalogueRepository.findAll()) {
-            if (market.getMarketId().equals(marketId)) {
-                marketBook.setMarketName(market.getMarketName());
+
+        if (marketCatalogueRepository.count() != 0) {
+            for (MarketCatalogue market : marketCatalogueRepository.findAll()) {
+                if (market.getMarketId().equals(marketId)) {
+                    marketBook.setMarketName(market.getMarketName());
+                }
+            }
+            for (Runner mbRunner : marketBook.getRunners()) {
+                for (Runner repoRunner : runnerRepository.findAll()) {
+                    if (repoRunner.getSelectionId().equals(mbRunner.getSelectionId())) {
+                        mbRunner.setRunnerName(repoRunner.getRunnerName());
+                    }
+                }
             }
         }
+
         model.addAttribute("marketBook", marketBook);
         return "listMarketBook";
     }

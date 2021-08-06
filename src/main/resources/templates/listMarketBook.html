@@ -12,17 +12,35 @@
     <body>
         <h1>Market Book</h1>
         <div th:unless="${ marketBook == null }">
-            <p th:text="${ marketBook.getMarketName() }" class="marketName"></p>
+            <p class="marketName">
+                <span>Showing best prices for </span>
+                <span th:text="${ marketBook.getMarketName() }"></span>
+            </p>
             <div th:each="runner : ${ marketBook.getRunners() }">
-                <p th:text="${ runner.toString() }"></p>
+                <p th:text="${ runner.getRunnerName() }"></p>
                 <div th:each="price : ${ runner.getAvailableToBack() }">
-                    <p th:text="${ price.toString() }"></p>
+                    <p>
+                        <span>Price: </span>
+                        <span th:text="${ price.getPrice() }"></span>
+                        <span>, Size: </span>
+                        <span th:text="${ price.getSize() }"></span>
+                    </p>
                 </div>
                 <div th:each="price : ${ runner.getAvailableToLay() }">
-                    <p th:text="${ price.toString() }"></p>
+                    <p>
+                        <span>Price: </span>
+                        <span th:text="${ price.getPrice() }"></span>
+                        <span>, Size: </span>
+                        <span th:text="${ price.getSize() }"></span>
+                    </p>
                 </div>
                 <div th:each="price : ${ runner.getTradedVolume() }">
-                    <p th:text="${ price.toString() }"></p>
+                    <p>
+                        <span>Price: </span>
+                        <span th:text="${ price.getPrice() }"></span>
+                        <span>, Size: </span>
+                        <span th:text="${ price.getSize() }"></span>
+                    </p>
                 </div>
                 <a th:href="@{/bets/new/{marketId}/{selectionId}(selectionId=${runner.getSelectionId()}, marketId=${marketBook.getMarketId()})}">
                     <button>Place A Bet</button>
