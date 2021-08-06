@@ -40,17 +40,13 @@ public class MarketController {
                                  Model model) throws IOException {
         String response = apiClient.listMarketBook(marketId);
         MarketBook marketBook = jsonDeserialiser.mapToMarketBook(response);
+        MarketBook.enrich(marketBook, marketCatalogueRepository);
 
-        if (marketCatalogueRepository.count() != 0) {
-            for (MarketCatalogue market : marketCatalogueRepository.findAll()) {
-                if (market.getMarketId().equals(marketId)) {
-                    marketBook.setMarketName(market.getMarketName());
-                }
-            }
-            for (Runner mbRunner : marketBook.getRunners()) {
+        if (runnerRepository.count() != 0) {
+            for (Runner runner : marketBook.getRunners()) {
                 for (Runner repoRunner : runnerRepository.findAll()) {
-                    if (repoRunner.getSelectionId().equals(mbRunner.getSelectionId())) {
-                        mbRunner.setRunnerName(repoRunner.getRunnerName());
+                    if (repoRunner.getSelectionId().equals(runner.getSelectionId())) {
+                        runner.setRunnerName(repoRunner.getRunnerName());
                     }
                 }
             }

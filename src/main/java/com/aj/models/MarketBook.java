@@ -1,5 +1,8 @@
 package com.aj.models;
 
+import com.aj.repositories.MarketBookRepository;
+import com.aj.repositories.MarketCatalogueRepository;
+import com.aj.repositories.RunnerRepository;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -29,4 +32,16 @@ public class MarketBook {
     @ToString.Exclude
     private List<Runner> runners;
 
+    public static void enrich(
+            MarketBook marketBook,
+            MarketCatalogueRepository marketCatalogueRepository) {
+
+        if (marketCatalogueRepository.count() != 0) {
+            for (MarketCatalogue market : marketCatalogueRepository.findAll()) {
+                if (marketBook.getMarketId().equals(market.getMarketId())) {
+                    marketBook.setMarketName(market.getMarketName());
+                }
+            }
+        }
+    }
 }

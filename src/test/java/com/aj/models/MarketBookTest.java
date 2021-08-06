@@ -1,11 +1,13 @@
 package com.aj.models;
 
+import com.aj.repositories.MarketCatalogueRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class MarketBookTest {
 
@@ -41,5 +43,44 @@ class MarketBookTest {
         assertTrue(toString.contains(marketBook.getTotalMatched().toString()));
         assertTrue(toString.contains(marketBook.getNumberOfActiveRunners().toString()));
         assertTrue(toString.contains(marketBook.getTotalAvailable().toString()));
+    }
+
+    @Test
+    void testEnrichMarket() {
+        MarketBook marketBook = new MarketBook();
+        marketBook.setMarketId("1.1");
+
+        MarketCatalogue marketCatalogue1 = new MarketCatalogue();
+        MarketCatalogue marketCatalogue2 = new MarketCatalogue();
+        MarketCatalogue marketCatalogue3 = new MarketCatalogue();
+
+        marketCatalogue2.setMarketId("1.1");
+        marketCatalogue2.setMarketName("New Market Name");
+
+        List<MarketCatalogue> marketList = new ArrayList<>();
+
+        marketList.add(marketCatalogue1);
+        marketList.add(marketCatalogue2);
+        marketList.add(marketCatalogue3);
+
+        System.out.println("=== marketBook ===");
+        System.out.println(marketBook);
+
+        System.out.println("=== marketCatalogue ===");
+        System.out.println(marketCatalogue2);
+
+        MarketCatalogueRepository repository = mock(MarketCatalogueRepository.class);
+        when(repository.findAll()).thenReturn(marketList);
+        when(repository.count()).thenReturn(3L);
+
+        System.out.println("=== market list ===");
+        System.out.println(repository.findAll());
+
+        MarketBook.enrich(marketBook, repository);
+
+        System.out.println("=== enriched marketBook ===");
+        System.out.println(marketBook);
+
+        assertEquals("New Market Name", marketBook.getMarketName());
     }
 }
