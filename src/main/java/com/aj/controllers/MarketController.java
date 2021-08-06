@@ -41,17 +41,6 @@ public class MarketController {
         String response = apiClient.listMarketBook(marketId);
         MarketBook marketBook = jsonDeserialiser.mapToMarketBook(response);
         MarketBook.enrich(marketBook, marketCatalogueRepository);
-
-        if (runnerRepository.count() != 0) {
-            for (Runner runner : marketBook.getRunners()) {
-                for (Runner repoRunner : runnerRepository.findAll()) {
-                    if (repoRunner.getSelectionId().equals(runner.getSelectionId())) {
-                        runner.setRunnerName(repoRunner.getRunnerName());
-                    }
-                }
-            }
-        }
-
         model.addAttribute("marketBook", marketBook);
         return "listMarketBook";
     }

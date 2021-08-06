@@ -4,6 +4,7 @@ import com.aj.repositories.MarketCatalogueRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,37 +51,52 @@ class MarketBookTest {
         MarketBook marketBook = new MarketBook();
         marketBook.setMarketId("1.1");
 
-        MarketCatalogue marketCatalogue1 = new MarketCatalogue();
-        MarketCatalogue marketCatalogue2 = new MarketCatalogue();
-        MarketCatalogue marketCatalogue3 = new MarketCatalogue();
-
-        marketCatalogue2.setMarketId("1.1");
-        marketCatalogue2.setMarketName("New Market Name");
-
-        List<MarketCatalogue> marketList = new ArrayList<>();
-
-        marketList.add(marketCatalogue1);
-        marketList.add(marketCatalogue2);
-        marketList.add(marketCatalogue3);
-
-        System.out.println("=== marketBook ===");
-        System.out.println(marketBook);
-
-        System.out.println("=== marketCatalogue ===");
-        System.out.println(marketCatalogue2);
+        MarketCatalogue market1 = new MarketCatalogue();
+        MarketCatalogue market2 = new MarketCatalogue();
+        MarketCatalogue market3 = new MarketCatalogue();
+        market2.setMarketId("1.1");
+        market2.setMarketName("New Market Name");
+        List<MarketCatalogue> marketList = Arrays.asList(market1, market2, market3);
 
         MarketCatalogueRepository repository = mock(MarketCatalogueRepository.class);
         when(repository.findAll()).thenReturn(marketList);
-        when(repository.count()).thenReturn(3L);
-
-        System.out.println("=== market list ===");
-        System.out.println(repository.findAll());
-
         MarketBook.enrich(marketBook, repository);
 
-        System.out.println("=== enriched marketBook ===");
-        System.out.println(marketBook);
-
         assertEquals("New Market Name", marketBook.getMarketName());
+    }
+
+    @Test
+    void testEnrichMarketWithRunners() {
+        MarketBook marketBook = new MarketBook();
+        marketBook.setMarketId("1.1");
+        Runner runner1 = new Runner();
+        Runner runner2 = new Runner();
+        runner1.setSelectionId(999L);
+        runner2.setSelectionId(55L);
+        List<Runner> runners = Arrays.asList(runner1, runner2);
+        marketBook.setRunners(runners);
+
+        MarketCatalogue market1 = new MarketCatalogue();
+        MarketCatalogue market2 = new MarketCatalogue();
+        MarketCatalogue market3 = new MarketCatalogue();
+        List<MarketCatalogue> marketList = Arrays.asList(market1, market2, market3);
+        market2.setMarketId("1.1");
+
+        Runner runner3 = new Runner();
+        Runner runner4 = new Runner();
+        Runner runner5 = new Runner();
+        runner4.setSelectionId(999L);
+        runner4.setRunnerName("999 Runner Name");
+        runner5.setSelectionId(55L);
+        runner5.setRunnerName("55 Runner Name");
+        List<Runner> runners2 = Arrays.asList(runner3, runner4, runner5);
+        market2.setRunners(runners2);
+
+        MarketCatalogueRepository repository = mock(MarketCatalogueRepository.class);
+        when(repository.findAll()).thenReturn(marketList);
+        MarketBook.enrich(marketBook, repository);
+
+        assertEquals("999 Runner Name", marketBook.getRunners().get(0).getRunnerName());
+        assertEquals("55 Runner Name", marketBook.getRunners().get(1).getRunnerName());
     }
 }

@@ -34,12 +34,24 @@ public class MarketBook {
 
     public static void enrich(
             MarketBook marketBook,
-            MarketCatalogueRepository marketCatalogueRepository) {
+            MarketCatalogueRepository repository) {
+        for (MarketCatalogue marketCatalogue : repository.findAll()) {
+            if (marketBook.getMarketId().equals(marketCatalogue.getMarketId())) {
+                marketBook.setMarketName(marketCatalogue.getMarketName());
+                enrichRunners(marketBook, marketCatalogue);
+            }
+        }
+    }
 
-        if (marketCatalogueRepository.count() != 0) {
-            for (MarketCatalogue market : marketCatalogueRepository.findAll()) {
-                if (marketBook.getMarketId().equals(market.getMarketId())) {
-                    marketBook.setMarketName(market.getMarketName());
+    private static void enrichRunners(
+            MarketBook marketBook, MarketCatalogue marketCatalogue) {
+
+        if (marketBook.getRunners() != null) {
+            for (Runner bookRunner : marketBook.getRunners()) {
+                for (Runner catalogueRunner : marketCatalogue.getRunners()) {
+                    if (bookRunner.getSelectionId().equals(catalogueRunner.getSelectionId())) {
+                        bookRunner.setRunnerName(catalogueRunner.getRunnerName());
+                    }
                 }
             }
         }

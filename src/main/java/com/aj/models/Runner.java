@@ -1,5 +1,6 @@
 package com.aj.models;
 
+import com.aj.repositories.RunnerRepository;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -32,6 +33,14 @@ public class Runner {
     @OneToMany(cascade = {CascadeType.ALL})
     @ToString.Exclude
     private List<ExchangePrice> tradedVolume;
+
+    public static void enrich(Runner runner, RunnerRepository repository) {
+        for (Runner repoRunner : repository.findAll()) {
+            if (runner.getSelectionId().equals(repoRunner.getSelectionId())) {
+                runner.setRunnerName(repoRunner.getRunnerName());
+            }
+        }
+    }
 
     @JsonProperty("ex")
     private void unpackNested(Map<String, List<ExchangePrice>> ex) {
