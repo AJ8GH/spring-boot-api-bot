@@ -40,6 +40,11 @@ public class MarketController {
                                  Model model) throws IOException {
         String response = apiClient.listMarketBook(marketId);
         MarketBook marketBook = jsonDeserialiser.mapToMarketBook(response);
+        for (MarketCatalogue market : marketCatalogueRepository.findAll()) {
+            if (market.getMarketId().equals(marketId)) {
+                marketBook.setMarketName(market.getMarketName());
+            }
+        }
         model.addAttribute("marketBook", marketBook);
         return "listMarketBook";
     }

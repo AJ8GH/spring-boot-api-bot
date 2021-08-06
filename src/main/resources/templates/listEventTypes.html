@@ -6,17 +6,27 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" th:href="@{/styles/main.css}">
+        <link rel="stylesheet" th:href="@{/styles/list.css}">
         <title>Betfair API Bot - Event Types</title>
     </head>
     <body>
         <h1>Event Types</h1>
-        <div th:unless="${ eventTypes.size() == 0 }">
-            <div th:each="eventType : ${ eventTypes }">
-                <p th:text="${ eventType.toString() }"></p>
-                <a th:href="@{/listEvents/{eventTypeId}(eventTypeId=${eventType.getId()})}">
-                    <button>View Events</button>
-                </a>
-            </div>
+        <div th:unless="${ eventTypes == null || eventTypes.size() == 0 }"v>
+            <table class="eventType">
+                <tr>
+                    <th class="tableHeader">Sport</th>
+                    <th class="tableHeader">Market Count</th>
+                </tr>
+                <tr th:each="eventType : ${ eventTypes }">
+                    <td th:text="${ eventType.getName() }" class="tableRow"></td>
+                    <td th:text="${ eventType.getMarketCount() }" class="tableRow"></td>
+                    <td>
+                        <a th:href="@{/listEvents/{eventTypeId}(eventTypeId=${eventType.getId()})}">
+                            <button>View Events</button>
+                        </a>
+                    </td>
+                </tr>
+            </table>
         </div>
     </body>
 </html>

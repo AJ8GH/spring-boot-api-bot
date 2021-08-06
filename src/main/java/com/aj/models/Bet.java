@@ -21,7 +21,8 @@ public class Bet {
     private Long id;
     private Long betId;
     private String marketId;
-    private Integer selectionId;
+    private Long selectionId;
+    private String placedDate;
     private Double price;
     private Double size;
     private String side;

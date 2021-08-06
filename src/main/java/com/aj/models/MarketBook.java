@@ -19,6 +19,7 @@ public class MarketBook {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String marketId;
+    private String marketName;
     private String status;
     private Boolean complete;
     private Integer numberOfActiveRunners;
