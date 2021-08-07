@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" th:href="@{/styles/main.css}">
+        <title>Betfair API Bot - Cancel Execution Report</title>
+    </head>
+    <body>
+        <h1>Cancel Execution Report</h1>
+        <span>Cancel status: </span><span th:text="${ report.get().getStatus() }"></span><br>
+        <span>Market ID: </span><span th:text="${ report.get().getMarketId() }"></span><br>
+        <span>Size cancelled: </span><span th:text="${ report.get().getSizeCancelled() }"></span><br>
+        <span>Cancelled date :</span><span th:text="${ report.get().getCancelledDate() }"></span><br>
+    </body>
+</html>
