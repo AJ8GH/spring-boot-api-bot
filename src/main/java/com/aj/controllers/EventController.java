@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class EventController {
+public class EventController extends AbstractController {
     private final EventTypeRepository eventTypeRepository;
     private final EventRepository eventRepository;
     private final ApiClientService apiClient;
@@ -26,6 +26,8 @@ public class EventController {
 
     @RequestMapping("/listEventTypes")
     public String listEventTypes(Model model) throws IOException {
+        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
+
         String response = apiClient.listEventTypes();
         List<EventType> eventTypes = jsonDeserialiser.mapToEventTypeList(response);
         eventTypeRepository.saveAll(eventTypes);
@@ -36,6 +38,8 @@ public class EventController {
     @RequestMapping("/listEvents/{eventTypeId}")
     public String listEvents(@PathVariable("eventTypeId") long eventTypeId,
                              Model model) throws IOException {
+        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
+
         String response = apiClient.listEvents(eventTypeId);
         List<Event> events = jsonDeserialiser.mapToEventList(response);
         eventRepository.saveAll(events);

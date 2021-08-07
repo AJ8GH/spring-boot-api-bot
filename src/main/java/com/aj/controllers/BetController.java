@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class BetController {
+public class BetController extends AbstractController {
     private final ApiClientService apiClient;
     private final DeserialisationService jsonDeserialiser;
     private final BetRepository betRepository;
@@ -38,6 +38,8 @@ public class BetController {
                          Model model) {
         model.addAttribute("marketId", marketId);
         model.addAttribute("selectionId", selectionId);
+        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
+
         return "placeOrders";
     }
 
@@ -59,6 +61,8 @@ public class BetController {
                                @RequestParam("marketId") String marketId,
                                @RequestParam("betId") long betId)
             throws IOException {
+        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
+
         String response = apiClient.cancelOrders(marketId, betId);
         model.addAttribute("response", response);
         // TODO - redirect to a get route and create cancel response model

@@ -41,7 +41,7 @@ public class UserSessionController extends AbstractController {
     }
 
     private String redirectIfNotLoggedIn() {
-        if (isLoggedIn(apiClient.getUserSession())) return "index";
-        return "redirect:/login";
+        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
+        return "index";
     }
 }

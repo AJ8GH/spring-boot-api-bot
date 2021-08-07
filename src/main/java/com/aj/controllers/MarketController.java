@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class MarketController {
+public class MarketController extends AbstractController {
     private final MarketCatalogueRepository marketCatalogueRepository;
     private final ApiClientService apiClient;
     private final DeserialisationService jsonDeserialiser;
@@ -27,6 +27,7 @@ public class MarketController {
     @RequestMapping("/listMarketCatalogue/{eventId}")
     public String listMarketCatalogue(@PathVariable("eventId") long eventId,
                                       Model model) throws IOException {
+        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
         String response = apiClient.listMarketCatalogue(eventId);
         List<MarketCatalogue> marketCatalogueList = jsonDeserialiser.mapToMarketCatalogue(response);
@@ -38,6 +39,8 @@ public class MarketController {
     @RequestMapping("/listMarketBook/{marketId}")
     public String listMarketBook(@PathVariable("marketId") String marketId,
                                  Model model) throws IOException {
+        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
+
         String response = apiClient.listMarketBook(marketId);
         MarketBook marketBook = jsonDeserialiser.mapToMarketBook(response);
         enricher.enrichMarketBook(marketBook);

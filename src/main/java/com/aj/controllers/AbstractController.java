@@ -3,9 +3,12 @@ package com.aj.controllers;
 import com.aj.models.UserSession;
 import org.springframework.stereotype.Controller;
 
+import java.util.Objects;
+
 @Controller
 public abstract class AbstractController {
-    protected boolean isLoggedIn(UserSession userSession) {
-        return userSession.getStatus().equals("SUCCESS");
+    protected boolean isNotLoggedIn(UserSession userSession) {
+        return (Objects.isNull(userSession) ||
+                !userSession.getStatus().equals("SUCCESS"));
     }
 }
