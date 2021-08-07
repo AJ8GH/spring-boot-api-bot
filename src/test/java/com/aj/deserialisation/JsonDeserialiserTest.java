@@ -56,7 +56,7 @@ class JsonDeserialiserTest {
 
         List<Bet> bets = jsonDeserialiser.mapToBetList(json);
 
-        assertEquals(10883651431L, bets.get(0).getBetId());
+        assertEquals("10883651431", bets.get(0).getBetId());
         assertEquals("1.179033087", bets.get(0).getMarketId());
         assertEquals(13495803, bets.get(0).getSelectionId());
         assertEquals(3.0, bets.get(0).getPrice());
@@ -65,7 +65,7 @@ class JsonDeserialiserTest {
         assertEquals(0.0, bets.get(0).getBspLiability());
         assertEquals("EXECUTABLE", bets.get(0).getStatus());
 
-        assertEquals(10883651820L, bets.get(1).getBetId());
+        assertEquals("10883651820", bets.get(1).getBetId());
         assertEquals("1.179344408", bets.get(1).getMarketId());
         assertEquals(34, bets.get(1).getSelectionId());
         assertEquals(2.0, bets.get(1).getPrice());
@@ -158,5 +158,19 @@ class JsonDeserialiserTest {
         assertEquals(0, runners.get(1).getTradedVolume().size());
         assertEquals(3.0, runners.get(1).getAvailableToLay().get(0).getPrice());
         assertEquals(6.0, runners.get(1).getAvailableToLay().get(0).getSize());
+    }
+
+    @Test
+    void testMapConfirmationResponseToBet() throws JsonProcessingException {
+        String json = "{\"status\": \"SUCCESS\"," +
+                "\"marketId\": \"1.179344550\"," +
+                "\"instructionReports\": " +
+                "[{\"status\": \"SUCCESS\"," +
+                "\"betId\": \"10883830194\"}]}";
+
+        Bet bet = jsonDeserialiser.mapToObject(json, Bet.class);
+
+        assertEquals("SUCCESS", bet.getStatus());
+        assertEquals("10883830194", bet.getBetId());
     }
 }

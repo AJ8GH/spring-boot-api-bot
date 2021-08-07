@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -19,7 +20,7 @@ public class Bet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long betId;
+    private String betId;
     private String marketId;
     private Long selectionId;
     private String marketName;
@@ -33,7 +34,12 @@ public class Bet {
 
     @JsonProperty("priceSize")
     private void unpackNested(Map<String, Object> priceSize) {
-        setPrice((Double) priceSize.get("price"));
-        setSize((Double) priceSize.get("size"));
+        this.price = (Double) priceSize.get("price");
+        this.size = (Double) priceSize.get("size");
+    }
+
+    @JsonProperty("instructionReports")
+    private void unpackPlaceExecutionReport(List<Map<String, Object>> report) {
+        this.betId = (String) report.get(0).get("betId");
     }
 }

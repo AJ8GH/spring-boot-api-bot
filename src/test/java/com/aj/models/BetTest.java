@@ -8,7 +8,7 @@ class BetTest {
 
     @Test
     void testToString() {
-        Bet bet = new Bet(1L, 0L, "1.0", 2L, "marketName",
+        Bet bet = new Bet(1L, "0", "1.0", 2L, "marketName",
                 "runnerName", "2021-02-25T15:44:53.000Z", 3.0, 4.0,
                 "BACK", 5.0, "EXECUTABLE");
 
@@ -25,12 +25,12 @@ class BetTest {
     }
 
     @Test void testBet() {
-        Bet bet = new Bet(1L, 0L, "1.0", 2L, "marketName",
+        Bet bet = new Bet(1L, "0", "1.0", 2L, "marketName",
                 "runnerName", "2021-02-25T15:44:53.000Z", 3.0, 4.0,
                 "BACK", 5.0, "EXECUTABLE");
 
         assertEquals(1L, bet.getId());
-        assertEquals(0L, bet.getBetId());
+        assertEquals("0", bet.getBetId());
         assertEquals("1.0", bet.getMarketId());
         assertEquals(2L, bet.getSelectionId());
         assertEquals(3.0, bet.getPrice());
