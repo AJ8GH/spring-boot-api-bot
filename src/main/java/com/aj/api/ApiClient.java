@@ -78,7 +78,8 @@ public class ApiClient implements ApiClientService {
     @Override
     public String listCurrentOrders() throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
-        Request request = createBettingRequest(url, "");
+        String body = requestBodyBuilder.listCurrentOrdersBody();
+        Request request = createBettingRequest(url, body);
         return CLIENT.newCall(request).execute().body().string();
     }
 
@@ -91,6 +92,7 @@ public class ApiClient implements ApiClientService {
         return CLIENT.newCall(request).execute().body().string();
     }
 
+    @Override
     public String cancelOrders(String marketId, long betId) throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.CANCEL_ORDERS);
         String body = requestBodyBuilder.cancelOrdersBody(marketId, betId);

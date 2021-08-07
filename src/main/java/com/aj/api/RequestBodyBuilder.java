@@ -10,6 +10,8 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
 
     private final String LIST_EVENTS_BODY = "{\"filter\":{\"eventTypeIds\":[%s]}}";
 
+    private final String LIST_CURRENT_ORDERS_BODY = "{\"orderProjection\": \"EXECUTABLE\"}";
+
     private final String LIST_MARKET_CATALOGUE_BODY =
             "{\"filter\":{\"eventIds\":[%s]},\"marketProjection\": " +
             "[\"RUNNER_DESCRIPTION\"],\"maxResults\":\"200\"}";
@@ -60,5 +62,10 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
     @Override
     public String cancelOrdersBody(String marketId, long betId) {
         return String.format(CANCEL_ORDERS_BODY, marketId, betId);
+    }
+
+    @Override
+    public String listCurrentOrdersBody() {
+        return LIST_CURRENT_ORDERS_BODY;
     }
 }

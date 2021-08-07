@@ -49,6 +49,15 @@ public class RequestBodyBuilderTest {
     }
 
     @Test
+
+    void testListCurrentOrdersBody() {
+        RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
+        String body = "{\"orderProjection\": \"EXECUTABLE\"}";
+
+        assertEquals(body, requestBodyBuilder.listCurrentOrdersBody());
+    }
+
+    @Test
     void testPlaceOrdersBody() {
         RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
 
