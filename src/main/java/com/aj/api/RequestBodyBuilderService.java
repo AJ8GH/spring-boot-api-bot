@@ -6,6 +6,7 @@ public interface RequestBodyBuilderService {
     public String listMarketCatalogueBody(long eventId);
     public String listMarketBookBody(String marketId);
     public String listCurrentOrdersBody();
+    public String listCurrentOrdersBody(String betId);
     public String placeOrdersBody(String marketId, long selectionId,
                                   String side, double price, double size);
     public String cancelOrdersBody(String marketId, long betId);

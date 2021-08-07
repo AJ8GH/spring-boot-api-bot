@@ -127,6 +127,31 @@ public class ApiClientTest {
     }
 
     @Test
+    void testListCurrentOrdersWithBetId() throws Exception {
+        String mockResponse = "{listCurrentOrders response}";
+        server.enqueue(new MockResponse().setBody(mockResponse));
+        HttpUrl baseUrl = server.url("/listCurrentOrders");
+
+        when(urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS)).thenReturn(baseUrl);
+        when(requestBodyBuilder.listCurrentOrdersBody("123456")).thenReturn("{listCurrentOrders body 123456}");
+
+        String response = apiClient.listCurrentOrders("123456");
+        RecordedRequest request = server.takeRequest();
+
+        verify(requestBodyBuilder).listCurrentOrdersBody("123456");
+        verify(urlBuilder).createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
+
+        assertEquals(mockResponse, response);
+        assertEquals(baseUrl, request.getRequestUrl());
+        assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
+        assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
+        assertTrue(request.getBody().toString().contains("{listCurrentOrders body 123456}"));
+        assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));
+        assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
+        assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));
+    }
+
+    @Test
     void testListEvents() throws Exception {
         String mockResponse = "{listEvents response}";
         server.enqueue(new MockResponse().setBody(mockResponse));

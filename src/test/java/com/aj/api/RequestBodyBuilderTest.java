@@ -49,12 +49,19 @@ public class RequestBodyBuilderTest {
     }
 
     @Test
-
     void testListCurrentOrdersBody() {
         RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
         String body = "{\"orderProjection\": \"EXECUTABLE\"}";
 
         assertEquals(body, requestBodyBuilder.listCurrentOrdersBody());
+    }
+
+    @Test
+    void testListCurrentOrdersBodyWithBetId() {
+        RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
+        String body = "{\"orderProjection\": \"EXECUTABLE\",\"betIds\": [\"9292\"]}";
+
+        assertEquals(body, requestBodyBuilder.listCurrentOrdersBody("9292"));
     }
 
     @Test

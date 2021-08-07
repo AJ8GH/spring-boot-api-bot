@@ -55,7 +55,19 @@ public class BetController extends AbstractController {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
         String response = apiClient.placeOrders(marketId, selectionId, side, size, price);
-        return "betOutcome";
+        Bet bet = jsonDeserialiser.mapToObject(response, Bet.class);
+        return ("redirect:/bets/" + bet.getBetId());
+    }
+
+    @RequestMapping("/bets/{betId}")
+    public String showBet(Model model, @PathVariable("betId") String betId)
+            throws IOException {
+        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
+
+        String response = apiClient.listCurrentOrders(betId);
+        Bet bet = jsonDeserialiser.mapToBetList(response).get(0);
+        model.addAttribute("bet", bet);
+        return "showBet";
     }
 
     @PostMapping("/cancelOrders")

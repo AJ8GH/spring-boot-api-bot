@@ -7,27 +7,23 @@ import org.springframework.stereotype.Service;
 public class RequestBodyBuilder implements RequestBodyBuilderService {
 
     private final String LIST_EVENT_TYPES_BODY = "{\"filter\":{}}";
-
     private final String LIST_EVENTS_BODY = "{\"filter\":{\"eventTypeIds\":[%s]}}";
-
-    private final String LIST_CURRENT_ORDERS_BODY = "{\"orderProjection\": \"EXECUTABLE\"}";
-
+    private final String LIST_ALL_CURRENT_ORDERS_BODY = "{\"orderProjection\": \"EXECUTABLE\"}";
+    private final String LIST_CURRENT_ORDERS_BODY = "{\"orderProjection\": " +
+            "\"EXECUTABLE\",\"betIds\": [\"%s\"]}";
     private final String LIST_MARKET_CATALOGUE_BODY =
             "{\"filter\":{\"eventIds\":[%s]},\"marketProjection\": " +
             "[\"RUNNER_DESCRIPTION\"],\"maxResults\":\"200\"}";
-
     private final String LIST_MARKET_BOOK_BODY =
             "{\"marketIds\": [%s],\"priceProjection\"" +
             ": {\"priceData\": [\"EX_BEST_OFFERS\", \"EX_TRADED\"]," +
             "\"virtualise\": \"true\"}}}";
-
     private final String PLACE_ORDERS_BODY =
             "{\"marketId\": \"%s\"," +
             "\"instructions\": [{\"selectionId\": %s" +
             ",\"side\": \"%s\",\"orderType\": \"LIMIT\"," +
             "\"limitOrder\": {\"size\": %s," +
             "\"price\": %s}}]}";
-
     private final String CANCEL_ORDERS_BODY = "{\"marketId\": \"%s\"," +
             "\"instructions\": [{\"betId\": %s," +
             "\"sizeReduction\": null}]}";
@@ -65,7 +61,12 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
     }
 
     @Override
+    public String listCurrentOrdersBody(String betId) {
+        return String.format(LIST_CURRENT_ORDERS_BODY, betId);
+    }
+
+    @Override
     public String listCurrentOrdersBody() {
-        return LIST_CURRENT_ORDERS_BODY;
+        return LIST_ALL_CURRENT_ORDERS_BODY;
     }
 }

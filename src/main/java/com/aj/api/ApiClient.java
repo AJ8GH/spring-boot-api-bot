@@ -76,6 +76,14 @@ public class ApiClient implements ApiClientService {
     }
 
     @Override
+    public String listCurrentOrders(String betId) throws IOException {
+        HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
+        String body = requestBodyBuilder.listCurrentOrdersBody(betId);
+        Request request = createBettingRequest(url, body);
+        return CLIENT.newCall(request).execute().body().string();
+    }
+
+    @Override
     public String listCurrentOrders() throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
         String body = requestBodyBuilder.listCurrentOrdersBody();
