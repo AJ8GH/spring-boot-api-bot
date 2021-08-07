@@ -18,6 +18,7 @@
                 <span>Side: </span><span th:text="${ bet.getSide() }"></span><br>
                 <span>Price: </span><span th:text="${ bet.getPrice() }"></span><br>
                 <span>Size: </span><span th:text="${ bet.getSize() }"></span><br>
+                <span>Size: </span><span th:text="${ bet.getPlacedDate() }"></span><br>
                 <form th:action="@{/cancelOrders}" method="post">
                     <input type="hidden" th:value="${ bet.getMarketId() }" name="marketId">
                     <input type="hidden" th:value="${ bet.getBetId() }" name="betId">
