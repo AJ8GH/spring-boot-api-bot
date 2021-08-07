@@ -47,11 +47,13 @@ public class BetController extends AbstractController {
 
     @PostMapping("/placeOrders")
     public String placeOrders(Model model,
-                              @RequestParam("price") int price,
-                              @RequestParam("size") int size,
+                              @RequestParam("price") double price,
+                              @RequestParam("size") double size,
                               @RequestParam("marketId") String marketId,
                               @RequestParam("selectionId") long selectionId,
                               @RequestParam("side") String side) throws IOException {
+        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
+
         String response = apiClient.placeOrders(marketId, selectionId, side, size, price);
         model.addAttribute("response", response);
         // TODO - redirect to a get route and bet response model
@@ -63,6 +65,8 @@ public class BetController extends AbstractController {
                                @RequestParam("marketId") String marketId,
                                @RequestParam("betId") long betId)
             throws IOException {
+        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
+
         String response = apiClient.cancelOrders(marketId, betId);
         model.addAttribute("response", response);
         // TODO - redirect to a get route and create cancel response model
