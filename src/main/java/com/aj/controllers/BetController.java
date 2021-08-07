@@ -25,6 +25,8 @@ public class BetController extends AbstractController {
 
     @RequestMapping("/listCurrentOrders")
     public String listCurrentBets(Model model) throws IOException {
+        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
+
         String response = apiClient.listCurrentOrders();
         List<Bet> bets = jsonDeserialiser.mapToBetList(response);
         betRepository.saveAll(bets);
@@ -61,8 +63,6 @@ public class BetController extends AbstractController {
                                @RequestParam("marketId") String marketId,
                                @RequestParam("betId") long betId)
             throws IOException {
-        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
-
         String response = apiClient.cancelOrders(marketId, betId);
         model.addAttribute("response", response);
         // TODO - redirect to a get route and create cancel response model

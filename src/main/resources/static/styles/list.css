@@ -15,3 +15,26 @@
 .marketName {
     font-size: 20px;
 }
+
+.bet {
+    padding: 10px;
+    margin-top: 10px;
+    width: 30%;
+    background-color: #FF851B;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button {
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #FFDC00;
+    color: #001f3f;
+    margin-top: 10px;
+}
+
+.bet, .button {
+    border-radius: 5px;
+}

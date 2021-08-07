@@ -5,28 +5,27 @@
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" th:href="@{/styles/main.css}">
         <link rel="stylesheet" th:href="@{/styles/list.css}">
+        <link rel="stylesheet" th:href="@{/styles/main.css}">
         <title>Betfair API Bot - Current Bets</title>
     </head>
     <body>
         <h1>Current Bets</h1>
-        <div th:each="bet : ${ bets }">
-            <div class="bet">
-                <span>Market ID: </span><span th:text="${ bet.getMarketId() }"></span><br>
-                <span>Selection ID: </span><span th:text="${ bet.getSelectionId() }"></span><br>
-                <span>Side: </span><span th:text="${ bet.getSide() }"></span><br>
-                <span>Price: </span><span th:text="${ bet.getPrice() }"></span><br>
-                <span>Size: </span><span th:text="${ bet.getSize() }"></span><br>
-                <span>Size: </span><span th:text="${ bet.getPlacedDate() }"></span><br>
+        <div th:each="bet : ${ bets }" class="bet">
+            <span>Market ID: </span><span th:text="${ bet.getMarketId() }" class="marketId"></span><br>
+            <span>Selection ID: </span><span th:text="${ bet.getSelectionId() }"></span><br>
+            <span>Bet ID: </span><span th:text="${ bet.getBetId() }"></span><br>
+            <span>Status: </span><span th:text="${ bet.getStatus() }"></span><br>
+            <span>Side: </span><span th:text="${ bet.getSide() }"></span><br>
+            <span>Price: </span><span th:text="${ bet.getPrice() }"></span><br>
+            <span>Size: </span><span th:text="${ bet.getSize() }"></span><br>
+            <span>Date: </span><span th:text="${ bet.getPlacedDate() }"></span><br>
 
-                <form th:action="@{/cancelOrders}" method="post">
-                    <input type="hidden" th:value="${ bet.getMarketId() }" name="marketId">
-                    <input type="hidden" th:value="${ bet.getBetId() }" name="betId">
-                    <input type="submit" value="Cancel Bet">
-                </form>
-            </div>
+            <form th:action="@{/cancelOrders}" method="post" class="cancelButton">
+                <input type="hidden" th:value="${ bet.getMarketId() }" name="marketId">
+                <input type="hidden" th:value="${ bet.getBetId() }" name="betId">
+                <input type="submit" value="Cancel Bet" class="button">
+            </form>
         </div>
     </body>
 </html>
-q
