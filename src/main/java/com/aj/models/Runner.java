@@ -34,14 +34,6 @@ public class Runner {
     @ToString.Exclude
     private List<ExchangePrice> tradedVolume;
 
-    public static void enrich(Runner runner, RunnerRepository repository) {
-        for (Runner repoRunner : repository.findAll()) {
-            if (runner.getSelectionId().equals(repoRunner.getSelectionId())) {
-                runner.setRunnerName(repoRunner.getRunnerName());
-            }
-        }
-    }
-
     @JsonProperty("ex")
     private void unpackNested(Map<String, List<ExchangePrice>> ex) {
         setAvailableToBack(ex.get("availableToBack"));

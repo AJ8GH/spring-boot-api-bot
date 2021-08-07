@@ -2,11 +2,10 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
 import com.aj.deserialisation.JsonDeserialiser;
+import com.aj.enrichment.EnrichmentService;
 import com.aj.models.MarketBook;
 import com.aj.models.MarketCatalogue;
-import com.aj.models.Runner;
 import com.aj.repositories.MarketCatalogueRepository;
-import com.aj.repositories.RunnerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +19,9 @@ import java.util.List;
 @AllArgsConstructor
 public class MarketController {
     private final MarketCatalogueRepository marketCatalogueRepository;
-    private final RunnerRepository runnerRepository;
     private final ApiClientService apiClient;
     private final JsonDeserialiser jsonDeserialiser;
+    private final EnrichmentService enricher;
 
     @RequestMapping("/listMarketCatalogue/{eventId}")
     public String listMarketCatalogue(@PathVariable("eventId") long eventId,
@@ -40,7 +39,7 @@ public class MarketController {
                                  Model model) throws IOException {
         String response = apiClient.listMarketBook(marketId);
         MarketBook marketBook = jsonDeserialiser.mapToMarketBook(response);
-        MarketBook.enrich(marketBook, marketCatalogueRepository);
+        enricher.enrichMarketBook(marketBook);
         model.addAttribute("marketBook", marketBook);
         return "listMarketBook";
     }
