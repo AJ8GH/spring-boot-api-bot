@@ -2,10 +2,12 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClient;
 import com.aj.api.ApiClientService;
+import com.aj.deserialisation.DeserialisationService;
 import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.models.UserSession;
 import com.aj.repositories.UserSessionRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.core.serializer.DefaultSerializer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserSessionController {
     private final UserSessionRepository userSessionRepository;
     private final ApiClientService apiClient;
-    private final JsonDeserialiser jsonDeserialiser;
+    private final DeserialisationService jsonDeserialiser;
 
     @RequestMapping("/")
     public String getIndex() {
-        if (ApiClient.getUserSession() == null ||
-                !ApiClient.getUserSession().getStatus().equals("SUCCESS")) {
+        if (apiClient.getUserSession() == null ||
+                !apiClient.getUserSession().getStatus().equals("SUCCESS")) {
             return "redirect:/login";
         }
         return "index";
@@ -30,7 +32,7 @@ public class UserSessionController {
 
     @RequestMapping("/login")
     public String login(Model model) {
-        model.addAttribute("userSession", ApiClient.getUserSession());
+        model.addAttribute("userSession", apiClient.getUserSession());
         return "login";
     }
 
@@ -42,7 +44,7 @@ public class UserSessionController {
         String response = apiClient.login(username, password);
         UserSession userSession = jsonDeserialiser.mapToObject(response, UserSession.class);
         userSessionRepository.save(userSession);
-        ApiClient.setUserSession(userSession);
+        apiClient.setUserSession(userSession);
 
         if (userSession.getStatus().equals("SUCCESS")) return "redirect:/";
         return "redirect:/login";

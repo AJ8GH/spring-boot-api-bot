@@ -1,8 +1,6 @@
 package com.aj.api;
 
-import com.aj.models.Bet;
 import com.aj.models.UserSession;
-import lombok.Builder;
 import okhttp3.*;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +8,10 @@ import java.io.IOException;
 
 @Service
 public class ApiClient implements ApiClientService {
-
-    private static UserSession userSession;
-
+    private UserSession userSession;
     private final UrlBuilder urlBuilder;
     private final RequestBodyBuilder requestBodyBuilder;
     private final OkHttpClient CLIENT = new OkHttpClient();
-
     private final String ACCEPT_HEADER = "Accept";
     private final String X_APPLICATION_HEADER = "X-Application";
     private final String X_APPLICATION = "testAccountApp";
@@ -32,12 +27,12 @@ public class ApiClient implements ApiClientService {
         this.requestBodyBuilder = requestBodyBuilder;
     }
 
-    public static void setUserSession(UserSession userSession) throws IOException {
+    public void setUserSession(UserSession userSession) throws IOException {
         userSession.loadAppKey();
-        ApiClient.userSession = userSession;
+        this.userSession = userSession;
     }
 
-    public static UserSession getUserSession() {
+    public UserSession getUserSession() {
         return userSession;
     }
 

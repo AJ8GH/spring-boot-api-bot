@@ -1,7 +1,7 @@
 package com.aj.controllers;
 
-import com.aj.api.ApiClient;
-import com.aj.deserialisation.JsonDeserialiser;
+import com.aj.api.ApiClientService;
+import com.aj.deserialisation.DeserialisationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,10 +21,10 @@ class BetControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    ApiClient apiClient;
+    ApiClientService apiClient;
 
     @MockBean
-    JsonDeserialiser jsonDeserialiser;
+    DeserialisationService jsonDeserialiser;
 
     @Test
     void testListCurrentBets() throws Exception {

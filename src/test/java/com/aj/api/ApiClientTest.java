@@ -22,16 +22,26 @@ public class ApiClientTest {
     private final String CONTENT_TYPE_VALUE = "application/json";
     private final String X_IP_HEADER = "X-IP";
     private final String X_IP_VALUE = "127.0.0.1";
-    private static final String APP_KEY = "APP_KEY";
-    private static final String TOKEN = "TOKEN";
+
+    private final String APP_KEY = "APP_KEY";
+    private final String TOKEN = "TOKEN";
+
     private MockWebServer server;
+    private ApiClient apiClient;
+    private UrlBuilder urlBuilder;
+    private RequestBodyBuilder requestBodyBuilder;
 
     @BeforeEach
     public void setUp() throws IOException {
+        urlBuilder = mock(UrlBuilder.class);
+        requestBodyBuilder = mock(RequestBodyBuilder.class);
+        apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
+
         UserSession userSession = mock(UserSession.class);
         when(userSession.getToken()).thenReturn(TOKEN);
         when(userSession.getAppKey()).thenReturn(APP_KEY);
-        ApiClient.setUserSession(userSession);
+
+        apiClient.setUserSession(userSession);
 
         server = new MockWebServer();
         server.start();
@@ -43,10 +53,10 @@ public class ApiClientTest {
     }
 
     @Test
-    public void getUserSession() throws IOException {
+    void getUserSession() throws IOException {
         UserSession userSession = mock(UserSession.class);
-        ApiClient.setUserSession(userSession);
-        assertEquals(userSession, ApiClient.getUserSession());
+        apiClient.setUserSession(userSession);
+        assertEquals(userSession, apiClient.getUserSession());
     }
 
     @Test
@@ -55,12 +65,9 @@ public class ApiClientTest {
         server.enqueue(new MockResponse().setBody(mockResponse));
         HttpUrl baseUrl = server.url("?username=username&password=password");
 
-        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
-        UrlBuilder urlBuilder = mock(UrlBuilder.class);
         when(urlBuilder.createLoginUrl("username", "password"))
                 .thenReturn(baseUrl);
 
-        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
         String response = apiClient.login("username", "password");
         RecordedRequest request = server.takeRequest();
 
@@ -78,12 +85,9 @@ public class ApiClientTest {
         server.enqueue(new MockResponse().setBody(mockResponse));
         HttpUrl baseUrl = server.url("/listEventTypes");
 
-        UrlBuilder urlBuilder = mock(UrlBuilder.class);
-        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
         when(urlBuilder.createBettingUrl(urlBuilder.LIST_EVENT_TYPES)).thenReturn(baseUrl);
         when(requestBodyBuilder.listEventTypesBody()).thenReturn("{listEventTypes body}");
 
-        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
         String response = apiClient.listEventTypes();
         RecordedRequest request = server.takeRequest();
 
@@ -103,11 +107,8 @@ public class ApiClientTest {
         server.enqueue(new MockResponse().setBody(mockResponse));
         HttpUrl baseUrl = server.url("/listCurrentOrders");
 
-        UrlBuilder urlBuilder = mock(UrlBuilder.class);
-        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
         when(urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS)).thenReturn(baseUrl);
 
-        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
         String response = apiClient.listCurrentOrders();
         RecordedRequest request = server.takeRequest();
 
@@ -126,12 +127,9 @@ public class ApiClientTest {
         server.enqueue(new MockResponse().setBody(mockResponse));
         HttpUrl baseUrl = server.url("/listEvents");
 
-        UrlBuilder urlBuilder = mock(UrlBuilder.class);
-        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
         when(urlBuilder.createBettingUrl(urlBuilder.LIST_EVENTS)).thenReturn(baseUrl);
         when(requestBodyBuilder.listEventsBody(1L)).thenReturn("{listEvents body}");
 
-        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
         String response = apiClient.listEvents(1L);
         RecordedRequest request = server.takeRequest();
 
@@ -152,12 +150,9 @@ public class ApiClientTest {
         server.enqueue(new MockResponse().setBody(mockResponse));
         HttpUrl baseUrl = server.url("/listMarketCatalogue");
 
-        UrlBuilder urlBuilder = mock(UrlBuilder.class);
-        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
         when(urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE)).thenReturn(baseUrl);
         when(requestBodyBuilder.listMarketCatalogueBody(999L)).thenReturn("{listMarketCatalogue body}");
 
-        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
         String response = apiClient.listMarketCatalogue(999L);
         RecordedRequest request = server.takeRequest();
 
@@ -179,12 +174,9 @@ public class ApiClientTest {
         server.enqueue(new MockResponse().setBody("{listMarketBook response}"));
         HttpUrl baseUrl = server.url("/listMarketBook");
 
-        UrlBuilder urlBuilder = mock(UrlBuilder.class);
-        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
         when(urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_BOOK)).thenReturn(baseUrl);
         when(requestBodyBuilder.listMarketBookBody("1.23456789")).thenReturn("{listMarketBook body}");
 
-        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
         String response = apiClient.listMarketBook("1.23456789");
         RecordedRequest request = server.takeRequest();
 
@@ -206,14 +198,10 @@ public class ApiClientTest {
         server.enqueue(new MockResponse().setBody("{placeOrders response}"));
         HttpUrl baseUrl = server.url("/placeOrders");
 
-        UrlBuilder urlBuilder = mock(UrlBuilder.class);
-        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
-
         when(urlBuilder.createBettingUrl(urlBuilder.PLACE_ORDERS)).thenReturn(baseUrl);
         when(requestBodyBuilder.placeOrdersBody("1.23", 77L, "LAY", 2.0, 5.5))
                 .thenReturn("{placeOrders body}");
 
-        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
         String response = apiClient.placeOrders("1.23", 77L, "LAY", 2.0, 5.5);
         RecordedRequest request = server.takeRequest();
 
@@ -235,13 +223,9 @@ public class ApiClientTest {
         server.enqueue(new MockResponse().setBody("{cancelOrders response}"));
         HttpUrl baseUrl = server.url("/cancelOrders");
 
-        UrlBuilder urlBuilder = mock(UrlBuilder.class);
-        RequestBodyBuilder requestBodyBuilder = mock(RequestBodyBuilder.class);
-
         when(urlBuilder.createBettingUrl(urlBuilder.CANCEL_ORDERS)).thenReturn(baseUrl);
         when(requestBodyBuilder.cancelOrdersBody("1.23", 77L)).thenReturn("{cancelOrders body}");
 
-        ApiClient apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
         String response = apiClient.cancelOrders("1.23", 77L);
         RecordedRequest request = server.takeRequest();
 

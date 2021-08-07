@@ -1,9 +1,8 @@
 package com.aj.controllers;
 
-import com.aj.api.ApiClient;
-import com.aj.deserialisation.JsonDeserialiser;
+import com.aj.api.ApiClientService;
+import com.aj.deserialisation.DeserialisationService;
 import com.aj.repositories.MarketBookRepository;
-import com.aj.repositories.MarketCatalogueRepository;
 import com.aj.repositories.RunnerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,9 @@ class MarketControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    ApiClient apiClient;
+    ApiClientService apiClient;
     @MockBean
-    JsonDeserialiser jsonDeserialiser;
+    DeserialisationService jsonDeserialiser;
     @MockBean
     MarketBookRepository marketBookRepository;
     @MockBean

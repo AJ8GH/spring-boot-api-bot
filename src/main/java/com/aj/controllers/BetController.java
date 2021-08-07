@@ -1,6 +1,7 @@
 package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
+import com.aj.deserialisation.DeserialisationService;
 import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.models.Bet;
 import com.aj.repositories.BetRepository;
@@ -19,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BetController {
     private final ApiClientService apiClient;
-    private final JsonDeserialiser jsonDeserialiser;
+    private final DeserialisationService jsonDeserialiser;
     private final BetRepository betRepository;
 
     @RequestMapping("/listCurrentOrders")

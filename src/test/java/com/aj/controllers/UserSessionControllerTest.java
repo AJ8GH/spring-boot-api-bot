@@ -1,7 +1,7 @@
 package com.aj.controllers;
 
-import com.aj.api.ApiClient;
-import com.aj.deserialisation.JsonDeserialiser;
+import com.aj.api.ApiClientService;
+import com.aj.deserialisation.DeserialisationService;
 import com.aj.models.UserSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -20,12 +21,10 @@ class UserSessionControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
-    ApiClient apiClient;
-
+    ApiClientService apiClient;
     @MockBean
-    JsonDeserialiser jsonDeserialiser;
+    DeserialisationService jsonDeserialiser;
 
     @Test
     void testLogIn() throws Exception {
@@ -40,7 +39,7 @@ class UserSessionControllerTest {
         UserSession userSession = new UserSession();
         userSession.setStatus("FAIL");
         userSession.setProps("test.properties");
-        ApiClient.setUserSession(userSession);
+        when(apiClient.getUserSession()).thenReturn(userSession);
 
         mockMvc.perform(get("/"))
                 .andExpect(status().is(302))
@@ -52,7 +51,7 @@ class UserSessionControllerTest {
         UserSession userSession = new UserSession();
         userSession.setStatus("SUCCESS");
         userSession.setProps("test.properties");
-        ApiClient.setUserSession(userSession);
+        when(apiClient.getUserSession()).thenReturn(userSession);
 
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())

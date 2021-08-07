@@ -1,6 +1,7 @@
 package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
+import com.aj.deserialisation.DeserialisationService;
 import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.models.Event;
 import com.aj.models.EventType;
@@ -21,7 +22,7 @@ public class EventController {
     private final EventTypeRepository eventTypeRepository;
     private final EventRepository eventRepository;
     private final ApiClientService apiClient;
-    private final JsonDeserialiser jsonDeserialiser;
+    private final DeserialisationService jsonDeserialiser;
 
     @RequestMapping("/listEventTypes")
     public String listEventTypes(Model model) throws IOException {

@@ -1,6 +1,7 @@
 package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
+import com.aj.deserialisation.DeserialisationService;
 import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.enrichment.EnrichmentService;
 import com.aj.models.MarketBook;
@@ -20,7 +21,7 @@ import java.util.List;
 public class MarketController {
     private final MarketCatalogueRepository marketCatalogueRepository;
     private final ApiClientService apiClient;
-    private final JsonDeserialiser jsonDeserialiser;
+    private final DeserialisationService jsonDeserialiser;
     private final EnrichmentService enricher;
 
     @RequestMapping("/listMarketCatalogue/{eventId}")
