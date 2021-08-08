@@ -1,4 +1,4 @@
-.username, .password, .login {
+.username, .password, .button {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -6,15 +6,19 @@
     font-size: 20px;
     margin-top: 10px;
     border-radius: 5px;
-    background-color: #C8D8E4;
-    color: #2B6777;
     font-weight: 600;
+    width: 20%;
+}
+
+.username, .password {
+    color: #2B6777;
+    background-color: #C8D8E4;
 }
 
 .loginForm {
     margin-top: 100px;
 }
 
-.login {
+.button {
     margin-top: 10px;
 }
