@@ -1,0 +1,40 @@
+.eventTypeData, .eventTypeName,.marketCount, .marketCountLabel {
+    background-color: #C8D8E4;
+    color: #2B6777;
+}
+
+.eventTypeData {
+    width: 60%;
+    border-radius: 5px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.eventType {
+    margin-top: 5px;
+    display: flex;
+    width: 30%;
+}
+
+.eventTypeName {
+    font-weight: 600;
+    font-size: 22px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.marketCount {
+    font-size: 18px;
+}
+
+.buttonContainer {
+    height: 100%;
+    width: 30%;
+}
+
+.button, .eventTypeData {
+    height: 100px;
+    margin: 5px;
+}

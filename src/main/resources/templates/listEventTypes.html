@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" th:href="@{/styles/main.css}">
         <link rel="stylesheet" th:href="@{/styles/list.css}">
+        <link rel="stylesheet" th:href="@{/styles/eventTypes.css}">
         <title>Betfair API Bot - Event Types</title>
     </head>
     <body class="body">
@@ -18,22 +19,18 @@
 
             <h2>Event Types</h2>
 
-            <div th:unless="${ eventTypes == null || eventTypes.size() == 0 }"v>
-                <table class="eventType">
-                    <tr>
-                        <th class="tableHeader">Sport</th>
-                        <th class="tableHeader">Market Count</th>
-                    </tr>
-                    <tr th:each="eventType : ${ eventTypes }">
-                        <td th:text="${ eventType.getName() }" class="tableRow"></td>
-                        <td th:text="${ eventType.getMarketCount() }" class="tableRow"></td>
-                        <td>
-                            <a th:href="@{/listEvents/{eventTypeId}(eventTypeId=${eventType.getId()})}">
-                                <button class="button">View Events</button>
-                            </a>
-                        </td>
-                    </tr>
-                </table>
+            <div th:unless="${ eventTypes == null || eventTypes.size() == 0 }">
+                <article class="eventType" th:each="eventType : ${ eventTypes }">
+                    <div class="eventTypeData">
+                        <p th:text="${ eventType.getName() }" class="eventTypeName"></p>
+                        <span class="marketCountLabel">Market Count: </span><span th:text="${ eventType.getMarketCount() }" class="marketCount"></span>
+                    </div>
+                    <div class="buttonContainer">
+                        <a th:href="@{/listEvents/{eventTypeId}(eventTypeId=${eventType.getId()})}">
+                            <button class="button">View Events</button>
+                        </a>
+                    </div>
+                </article>
             </div>
         </div>
     </body>
