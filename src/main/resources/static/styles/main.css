@@ -3,8 +3,35 @@
     border: 0;
     font-family: Arial, sans-serif;
     text-align: center;
+    background-color: #2B6777;
+    color: #FFF;
+}
+
+.body {
+    margin: 0;
+}
+
+.mainTitle {
+    font-size: 40px;
+    font-weight: 900;
 }
 
 .heading {
-    margin: 20px;
+    height: 8%;
+    margin-bottom: 20px;
+}
+
+.mainTitle, .heading {
+    width: 100%;
+    background-color: #FFF;
+    color: #2B6777;
+}
+
+.pageContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    padding: 0;
+    margin: 0;
 }

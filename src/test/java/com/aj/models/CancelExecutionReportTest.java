@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CancelExecutionReportTest {
 
     @Test
-    public void testCancelExecutionReport() {
+    void testCancelExecutionReport() {
         CancelExecutionReport report = new CancelExecutionReport(
                 9L, "status", "1.23", 2.0, "date");
 
