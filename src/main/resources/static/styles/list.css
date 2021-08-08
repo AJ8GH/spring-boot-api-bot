@@ -20,12 +20,16 @@
     padding: 10px;
     margin-top: 10px;
     width: 30%;
-    background-color: #FF851B;
-    color: white;
     margin-left: auto;
     margin-right: auto;
 }
 
-.bet {
+.bet, .betDetail, .betDetailLabel, .cancelButton {
     border-radius: 5px;
+    background-color: #C8D8E4;
+    color: #2B6777;
+}
+
+.cancelButton {
+    margin-top: 10px;
 }

@@ -20,7 +20,7 @@
             <div th:unless="${ marketCatalogue == null || marketCatalogue.size() < 0 }">
                 <div th:each="market : ${ marketCatalogue }">
                     <p th:text="${ market.getMarketName() }" class="marketName"></p>
-                    <a th:href="@{/listMarketBook/{marketId}(marketId=${market.getMarketId()})}" class="button">
+                    <a th:href="@{/listMarketBook/{marketId}(marketId=${market.getMarketId()})}">
                         <button class="button">View Best Prices</button>
                     </a>
                 </div>
