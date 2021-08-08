@@ -29,7 +29,7 @@
                         <td th:text="${ eventType.getMarketCount() }" class="tableRow"></td>
                         <td>
                             <a th:href="@{/listEvents/{eventTypeId}(eventTypeId=${eventType.getId()})}">
-                                <button>View Events</button>
+                                <button class="button">View Events</button>
                             </a>
                         </td>
                     </tr>

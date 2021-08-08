@@ -26,15 +26,6 @@
     margin-right: auto;
 }
 
-.button {
-    padding: 10px;
-    font-size: 15px;
-    font-weight: 600;
-    background-color: #FFDC00;
-    color: #001f3f;
-    margin-top: 10px;
-}
-
-.bet, .button {
+.bet {
     border-radius: 5px;
 }
