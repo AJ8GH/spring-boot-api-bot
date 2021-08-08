@@ -8,11 +8,18 @@
         <link rel="stylesheet" th:href="@{/styles/main.css}">
         <title>Betfair API Bot - Cancel Execution Report</title>
     </head>
-    <body>
-        <h1>Cancel Execution Report</h1>
-        <span>Cancel status: </span><span th:text="${ report.get().getStatus() }"></span><br>
-        <span>Market ID: </span><span th:text="${ report.get().getMarketId() }"></span><br>
-        <span>Size cancelled: </span><span th:text="${ report.get().getSizeCancelled() }"></span><br>
-        <span>Cancelled date :</span><span th:text="${ report.get().getCancelledDate() }"></span><br>
+    <body class="body">
+        <div class="pageContainer">
+            <div class="heading">
+                <h1 class="mainTitle">Betfair API Bot</h1>
+            </div>
+
+            <h2>Cancel Execution Report</h2>
+
+            <span>Cancel status: </span><span th:text="${ report.get().getStatus() }"></span><br>
+            <span>Market ID: </span><span th:text="${ report.get().getMarketId() }"></span><br>
+            <span>Size cancelled: </span><span th:text="${ report.get().getSizeCancelled() }"></span><br>
+            <span>Cancelled date :</span><span th:text="${ report.get().getCancelledDate() }"></span><br>
+        </div>
     </body>
 </html>

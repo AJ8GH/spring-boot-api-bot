@@ -9,14 +9,21 @@
         <link rel="stylesheet" th:href="@{/styles/list.css}">
         <title>Betfair API Bot - Market Catalogue</title>
     </head>
-    <body>
-        <h1>Market Catalogue</h1>
-        <div th:unless="${ marketCatalogue == null || marketCatalogue.size() < 0 }">
-            <div th:each="market : ${ marketCatalogue }">
-                <p th:text="${ market.getMarketName() }" class="marketName"></p>
-                <a th:href="@{/listMarketBook/{marketId}(marketId=${market.getMarketId()})}" class="button">
-                    <button>View Best Prices</button>
-                </a>
+    <body class="body">
+        <div class="pageContainer">
+            <div class="heading">
+                <h1 class="mainTitle">Betfair API Bot</h1>
+            </div>
+
+            <h2>Market Catalogue</h2>
+
+            <div th:unless="${ marketCatalogue == null || marketCatalogue.size() < 0 }">
+                <div th:each="market : ${ marketCatalogue }">
+                    <p th:text="${ market.getMarketName() }" class="marketName"></p>
+                    <a th:href="@{/listMarketBook/{marketId}(marketId=${market.getMarketId()})}" class="button">
+                        <button>View Best Prices</button>
+                    </a>
+                </div>
             </div>
         </div>
     </body>

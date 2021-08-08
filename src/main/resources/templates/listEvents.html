@@ -9,28 +9,35 @@
         <link rel="stylesheet" th:href="@{/styles/list.css}">
         <title>Betfair API Bot - Events</title>
     </head>
-    <body>
-        <h1>Events</h1>
-        <div th:unless="${ events == null || events.size() == 0 }">
-            <table class="event">
-                <tr>
-                    <th class="tableHeader">Event</th>
-                    <th class="tableHeader">Country</th>
-                    <th class="tableHeader">Date</th>
-                    <th class="tableHeader">Market Count</th>
-                </tr>
-                <tr th:each="event : ${ events }">
-                    <td th:text="${ event.getName() }" class="tableRow"></td>
-                    <td th:text="${ event.getCountryCode() }" class="tableRow"></td>
-                    <td th:text="${ event.getOpenDate() }" class="tableRow"></td>
-                    <td th:text="${ event.getMarketCount() }" class="tableRow"></td>
-                    <td>
-                        <a th:href="@{/listMarketCatalogue/{eventId}(eventId=${event.getId()})}">
-                            <button>View Markets</button>
-                        </a>
-                    </td>
-                </tr>
-            </table>
+    <body class="body">
+        <div class="pageContainer">
+            <header class="heading">
+                <h1 class="mainTitle">Betfair API Bot</h1>
+            </header>
+
+            <h2>Events</h2>
+
+            <div th:unless="${ events == null || events.size() == 0 }">
+                <table class="event">
+                    <tr>
+                        <th class="tableHeader">Event</th>
+                        <th class="tableHeader">Country</th>
+                        <th class="tableHeader">Date</th>
+                        <th class="tableHeader">Market Count</th>
+                    </tr>
+                    <tr th:each="event : ${ events }">
+                        <td th:text="${ event.getName() }" class="tableRow"></td>
+                        <td th:text="${ event.getCountryCode() }" class="tableRow"></td>
+                        <td th:text="${ event.getOpenDate() }" class="tableRow"></td>
+                        <td th:text="${ event.getMarketCount() }" class="tableRow"></td>
+                        <td>
+                            <a th:href="@{/listMarketCatalogue/{eventId}(eventId=${event.getId()})}">
+                                <button>View Markets</button>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </body>
 </html>

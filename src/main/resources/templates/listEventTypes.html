@@ -9,24 +9,32 @@
         <link rel="stylesheet" th:href="@{/styles/list.css}">
         <title>Betfair API Bot - Event Types</title>
     </head>
-    <body>
-        <h1>Event Types</h1>
-        <div th:unless="${ eventTypes == null || eventTypes.size() == 0 }"v>
-            <table class="eventType">
-                <tr>
-                    <th class="tableHeader">Sport</th>
-                    <th class="tableHeader">Market Count</th>
-                </tr>
-                <tr th:each="eventType : ${ eventTypes }">
-                    <td th:text="${ eventType.getName() }" class="tableRow"></td>
-                    <td th:text="${ eventType.getMarketCount() }" class="tableRow"></td>
-                    <td>
-                        <a th:href="@{/listEvents/{eventTypeId}(eventTypeId=${eventType.getId()})}">
-                            <button>View Events</button>
-                        </a>
-                    </td>
-                </tr>
-            </table>
+    <body class="body">
+        <div class="pageContainer">
+
+            <header class="heading">
+                <h1 class="mainTitle">Betfair API Bot</h1>
+            </header>
+
+            <h2>Event Types</h2>
+
+            <div th:unless="${ eventTypes == null || eventTypes.size() == 0 }"v>
+                <table class="eventType">
+                    <tr>
+                        <th class="tableHeader">Sport</th>
+                        <th class="tableHeader">Market Count</th>
+                    </tr>
+                    <tr th:each="eventType : ${ eventTypes }">
+                        <td th:text="${ eventType.getName() }" class="tableRow"></td>
+                        <td th:text="${ eventType.getMarketCount() }" class="tableRow"></td>
+                        <td>
+                            <a th:href="@{/listEvents/{eventTypeId}(eventTypeId=${eventType.getId()})}">
+                                <button>View Events</button>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </body>
 </html>

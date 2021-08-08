@@ -8,17 +8,24 @@
         <link rel="stylesheet" th:href="@{/styles/main.css}">
         <title>Betfair API Bot</title>
     </head>
-    <body>
-        <h1>Betfair API Bot</h1>
-        <p>Welcome!</p>
-        <p>Menu</p>
+    <body class="body">
+        <div class="pageContainer">
 
-        <form action="/listEventTypes" method="post">
-            <input type="submit" value="View Event Types">
-        </form><br>
+            <header class="heading">
+                <h1 class="mainTitle">Betfair API Bot</h1>
+            </header>
 
-        <form action="/listCurrentOrders">
-            <input type="submit" value="View Current Bets">
-        </form>
+            <h2>Welcome!</h2>
+
+            <h3>Menu</h3>
+
+            <form action="/listEventTypes" method="post">
+                <input type="submit" value="View Event Types" class="button">
+            </form><br>
+
+            <form action="/listCurrentOrders">
+                <input type="submit" value="View Current Bets" class="button">
+            </form>
+        </div>
     </body>
 </html>

@@ -8,21 +8,28 @@
         <link rel="stylesheet" th:href="@{/styles/main.css}">
         <title>Betfair API Bot - Bet Confirmation</title>
     </head>
-    <body>
-        <h1>Bet Confirmation</h1>
-        <span>Market ID: </span><span th:text="${ bet.getMarketId() }" class="marketId"></span><br>
-        <span>Selection ID: </span><span th:text="${ bet.getSelectionId() }"></span><br>
-        <span>Bet ID: </span><span th:text="${ bet.getBetId() }"></span><br>
-        <span>Status: </span><span th:text="${ bet.getStatus() }"></span><br>
-        <span>Side: </span><span th:text="${ bet.getSide() }"></span><br>
-        <span>Price: </span><span th:text="${ bet.getPrice() }"></span><br>
-        <span>Size: </span><span th:text="${ bet.getSize() }"></span><br>
-        <span>Date: </span><span th:text="${ bet.getPlacedDate() }"></span><br>
+    <body class="body">
+        <div class="pageContainer">
+            <div class="heading">
+                <h1 class="mainTitle">Betfair API Bot</h1>
+            </div>
 
-        <form th:action="@{/cancelOrders}" method="post" class="cancelButton">
-            <input type="hidden" th:value="${ bet.getMarketId() }" name="marketId">
-            <input type="hidden" th:value="${ bet.getBetId() }" name="betId">
-            <input type="submit" value="Cancel Bet" class="button">
-        </form>
+            <h2>Bet Confirmation</h2>
+
+            <span>Market ID: </span><span th:text="${ bet.getMarketId() }" class="marketId"></span><br>
+            <span>Selection ID: </span><span th:text="${ bet.getSelectionId() }"></span><br>
+            <span>Bet ID: </span><span th:text="${ bet.getBetId() }"></span><br>
+            <span>Status: </span><span th:text="${ bet.getStatus() }"></span><br>
+            <span>Side: </span><span th:text="${ bet.getSide() }"></span><br>
+            <span>Price: </span><span th:text="${ bet.getPrice() }"></span><br>
+            <span>Size: </span><span th:text="${ bet.getSize() }"></span><br>
+            <span>Date: </span><span th:text="${ bet.getPlacedDate() }"></span><br>
+
+            <form th:action="@{/cancelOrders}" method="post" class="cancelButton">
+                <input type="hidden" th:value="${ bet.getMarketId() }" name="marketId">
+                <input type="hidden" th:value="${ bet.getBetId() }" name="betId">
+                <input type="submit" value="Cancel Bet" class="button">
+            </form>
+        </div>
     </body>
 </html>

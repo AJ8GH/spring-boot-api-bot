@@ -20,7 +20,8 @@ public class UserSessionController extends AbstractController {
 
     @RequestMapping("/")
     public String getIndex() {
-        return redirectIfNotLoggedIn();
+        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
+        return "index";
     }
 
     @RequestMapping("/login")
@@ -37,11 +38,6 @@ public class UserSessionController extends AbstractController {
         UserSession userSession = jsonDeserialiser.mapToObject(response, UserSession.class);
         userSessionRepository.save(userSession);
         apiClient.setUserSession(userSession);
-        return redirectIfNotLoggedIn();
-    }
-
-    private String redirectIfNotLoggedIn() {
-        if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
-        return "index";
+        return "redirect:/";
     }
 }

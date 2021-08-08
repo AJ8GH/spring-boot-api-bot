@@ -23,7 +23,7 @@
 
 .mainTitle, .heading {
     width: 100%;
-    background-color: #FFF;
+    background-color: #C8D8E4;
     color: #2B6777;
 }
 
@@ -34,4 +34,13 @@
     flex-flow: column;
     padding: 0;
     margin: 0;
+}
+
+.button {
+    padding: 20px;
+    background-color: #C8D8E4;
+    color: #2B6777;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 5px;
 }
