@@ -1,0 +1,30 @@
+.eventData, .eventName, .country, .marketCount, .date {
+    background-color: #C8D8E4;
+    color: #2B6777;
+}
+
+.eventData {
+    width: 70%;
+    border-radius: 5px;
+}
+
+.event {
+    margin-top: 5px;
+    display: flex;
+    width: 40%;
+}
+
+.eventName {
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.buttonContainer {
+    height: 100%;
+    width: 30%;
+}
+
+.eventData, .button {
+    height: 160px;
+    margin: 5px;
+}
