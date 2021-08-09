@@ -181,12 +181,12 @@ public class ApiClientTest {
         HttpUrl baseUrl = server.url("/listMarketCatalogue");
 
         when(urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE)).thenReturn(baseUrl);
-        when(requestBodyBuilder.listMarketCatalogueBody(999L)).thenReturn("{listMarketCatalogue body}");
+        when(requestBodyBuilder.listMarketCatalogueBody("eventIds", "999")).thenReturn("{listMarketCatalogue body}");
 
-        String response = apiClient.listMarketCatalogue(999L);
+        String response = apiClient.listMarketCatalogue("eventIds", "999");
         RecordedRequest request = server.takeRequest();
 
-        verify(requestBodyBuilder).listMarketCatalogueBody(999L);
+        verify(requestBodyBuilder).listMarketCatalogueBody("eventIds", "999");
         verify(urlBuilder).createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
 
         assertEquals(mockResponse, response);

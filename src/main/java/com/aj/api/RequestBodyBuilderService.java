@@ -3,7 +3,7 @@ package com.aj.api;
 public interface RequestBodyBuilderService {
     public String listEventTypesBody();
     public String listEventsBody(long eventTypeId);
-    public String listMarketCatalogueBody(long eventId);
+    public String listMarketCatalogueBody(String filter, String id);
     public String listMarketBookBody(String marketId);
     public String listCurrentOrdersBody();
     public String listCurrentOrdersBody(String betId);
