@@ -23,8 +23,9 @@ public class EsaClient {
         return reader;
     }
 
-    public String connect() throws IOException {
+    public String connect(int timeout) throws IOException {
         Socket socket = socketFactory.getDefault();
+        socket.setSoTimeout(timeout * 1000);
         InputStreamReader in = new InputStreamReader(socket.getInputStream());
         reader = new BufferedReader(in);
         writer = new PrintWriter(socket.getOutputStream());

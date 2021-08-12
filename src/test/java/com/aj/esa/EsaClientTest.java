@@ -39,17 +39,18 @@ class EsaClientTest {
 
     @Test
     void connect() throws IOException {
-        String result = client.connect();
+        String result = client.connect(3);
 
         verify(factory).getDefault();
         verify(socket).getInputStream();
         verify(socket).getOutputStream();
+        verify(socket).setSoTimeout(3 * 1000);
         assertEquals(client.getReader().readLine(), result);
     }
 
     @Test
     void authenticate() throws IOException {
-        client.connect();
+        client.connect(3);
 
         String result = client.authenticate();
         String payLoad = "{\"op\":\"authentication\"," +
@@ -58,7 +59,4 @@ class EsaClientTest {
 
         assertArrayEquals(outputStream.toByteArray(), payLoad.getBytes());
     }
-
-    // @Test
-    // void
 }
