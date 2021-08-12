@@ -1,5 +1,6 @@
 package com.aj.esa;
 
+import com.aj.models.UserSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,7 @@ class EsaClientTest {
     private SocketFactory factory;
     private Socket socket;
     private ByteArrayOutputStream outputStream;
+    private EsaClient client;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -27,11 +29,16 @@ class EsaClientTest {
 
         when(socket.getOutputStream()).thenReturn(outputStream);
         when(socket.getInputStream()).thenReturn(inputStream);
+
+        UserSession userSession = mock(UserSession.class);
+        when(userSession.getEsaAppKey()).thenReturn("AppKey");
+        when(userSession.getToken()).thenReturn("Session");
+
+        client = new EsaClient(factory, userSession);
     }
 
     @Test
     void connect() throws IOException {
-        EsaClient client = new EsaClient(factory);
         String result = client.connect();
 
         verify(factory).getDefault();
@@ -42,14 +49,16 @@ class EsaClientTest {
 
     @Test
     void authenticate() throws IOException {
-        EsaClient client = new EsaClient(factory);
         client.connect();
 
-        String result = client.authenticate("AppKey", "Session");
+        String result = client.authenticate();
         String payLoad = "{\"op\":\"authentication\"," +
                 "\"appKey\":\"AppKey\"," +
                 "\"session\":\"Session\"}\n";
 
         assertArrayEquals(outputStream.toByteArray(), payLoad.getBytes());
     }
+
+    // @Test
+    // void
 }
