@@ -30,15 +30,7 @@ public class MarketController extends AbstractController {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
         String response = apiClient.listMarketCatalogue("eventIds", eventId);
-        System.out.println(response);
         List<MarketCatalogue> marketCatalogueList = jsonDeserialiser.mapToMarketCatalogue(response);
-        int i = 0;
-        for (MarketCatalogue cat : marketCatalogueList) {
-            System.out.println("catalogue " + i);
-            System.out.println(cat);
-            System.out.println();
-            i++;
-        }
         marketCatalogueRepository.saveAll(marketCatalogueList);
         model.addAttribute("marketCatalogue", marketCatalogueList);
         return "listMarketCatalogue";
@@ -50,11 +42,8 @@ public class MarketController extends AbstractController {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
         String response = apiClient.listMarketBook(marketId);
-        System.out.println(response);
         MarketBook marketBook = jsonDeserialiser.mapToMarketBook(response);
-        System.out.println(marketBook);
         enricher.enrichMarketBook(marketBook);
-        System.out.println(marketBook);
         model.addAttribute("marketBook", marketBook);
         return "listMarketBook";
     }
