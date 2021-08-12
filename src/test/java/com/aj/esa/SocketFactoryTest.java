@@ -18,6 +18,5 @@ class SocketFactoryTest {
 
         assertTrue(socket.getInetAddress().toString().contains(DEFAULT_HOST));
         assertEquals(DEFAULT_PORT, socket.getPort());
-        
     }
 }

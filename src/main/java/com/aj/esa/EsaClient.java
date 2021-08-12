@@ -29,14 +29,18 @@ public class EsaClient {
         return connectionMessage;
     }
 
-    public void authenticate() throws IOException {
-        writer.println("{\"op\":\"authentication\"," +
-                "\"appKey\":\"h5rA96c1fEVxJYLt\"," +
-                "\"session\":\"larkHPDxNAKNJMTRTyB66K0fh9STMh1s5q/XQhVddh4=\"}");
+    public String authenticate(String appKey, String sessionToken) throws IOException {
+        String payLoad = String.format("{\"op\":\"authentication\"," +
+                "\"appKey\":\"%s\"," +
+                "\"session\":\"%s\"}", appKey, sessionToken);
+
+        writer.println(payLoad);
         writer.flush();
 
         String authenticationMessage = reader.readLine();
-        // LOGGER.info(authenticationMessage);
+        LOGGER.info(authenticationMessage);
+
+        return authenticationMessage;
     }
 
     public BufferedReader getReader() {
