@@ -1,6 +1,8 @@
 package com.aj.esa;
 
+import com.aj.esa.models.AuthenticationMessage;
 import com.aj.models.UserSession;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class EsaClientTest {
     private SocketFactory factory;
     private Socket socket;
+    private ObjectMapper mapper;
     private ByteArrayOutputStream outputStream;
     private EsaClient client;
 
@@ -34,7 +37,9 @@ class EsaClientTest {
         when(userSession.getEsaAppKey()).thenReturn("AppKey");
         when(userSession.getToken()).thenReturn("Session");
 
-        client = new EsaClient(factory, userSession);
+        mapper = mock(ObjectMapper.class);
+
+        client = new EsaClient(factory, userSession, mapper);
     }
 
     @Test
@@ -52,11 +57,20 @@ class EsaClientTest {
     void authenticate() throws IOException {
         client.connect(3);
 
-        String result = client.authenticate();
-        String payLoad = "{\"op\":\"authentication\"," +
-                "\"appKey\":\"AppKey\"," +
-                "\"session\":\"Session\"}\n";
+        AuthenticationMessage message = AuthenticationMessage.builder()
+                .op("authentication")
+                .appKey("AppKey")
+                .session("Session").build();
 
-        assertArrayEquals(outputStream.toByteArray(), payLoad.getBytes());
+        ObjectMapper om = new ObjectMapper();
+        String payLoad = om.writeValueAsString(message);
+
+        when(mapper.writeValueAsString(any(AuthenticationMessage.class)))
+                .thenReturn(payLoad);
+
+        String result = client.authenticate();
+
+        assertArrayEquals(outputStream.toByteArray(), (payLoad + "\n").getBytes());
+        assertEquals(client.getReader().readLine(), result);
     }
 }

@@ -1,6 +1,8 @@
 package com.aj.esa;
 
+import com.aj.esa.models.AuthenticationMessage;
 import com.aj.models.UserSession;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,13 +12,18 @@ import java.net.Socket;
 public class EsaClient {
     private final Logger LOGGER = LoggerFactory.getLogger(EsaClient.class);
     private final SocketFactory socketFactory;
+    private final ObjectMapper mapper;
     private BufferedReader reader;
     private PrintWriter writer;
     private UserSession userSession;
 
-    public EsaClient(SocketFactory socketFactory, UserSession userSession) {
+    public EsaClient(
+            SocketFactory socketFactory,
+            UserSession userSession,
+            ObjectMapper mapper) {
         this.socketFactory = socketFactory;
         this.userSession = userSession;
+        this.mapper = mapper;
     }
 
     public BufferedReader getReader() {
@@ -33,11 +40,16 @@ public class EsaClient {
     }
 
     public String authenticate() throws IOException {
-        String payLoad = String.format("{\"op\":\"authentication\"," +
-                "\"appKey\":\"%s\",\"session\":\"%s\"}",
-                userSession.getEsaAppKey(), userSession.getToken());
+        AuthenticationMessage message = AuthenticationMessage.builder()
+                .op("authentication")
+                .appKey(userSession.getEsaAppKey())
+                .session(userSession.getToken()).build();
+
+        String payLoad = mapper.writeValueAsString(message);
+
         writer.println(payLoad);
         writer.flush();
+
         return logAndReturnResponse();
     }
 
