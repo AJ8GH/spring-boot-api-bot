@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -91,15 +92,23 @@ class JsonDeserialiserTest {
         assertEquals("Newcastle v West Ham", events.get(0).getName());
         assertEquals("GB", events.get(0).getCountryCode());
         assertEquals("GMT", events.get(0).getTimezone());
-        assertEquals("2021-08-15T13:00:00.000Z", events.get(0).getOpenDate());
         assertEquals(5, events.get(0).getMarketCount());
+
+        String date = "2021-08-15T13:00:00.000Z";
+        LocalDateTime parsedDate = LocalDateTime.parse(date.substring(0, date.length() - 1));
+        assertEquals(parsedDate, events.get(0).getDateTime());
+        assertEquals(date, events.get(0).getOpenDate());
 
         assertEquals(29865701L, events.get(1).getId());
         assertEquals("Everton v Southampton", events.get(1).getName());
         assertEquals("GB", events.get(1).getCountryCode());
         assertEquals("GMT", events.get(1).getTimezone());
-        assertEquals("2021-06-22T16:15:00.000Z", events.get(1).getOpenDate());
         assertEquals(6, events.get(1).getMarketCount());
+
+        date = "2021-06-22T16:15:00.000Z";
+        parsedDate = LocalDateTime.parse(date.substring(0, date.length() - 1));
+        assertEquals(parsedDate, events.get(1).getDateTime());
+        assertEquals(date, events.get(1).getOpenDate());
     }
 
     @Test
@@ -114,7 +123,7 @@ class JsonDeserialiserTest {
         assertEquals("Soccer", marketCatalogueList.get(0).getEventType().getName());
         assertEquals("Leicester v Wolves", marketCatalogueList.get(0).getEvent().getName());
         assertEquals("English Premier League", marketCatalogueList.get(0).getCompetition().getName());
-        assertEquals(509933, marketCatalogueList.get(0).getCompetition().getId());
+        assertEquals("509933", marketCatalogueList.get(0).getCompetition().getId());
 
         assertEquals("1.179345012", marketCatalogueList.get(1).getMarketId());
         assertEquals("Over/Under 2.5 goals", marketCatalogueList.get(1).getMarketName());

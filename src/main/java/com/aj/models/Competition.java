@@ -12,7 +12,8 @@ import javax.persistence.*;
 public class Competition {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private long entityId;
     @JsonProperty("id")
-    private long id;
+    private String id;
     private String name;
 }

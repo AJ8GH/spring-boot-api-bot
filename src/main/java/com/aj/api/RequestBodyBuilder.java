@@ -13,8 +13,8 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
             "\"EXECUTABLE\",\"betIds\": [\"%s\"]}";
     private final String LIST_MARKET_CATALOGUE_BODY =
             "{\"filter\":{\"%s\":[\"%s\"]},\"marketProjection\": " +
-            "[\"RUNNER_DESCRIPTION\", \"EVENT\", \"COMPETITION\", \"EVENT\", " +
-            "\"EVENT_TYPE\"\"],\"maxResults\":\"200\"}";
+            "[\"RUNNER_DESCRIPTION\", \"COMPETITION\", \"EVENT\", " +
+            "\"EVENT_TYPE\"],\"maxResults\":\"200\"}";
     private final String LIST_MARKET_BOOK_BODY =
             "{\"marketIds\": [\"%s\"],\"priceProjection\"" +
             ": {\"priceData\": [\"EX_BEST_OFFERS\", \"EX_TRADED\"]," +

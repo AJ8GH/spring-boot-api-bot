@@ -18,8 +18,6 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class EventController extends AbstractController {
-    private final EventTypeRepository eventTypeRepository;
-    private final EventRepository eventRepository;
     private final ApiClientService apiClient;
     private final DeserialisationService jsonDeserialiser;
 

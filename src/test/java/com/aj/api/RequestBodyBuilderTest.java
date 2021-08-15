@@ -32,7 +32,7 @@ public class RequestBodyBuilderTest {
         String filterType = "eventIds";
         String body = "{\"filter\":{\"" + filterType + "\":[\"" + eventId +
                 "\"]},\"marketProjection\": [\"RUNNER_DESCRIPTION\", " +
-                "\"EVENT\", \"COMPETITION\", \"EVENT\", \"EVENT_TYPE\"\"]," +
+                "\"COMPETITION\", \"EVENT\", \"EVENT_TYPE\"]," +
                 "\"maxResults\":\"200\"}";
 
         assertEquals(body, requestBodyBuilder.listMarketCatalogueBody(filterType, eventId));

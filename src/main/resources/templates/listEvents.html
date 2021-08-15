@@ -23,8 +23,13 @@
                     <div class="eventData">
                         <p th:text="${ event.getName() }" class="eventName"></p>
                         <p th:text="${ event.getCountryCode() }" class="country"></p>
-                        <p th:text="${ event.getOpenDate() }" class="date"></p>
-                        <p th:text="${ event.getMarketCount() }" class="marketCount"></p>
+                        <p>
+                            <span th:text="${ event.getDateTime().toLocalDate() }" class="date"></span>
+                            <span> </span>
+                            <span th:text="${ event.getDateTime().toLocalTime() }" class="date"></span>
+                        </p>
+                        <span>Market Count: </span>
+                        <span th:text="${ event.getMarketCount() }" class="marketCount"></span>
                     </div>
                     <div class="buttonContainer">
                         <a th:href="@{/listMarketCatalogue/{eventId}(eventId=${event.getId()})}">

@@ -26,30 +26,23 @@ class EnricherTest {
         List<Runner> runners = Arrays.asList(runner1, runner2);
         marketBook.setRunners(runners);
 
-        MarketCatalogue market1 = new MarketCatalogue();
-        MarketCatalogue market2 = new MarketCatalogue();
-        MarketCatalogue market3 = new MarketCatalogue();
-        List<MarketCatalogue> marketList = Arrays.asList(market1, market2, market3);
+        MarketCatalogue marketCatalogue = new MarketCatalogue();
 
-        market2.setMarketId("1.1");
-        market2.setMarketName("New Market Name");
+        marketCatalogue.setMarketId("1.1");
+        marketCatalogue.setMarketName("New Market Name");
 
         Runner runner3 = new Runner();
         Runner runner4 = new Runner();
         Runner runner5 = new Runner();
         runner4.setSelectionId(999L);
         runner5.setSelectionId(55L);
-        List<Runner> runners2 = Arrays.asList(runner3, runner4, runner5);
-        market2.setRunners(runners2);
-
         runner4.setRunnerName("999 Runner Name");
         runner5.setRunnerName("55 Runner Name");
+        List<Runner> runners2 = Arrays.asList(runner3, runner4, runner5);
+        marketCatalogue.setRunners(runners2);
 
-        MarketCatalogueRepository repository = mock(MarketCatalogueRepository.class);
-        when(repository.findAll()).thenReturn(marketList);
-
-        Enricher enricher = new Enricher(repository);
-        enricher.enrichMarketBook(marketBook);
+        Enricher enricher = new Enricher();
+        enricher.enrichMarketBook(marketBook, marketCatalogue);
 
         assertEquals("New Market Name", marketBook.getMarketName());
         assertEquals("999 Runner Name", runner1.getRunnerName());

@@ -4,6 +4,7 @@ import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
 import com.aj.models.Bet;
 import com.aj.models.CancelExecutionReport;
+
 import com.aj.repositories.BetRepository;
 import com.aj.repositories.CancelExecutionReportRepository;
 import lombok.AllArgsConstructor;
@@ -23,8 +24,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class BetController extends AbstractController {
     private final ApiClientService apiClient;
-    private final DeserialisationService jsonDeserialiser;
     private final BetRepository betRepository;
+    private final DeserialisationService jsonDeserialiser;
     private final CancelExecutionReportRepository reportRepository;
 
     @RequestMapping("/listCurrentOrders")

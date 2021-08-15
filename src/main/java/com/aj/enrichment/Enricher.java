@@ -8,20 +8,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
 public class Enricher implements EnrichmentService {
-    private final MarketCatalogueRepository marketCatalogueRepository;
 
     @Override
-    public void enrichMarketBook(MarketBook marketBook) {
-        for (MarketCatalogue marketCatalogue : marketCatalogueRepository.findAll()) {
-            if (marketBook.getMarketId().equals(marketCatalogue.getMarketId())) {
-                marketBook.setMarketName(marketCatalogue.getMarketName());
-                if (marketBook.getRunners() != null) {
-                    enrichRunners(marketBook, marketCatalogue);
-                }
-            }
-        }
+    public void enrichMarketBook(MarketBook book, MarketCatalogue catalogue) {
+        book.setMarketName(catalogue.getMarketName());
+        if (book.getRunners() != null) enrichRunners(book, catalogue);
     }
 
     private void enrichRunners(

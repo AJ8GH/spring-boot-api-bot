@@ -22,10 +22,13 @@ public class MarketCatalogue {
     @OneToMany(cascade = {CascadeType.ALL})
     @ToString.Exclude
     private List<Runner> runners;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "eventType_ID")
     private EventType eventType;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "event_ID")
     private Event event;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "competition_ID")
     private Competition competition;
 }

@@ -1,6 +1,9 @@
 package com.aj.models;
 
+import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +19,6 @@ class EventTest {
         assertTrue(event.toString().contains(event.getCountryCode()));
         assertTrue(event.toString().contains(event.getTimezone()));
         assertTrue(event.toString().contains(event.getMarketCount().toString()));
-        assertTrue(event.toString().contains(event.getOpenDate()));
     }
 
     @Test
@@ -28,7 +30,6 @@ class EventTest {
         assertEquals("name", event.getName());
         assertEquals("countryCode", event.getCountryCode());
         assertEquals("timeZone", event.getTimezone());
-        assertEquals("openDate", event.getOpenDate());
         assertEquals(30, event.getMarketCount());
     }
 }

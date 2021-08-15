@@ -7,7 +7,6 @@ import com.aj.esa.EsaClient;
 import com.aj.models.MarketBook;
 import com.aj.models.MarketCatalogue;
 import com.aj.models.UserSession;
-import com.aj.repositories.MarketCatalogueRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +20,6 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class MarketController extends AbstractController {
-    private final MarketCatalogueRepository marketCatalogueRepository;
     private final ApiClientService apiClient;
     private final DeserialisationService jsonDeserialiser;
     private final EnrichmentService enricher;
@@ -34,7 +32,6 @@ public class MarketController extends AbstractController {
 
         String response = apiClient.listMarketCatalogue("eventIds", eventId);
         List<MarketCatalogue> marketCatalogueList = jsonDeserialiser.mapToMarketCatalogue(response);
-        marketCatalogueRepository.saveAll(marketCatalogueList);
         model.addAttribute("marketCatalogue", marketCatalogueList);
         return "listMarketCatalogue";
     }
@@ -44,16 +41,23 @@ public class MarketController extends AbstractController {
                                  Model model) throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
-        String response = apiClient.listMarketBook(marketId);
-        MarketBook marketBook = jsonDeserialiser.mapToMarketBook(response);
-        enricher.enrichMarketBook(marketBook);
+        String marketBookResponse = apiClient.listMarketBook(marketId);
+        String marketCatalogueResponse = apiClient.listMarketCatalogue("marketIds", marketId);
+
+        MarketBook marketBook = jsonDeserialiser.mapToMarketBook(marketBookResponse);
+        MarketCatalogue marketCatalogue = jsonDeserialiser
+                .mapToMarketCatalogue(marketCatalogueResponse)
+                .get(0);
+
+        enricher.enrichMarketBook(marketBook, marketCatalogue);
         model.addAttribute("marketBook", marketBook);
+
         return "listMarketBook";
     }
 
     @RequestMapping("/marketSubscription/new/{marketId}")
     public String newMarketSubscription(@PathVariable("marketId") String marketId,
-                                     Model model) throws IOException {
+                                     Model model) {
         model.addAttribute("marketId", marketId);
         return "newMarketSubscription";
     }

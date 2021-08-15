@@ -17,8 +17,11 @@
             </div>
 
             <h2>Market Catalogue</h2>
+            <div th:text="${marketCatalogue.get(0).getEventType().getName()}"></div>
+            <div th:text="${marketCatalogue.get(0).getCompetition().getName()}"></div>
+            <div th:text="${marketCatalogue.get(0).getEvent().getName()}"></div>
 
-            <div th:unless="${ marketCatalogue == null || marketCatalogue.size() < 0 }">
+            <div th:unless="${ marketCatalogue == null }">
                 <div th:each="market : ${ marketCatalogue }" class="market">
                     <div class="marketNameContainer">
                         <p th:text="${ market.getMarketName() }" class="marketName"></p>
