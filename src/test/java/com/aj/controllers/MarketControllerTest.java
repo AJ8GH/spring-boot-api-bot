@@ -2,6 +2,7 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
+import com.aj.esa.EsaClient;
 import com.aj.models.UserSession;
 import com.aj.repositories.MarketBookRepository;
 import com.aj.repositories.RunnerRepository;
@@ -33,6 +34,8 @@ class MarketControllerTest {
     MarketBookRepository marketBookRepository;
     @MockBean
     RunnerRepository runnerRepository;
+    @MockBean
+    EsaClient esaClient;
 
     @BeforeEach
     void setup() {

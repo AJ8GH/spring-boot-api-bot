@@ -1,4 +1,4 @@
-.eventType, .event {
+.eventType, .event, .marketName {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -14,17 +14,19 @@
 
 .marketName {
     font-size: 20px;
+    width: 30%;
 }
+
 
 .bet {
     padding: 10px;
     margin-top: 10px;
-    width: 30%;
+    width: 25%;
     margin-left: auto;
     margin-right: auto;
 }
 
-.bet, .betDetail, .betDetailLabel, .cancelButton {
+.bet, .betDetail, .betDetailLabel, .cancelButton, .marketName {
     border-radius: 5px;
     background-color: #C8D8E4;
     color: #2B6777;

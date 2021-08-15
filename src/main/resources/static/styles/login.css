@@ -10,7 +10,7 @@
     width: 20%;
 }
 
-.username, .password {
+.username, .password, .timeout {
     color: #2B6777;
     background-color: #C8D8E4;
 }

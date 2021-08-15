@@ -1,0 +1,22 @@
+.button {
+}
+
+.marketName {
+    height: 90%;
+}
+
+.button {
+    display: inline;
+}
+
+.market {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.marketNameContainer, .buttonContainer {
+    flex: 1;
+}

@@ -29,7 +29,6 @@ public class EventController extends AbstractController {
 
         String response = apiClient.listEventTypes();
         List<EventType> eventTypes = jsonDeserialiser.mapToEventTypeList(response);
-        eventTypeRepository.saveAll(eventTypes);
         model.addAttribute("eventTypes", eventTypes);
         return "listEventTypes";
     }
@@ -41,7 +40,6 @@ public class EventController extends AbstractController {
 
         String response = apiClient.listEvents(eventTypeId);
         List<Event> events = jsonDeserialiser.mapToEventList(response);
-        eventRepository.saveAll(events);
         model.addAttribute("events", events);
         return "listEvents";
     }

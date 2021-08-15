@@ -25,7 +25,22 @@ public class ListMarketCatalogueResponse {
                 "                    \"runnerId\": \"4699139\"\n" +
                 "                }\n" +
                 "            }\n" +
-                "        ]\n" +
+                "        ],\n" +
+                "       \"eventType\": {\n" +
+                "            \"id\": \"1\",\n" +
+                "            \"name\": \"Soccer\"\n" +
+                "        },\n" +
+                "        \"competition\": {\n" +
+                "            \"id\": \"509933\",\n" +
+                "            \"name\": \"English Premier League\"\n" +
+                "        },\n" +
+                "        \"event\": {\n" +
+                "            \"id\": \"29865693\",\n" +
+                "            \"name\": \"Leicester v Wolves\",\n" +
+                "            \"countryCode\": \"GB\",\n" +
+                "            \"timezone\": \"GMT\",\n" +
+                "            \"openDate\": \"2021-08-14T14:00:00.000Z\"\n" +
+                "        }" +
                 "    },\n" +
                 "    {\n" +
                 "        \"marketId\": \"1.179345012\",\n" +

@@ -22,5 +22,10 @@ public class MarketCatalogue {
     @OneToMany(cascade = {CascadeType.ALL})
     @ToString.Exclude
     private List<Runner> runners;
-
+    @ManyToOne
+    private EventType eventType;
+    @ManyToOne
+    private Event event;
+    @ManyToOne
+    private Competition competition;
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta http-equiv="refresh" content="3">
+        <link rel="stylesheet" th:href="@{/styles/main.css}">
+        <link rel="stylesheet" th:href="@{/styles/marketSubscription.css}">
+        <title>Betfair API Bot - Market Catalogue</title>
+    </head>
+    <body class="body">
+        <div class="pageContainer">
+            <div class="heading">
+                <h1 class="mainTitle">Betfair API Bot</h1>
+            </div>
+
+            <h2>Market Subscription</h2>
+
+            <div>
+                <p th:text="${marketChange}"></p>
+            </div>
+        </div>
+    </body>
+</html>
