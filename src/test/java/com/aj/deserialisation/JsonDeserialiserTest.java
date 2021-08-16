@@ -1,6 +1,6 @@
 package com.aj.deserialisation;
 
-import com.aj.esa.models.MarketCache;
+import com.aj.esa.models.ResponseMessage;
 import com.aj.helpers.ListMarketBookResponse;
 import com.aj.helpers.ListMarketCatalogueResponse;
 import com.aj.helpers.ListOrdersResponse;
@@ -202,14 +202,18 @@ class JsonDeserialiserTest {
         assertEquals("2021-08-07T18:59:28.000Z", cancelExecutionReport.getCancelledDate());
     }
 
-    // @Test
-    // void testMapToMarketCacheObject() throws JsonProcessingException {
-    //     String json = "{\"op\":\"mcm\",\"id\":0,\"mc\":[{\"id\":\"1.179268396\",\"rc\":[{\"batl\":[[0,2,1.7]],\n" +
-    //             "\"bdatb\":[[0,0,0],[1,0,0],[2,0,0],[3,0,0],[4,0,0],[5,0,0],[6,0,0],[7,0,0],[8,0,0],[9,0,0]],\n" +
-    //             "\"bdatl\":[[0,2,1.7],[1,0,0],[2,0,0],[3,0,0],[4,0,0],[5,0,0],[6,0,0],[7,0,0],[8,0,0],[9,0,0]],\n" +
-    //             "\"id\":47999}],\"img\":true}]}";
-    //     MarketCache marketCache = jsonDeserialiser.mapToObject(json, MarketCache.class);
-    //     System.out.println(marketCache.getRunnerCaches());
-    //     // System.out.println(marketCache.getRunnerCaches());
-    // }
+    @Test
+    void testMapToResponseMessageObject() throws JsonProcessingException {
+        String json = "{\"op\":\"mcm\",\"id\":0,\"mc\":[{\"id\":\"1.179268396\",\"rc\":[{\"batl\":[[0,2,1.7]],\n" +
+                "\"bdatb\":[[0,0,0],[1,0,0],[2,0,0],[3,0,0],[4,0,0],[5,0,0],[6,0,0],[7,0,0],[8,0,0],[9,0,0]],\n" +
+                "\"bdatl\":[[0,2,1.7],[1,0,0],[2,0,0],[3,0,0],[4,0,0],[5,0,0],[6,0,0],[7,0,0],[8,0,0],[9,0,0]],\n" +
+                "\"id\":47999}],\"img\":true}]}";
+
+        ResponseMessage responseMessage = jsonDeserialiser.mapToObject(json, ResponseMessage.class);
+
+        assertEquals(0, responseMessage.getId());
+        assertEquals("mcm", responseMessage.getOp());
+        assertEquals(2, responseMessage.getMc().get(0).getRc().get(0).getBatl().get(0).get(1));
+        assertEquals(1.7, responseMessage.getMc().get(0).getRc().get(0).getBatl().get(0).get(2));
+    }
 }
