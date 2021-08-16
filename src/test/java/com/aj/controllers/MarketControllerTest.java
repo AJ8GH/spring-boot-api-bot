@@ -49,9 +49,6 @@ class MarketControllerTest {
         when(apiClient.getUserSession()).thenReturn(userSession);
 
         MarketCatalogue catalogue = mock(MarketCatalogue.class);
-        when(catalogue.getCompetition()).thenReturn(new Competition());
-        when(catalogue.getEvent()).thenReturn(new Event());
-        when(catalogue.getEventType()).thenReturn(new EventType());
 
         when(jsonDeserialiser.mapToMarketCatalogue(any())).thenReturn(List.of(catalogue));
     }

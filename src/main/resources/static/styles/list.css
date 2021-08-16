@@ -20,7 +20,7 @@
     margin-right: auto;
 }
 
-.bet, .betDetail, .betDetailLabel, .cancelButton, .marketName {
+.bet, .betDetail, .betDetailLabel, .cancelButton, .marketName, .runnerName {
     border-radius: 5px;
     background-color: #C8D8E4;
     color: #2B6777;

@@ -60,7 +60,9 @@ public class BetController extends AbstractController {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
         String response = apiClient.placeOrders(marketId, selectionId, side, size, price);
+        System.out.println(response);
         Bet bet = jsonDeserialiser.mapToObject(response, Bet.class);
+        System.out.println(bet);
         return ("redirect:/bets/" + bet.getBetId());
     }
 

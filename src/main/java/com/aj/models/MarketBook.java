@@ -29,10 +29,7 @@ public class MarketBook {
     @OneToMany
     @ToString.Exclude
     private List<Runner> runners;
-    @ManyToOne
-    private Competition competition;
-    @ManyToOne
-    private EventType eventType;
-    @ManyToOne
-    private Event event;
+    private String competitionName;
+    private String eventTypeName;
+    private String eventName;
 }

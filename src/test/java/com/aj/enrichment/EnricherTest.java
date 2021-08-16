@@ -26,39 +26,32 @@ class EnricherTest {
                 .runners(runners)
                 .build();
 
-        Event event = new Event();
-        event.setName("eventName");
-        EventType eventType = new EventType();
-        eventType.setName("eventTypeName");
-        Competition competition = new Competition();
-        competition.setName("competitionName");
-
         Runner runner3 = new Runner();
         Runner runner4 = new Runner();
         Runner runner5 = new Runner();
         runner4.setSelectionId(999L);
         runner5.setSelectionId(55L);
-        runner4.setRunnerName("999 Runner Name");
-        runner5.setRunnerName("55 Runner Name");
+        runner4.setRunnerName("999 Runner");
+        runner5.setRunnerName("55 Runner");
         List<Runner> runners2 = Arrays.asList(runner3, runner4, runner5);
 
         MarketCatalogue marketCatalogue = MarketCatalogue.builder()
                 .marketId("1.1")
-                .marketName("New Market Name")
+                .marketName("New Market")
                 .runners(runners2)
-                .event(event)
-                .eventType(eventType)
-                .competition(competition)
+                .eventName("event")
+                .eventTypeName("eventType")
+                .competitionName("competition")
                 .build();
 
         Enricher enricher = new Enricher();
         enricher.enrichMarketBook(marketBook, marketCatalogue);
 
-        assertEquals("New Market Name", marketBook.getMarketName());
-        assertEquals("999 Runner Name", runner1.getRunnerName());
-        assertEquals("55 Runner Name", runner2.getRunnerName());
-        assertEquals("eventName", marketBook.getEvent().getName());
-        assertEquals("eventTypeName", marketBook.getEventType().getName());
-        assertEquals("competitionName", marketBook.getCompetition().getName());
+        assertEquals("New Market", marketBook.getMarketName());
+        assertEquals("999 Runner", runner1.getRunnerName());
+        assertEquals("55 Runner", runner2.getRunnerName());
+        assertEquals("event", marketBook.getEventName());
+        assertEquals("eventType", marketBook.getEventTypeName());
+        assertEquals("competition", marketBook.getCompetitionName());
     }
 }

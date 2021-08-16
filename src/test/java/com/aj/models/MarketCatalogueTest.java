@@ -13,7 +13,7 @@ class MarketCatalogueTest {
     void testMarketCatalogue() {
         List<Runner> runners = new ArrayList<>();
         MarketCatalogue marketCatalogue = new MarketCatalogue(9L, "1.23",
-                "name", 0.0, runners, new EventType(), new Event(), new Competition());
+                "name", 0.0, runners, "eventType", "event", "competition");
 
         assertEquals("1.23", marketCatalogue.getMarketId());
         assertEquals("name", marketCatalogue.getMarketName());
@@ -26,7 +26,7 @@ class MarketCatalogueTest {
     void testToString() {
         List<Runner> runners = new ArrayList<>();
         MarketCatalogue marketCatalogue = new MarketCatalogue(9L, "1.23",
-                "name", 0.0, runners, new EventType(), new Event(), new Competition());
+                "name", 0.0, runners, "eventType", "event", "competition");
 
         String toString = marketCatalogue.toString();
         assertTrue(toString.contains(marketCatalogue.getMarketId()));

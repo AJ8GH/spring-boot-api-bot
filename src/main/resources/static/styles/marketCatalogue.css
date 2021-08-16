@@ -4,6 +4,11 @@
     margin-top: 5px;
 }
 
+.marketTitle {
+    font-size: 30px;
+    font-weight: 900;
+}
+
 .marketDescription {
     margin-bottom: 20px;
 }
@@ -21,13 +26,13 @@ a {
     text-decoration: none;
 }
 
-.marketName {
+.marketName, .runnerName {
     width: 250px;
     padding: 20px;
     font-size: 18px;
 }
 
-.marketName, a, .button {
+.marketName, a, .button, .runnerName {
     display: inline-block;
 }
 
