@@ -6,6 +6,7 @@ import com.aj.enrichment.EnrichmentService;
 import com.aj.esa.EsaClient;
 import com.aj.models.*;
 import com.aj.repositories.MarketBookRepository;
+import com.aj.repositories.MarketCatalogueRepository;
 import com.aj.repositories.RunnerRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,6 +40,8 @@ class MarketControllerTest {
     DeserialisationService jsonDeserialiser;
     @MockBean
     EnrichmentService enricher;
+    @MockBean
+    MarketCatalogueRepository marketCatalogueRepository;
     @MockBean
     EsaClient esaClient;
 

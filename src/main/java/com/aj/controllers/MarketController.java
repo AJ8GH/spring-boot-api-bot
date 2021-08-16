@@ -7,6 +7,7 @@ import com.aj.esa.EsaClient;
 import com.aj.models.MarketBook;
 import com.aj.models.MarketCatalogue;
 import com.aj.models.UserSession;
+import com.aj.repositories.MarketCatalogueRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ public class MarketController extends AbstractController {
     private final ApiClientService apiClient;
     private final DeserialisationService jsonDeserialiser;
     private final EnrichmentService enricher;
+    private final MarketCatalogueRepository marketCatalogueRepository;
     private final EsaClient esaClient;
 
     @RequestMapping("/listMarketCatalogue/{eventId}")
@@ -32,6 +34,7 @@ public class MarketController extends AbstractController {
 
         String response = apiClient.listMarketCatalogue("eventIds", eventId);
         List<MarketCatalogue> marketCatalogueList = jsonDeserialiser.mapToMarketCatalogue(response);
+        marketCatalogueRepository.saveAll(marketCatalogueList);
         model.addAttribute("marketCatalogue", marketCatalogueList);
         return "listMarketCatalogue";
     }
@@ -42,14 +45,9 @@ public class MarketController extends AbstractController {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
         String marketBookResponse = apiClient.listMarketBook(marketId);
-        String marketCatalogueResponse = apiClient.listMarketCatalogue("marketIds", marketId);
-
         MarketBook marketBook = jsonDeserialiser.mapToMarketBook(marketBookResponse);
-        MarketCatalogue marketCatalogue = jsonDeserialiser
-                .mapToMarketCatalogue(marketCatalogueResponse)
-                .get(0);
 
-        enricher.enrichMarketBook(marketBook, marketCatalogue);
+        enricher.enrichMarketBook(marketBook, marketCatalogueRepository.findAll());
         model.addAttribute("marketBook", marketBook);
 
         return "listMarketBook";
