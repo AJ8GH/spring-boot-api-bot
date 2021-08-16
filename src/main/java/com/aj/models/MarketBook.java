@@ -10,6 +10,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Getter
 @Setter
 @ToString
@@ -28,4 +29,10 @@ public class MarketBook {
     @OneToMany
     @ToString.Exclude
     private List<Runner> runners;
+    @ManyToOne
+    private Competition competition;
+    @ManyToOne
+    private EventType eventType;
+    @ManyToOne
+    private Event event;
 }

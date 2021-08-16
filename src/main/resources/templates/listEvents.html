@@ -23,12 +23,12 @@
                     <div class="eventData">
                         <p th:text="${ event.getName() }" class="eventName"></p>
                         <p th:text="${ event.getCountryCode() }" class="country"></p>
-                        <p>
+                        <p class="dateContainer">
                             <span th:text="${ event.getDateTime().toLocalDate() }" class="date"></span>
-                            <span> </span>
-                            <span th:text="${ event.getDateTime().toLocalTime() }" class="date"></span>
+                            <span class="at"> at </span>
+                            <span th:text="${ event.getDateTime().toLocalTime() }" class="time"></span>
                         </p>
-                        <span>Market Count: </span>
+                        <span class="marketCountLabel">Market Count: </span>
                         <span th:text="${ event.getMarketCount() }" class="marketCount"></span>
                     </div>
                     <div class="buttonContainer">

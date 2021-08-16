@@ -13,6 +13,9 @@ public class Enricher implements EnrichmentService {
     @Override
     public void enrichMarketBook(MarketBook book, MarketCatalogue catalogue) {
         book.setMarketName(catalogue.getMarketName());
+        book.setEvent(catalogue.getEvent());
+        book.setEventType(catalogue.getEventType());
+        book.setCompetition(catalogue.getCompetition());
         if (book.getRunners() != null) enrichRunners(book, catalogue);
     }
 

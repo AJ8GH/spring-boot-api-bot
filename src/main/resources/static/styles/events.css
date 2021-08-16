@@ -1,6 +1,10 @@
-.eventData, .eventName, .country, .marketCount, .date {
+.eventData, .eventName, .country, .marketCount, .date, .time, .dateContainer, .at, .marketCountLabel {
     background-color: #C8D8E4;
     color: #2B6777;
+}
+
+.date, .time {
+    font-weight: 600;
 }
 
 .eventData {
@@ -9,7 +13,7 @@
 }
 
 .event {
-    margin-top: 5px;
+    margin-top: 10px;
     display: flex;
     width: 40%;
 }
@@ -21,10 +25,12 @@
 
 .buttonContainer {
     height: 100%;
-    width: 30%;
 }
 
 .eventData, .button {
     height: 160px;
-    margin: 5px;
+}
+
+.button {
+    margin-left: 10px;
 }

@@ -12,8 +12,8 @@ class MarketBookTest {
     @Test
     void testMarketBook() {
         List<Runner> runners = new ArrayList<>();
-        MarketBook marketBook = new MarketBook(9L, "1.23", "name",
-                "status", true, 10, 0.0, 1.1, runners);
+        MarketBook marketBook = new MarketBook(9L, "1.23", "name", "status", true, 10,
+                0.0, 1.1, runners, new Competition(), new EventType(), new Event());
 
         assertEquals(9L, marketBook.getId());
         assertEquals("1.23", marketBook.getMarketId());
@@ -28,8 +28,8 @@ class MarketBookTest {
     @Test
     void testToString() {
         List<Runner> runners = new ArrayList<>();
-        MarketBook marketBook = new MarketBook(9L, "1.23", "name",
-                "status", true, 10, 0.0, 1.1, runners);
+        MarketBook marketBook = new MarketBook(9L, "1.23", "name", "status", true, 10,
+                0.0, 1.1, runners, new Competition(), new EventType(), new Event());
 
         String toString = marketBook.toString();
 

@@ -1,8 +1,6 @@
 package com.aj.enrichment;
 
-import com.aj.models.MarketBook;
-import com.aj.models.MarketCatalogue;
-import com.aj.models.Runner;
+import com.aj.models.*;
 import com.aj.repositories.MarketCatalogueRepository;
 import org.junit.jupiter.api.Test;
 
@@ -17,19 +15,23 @@ class EnricherTest {
 
     @Test
     void testEnrichMarketBook() {
-        MarketBook marketBook = new MarketBook();
-        marketBook.setMarketId("1.1");
         Runner runner1 = new Runner();
         Runner runner2 = new Runner();
         runner1.setSelectionId(999L);
         runner2.setSelectionId(55L);
         List<Runner> runners = Arrays.asList(runner1, runner2);
-        marketBook.setRunners(runners);
 
-        MarketCatalogue marketCatalogue = new MarketCatalogue();
+        MarketBook marketBook = MarketBook.builder()
+                .marketId("1.1")
+                .runners(runners)
+                .build();
 
-        marketCatalogue.setMarketId("1.1");
-        marketCatalogue.setMarketName("New Market Name");
+        Event event = new Event();
+        event.setName("eventName");
+        EventType eventType = new EventType();
+        eventType.setName("eventTypeName");
+        Competition competition = new Competition();
+        competition.setName("competitionName");
 
         Runner runner3 = new Runner();
         Runner runner4 = new Runner();
@@ -39,7 +41,15 @@ class EnricherTest {
         runner4.setRunnerName("999 Runner Name");
         runner5.setRunnerName("55 Runner Name");
         List<Runner> runners2 = Arrays.asList(runner3, runner4, runner5);
-        marketCatalogue.setRunners(runners2);
+
+        MarketCatalogue marketCatalogue = MarketCatalogue.builder()
+                .marketId("1.1")
+                .marketName("New Market Name")
+                .runners(runners2)
+                .event(event)
+                .eventType(eventType)
+                .competition(competition)
+                .build();
 
         Enricher enricher = new Enricher();
         enricher.enrichMarketBook(marketBook, marketCatalogue);
@@ -47,5 +57,8 @@ class EnricherTest {
         assertEquals("New Market Name", marketBook.getMarketName());
         assertEquals("999 Runner Name", runner1.getRunnerName());
         assertEquals("55 Runner Name", runner2.getRunnerName());
+        assertEquals("eventName", marketBook.getEvent().getName());
+        assertEquals("eventTypeName", marketBook.getEventType().getName());
+        assertEquals("competitionName", marketBook.getCompetition().getName());
     }
 }

@@ -1,22 +1,36 @@
-.button {
+.event, .eventType, .competition {
+    font-weight: bold;
+    font-size: 24px;
+    margin-top: 5px;
 }
 
-.marketName {
-    height: 90%;
+.marketDescription {
+    margin-bottom: 20px;
 }
 
 .button {
     display: inline;
 }
 
-.market {
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-    margin-left: auto;
-    margin-right: auto;
+.button {
+    width: 200px;
+    font-size: 18px;
 }
 
-.marketNameContainer, .buttonContainer {
-    flex: 1;
+a {
+    text-decoration: none;
+}
+
+.marketName {
+    width: 250px;
+    padding: 20px;
+    font-size: 18px;
+}
+
+.marketName, a, .button {
+    display: inline-block;
+}
+
+.marketName, .button {
+    margin: 5px;
 }
