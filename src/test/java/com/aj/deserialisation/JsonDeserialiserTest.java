@@ -1,5 +1,6 @@
 package com.aj.deserialisation;
 
+import com.aj.esa.models.ResponseMessage;
 import com.aj.helpers.ListMarketBookResponse;
 import com.aj.helpers.ListMarketCatalogueResponse;
 import com.aj.helpers.ListOrdersResponse;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -90,15 +92,23 @@ class JsonDeserialiserTest {
         assertEquals("Newcastle v West Ham", events.get(0).getName());
         assertEquals("GB", events.get(0).getCountryCode());
         assertEquals("GMT", events.get(0).getTimezone());
-        assertEquals("2021-08-15T13:00:00.000Z", events.get(0).getOpenDate());
         assertEquals(5, events.get(0).getMarketCount());
+
+        String date = "2021-08-15T13:00:00.000Z";
+        LocalDateTime parsedDate = LocalDateTime.parse(date.substring(0, date.length() - 1));
+        assertEquals(parsedDate, events.get(0).getDateTime());
+        assertEquals(date, events.get(0).getOpenDate());
 
         assertEquals(29865701L, events.get(1).getId());
         assertEquals("Everton v Southampton", events.get(1).getName());
         assertEquals("GB", events.get(1).getCountryCode());
         assertEquals("GMT", events.get(1).getTimezone());
-        assertEquals("2021-06-22T16:15:00.000Z", events.get(1).getOpenDate());
         assertEquals(6, events.get(1).getMarketCount());
+
+        date = "2021-06-22T16:15:00.000Z";
+        parsedDate = LocalDateTime.parse(date.substring(0, date.length() - 1));
+        assertEquals(parsedDate, events.get(1).getDateTime());
+        assertEquals(date, events.get(1).getOpenDate());
     }
 
     @Test
@@ -110,6 +120,9 @@ class JsonDeserialiserTest {
         assertEquals("1.179345011", marketCatalogueList.get(0).getMarketId());
         assertEquals("Over/Under 0.5 Goals", marketCatalogueList.get(0).getMarketName());
         assertEquals(0.0, marketCatalogueList.get(0).getTotalMatched());
+        assertEquals("Soccer", marketCatalogueList.get(0).getEventTypeName());
+        assertEquals("Leicester v Wolves", marketCatalogueList.get(0).getEventName());
+        assertEquals("English Premier League", marketCatalogueList.get(0).getCompetitionName());
 
         assertEquals("1.179345012", marketCatalogueList.get(1).getMarketId());
         assertEquals("Over/Under 2.5 goals", marketCatalogueList.get(1).getMarketName());
@@ -187,5 +200,20 @@ class JsonDeserialiserTest {
         assertEquals("1.179344550", cancelExecutionReport.getMarketId());
         assertEquals(0.1, cancelExecutionReport.getSizeCancelled());
         assertEquals("2021-08-07T18:59:28.000Z", cancelExecutionReport.getCancelledDate());
+    }
+
+    @Test
+    void testMapToResponseMessageObject() throws JsonProcessingException {
+        String json = "{\"op\":\"mcm\",\"id\":0,\"mc\":[{\"id\":\"1.179268396\",\"rc\":[{\"batl\":[[0,2,1.7]],\n" +
+                "\"bdatb\":[[0,0,0],[1,0,0],[2,0,0],[3,0,0],[4,0,0],[5,0,0],[6,0,0],[7,0,0],[8,0,0],[9,0,0]],\n" +
+                "\"bdatl\":[[0,2,1.7],[1,0,0],[2,0,0],[3,0,0],[4,0,0],[5,0,0],[6,0,0],[7,0,0],[8,0,0],[9,0,0]],\n" +
+                "\"id\":47999}],\"img\":true}]}";
+
+        ResponseMessage responseMessage = jsonDeserialiser.mapToObject(json, ResponseMessage.class);
+
+        assertEquals(0, responseMessage.getId());
+        assertEquals("mcm", responseMessage.getOp());
+        assertEquals(2, responseMessage.getMc().get(0).getRc().get(0).getBatl().get(0).get(1));
+        assertEquals(1.7, responseMessage.getMc().get(0).getRc().get(0).getBatl().get(0).get(2));
     }
 }

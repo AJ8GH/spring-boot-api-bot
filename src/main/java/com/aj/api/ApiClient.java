@@ -60,9 +60,9 @@ public class ApiClient implements ApiClientService {
     }
 
     @Override
-    public String listMarketCatalogue(long eventId) throws IOException {
+    public String listMarketCatalogue(String filter, String id) throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
-        String body = requestBodyBuilder.listMarketCatalogueBody(eventId);
+        String body = requestBodyBuilder.listMarketCatalogueBody(filter, id);
         Request request = createBettingRequest(url, body);
         return CLIENT.newCall(request).execute().body().string();
     }

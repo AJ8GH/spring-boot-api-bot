@@ -28,12 +28,14 @@ public class RequestBodyBuilderTest {
     void testListMarketCatalogueBody() {
         RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
 
-        long eventId = 999L;
-        String body = "{\"filter\":{\"eventIds\":[" + eventId +
-                "]},\"marketProjection\": [\"RUNNER_DESCRIPTION\"]," +
+        String eventId = "999";
+        String filterType = "eventIds";
+        String body = "{\"filter\":{\"" + filterType + "\":[\"" + eventId +
+                "\"]},\"marketProjection\": [\"RUNNER_DESCRIPTION\", " +
+                "\"COMPETITION\", \"EVENT\", \"EVENT_TYPE\"]," +
                 "\"maxResults\":\"200\"}";
 
-        assertEquals(body, requestBodyBuilder.listMarketCatalogueBody(eventId));
+        assertEquals(body, requestBodyBuilder.listMarketCatalogueBody(filterType, eventId));
     }
 
     @Test
@@ -41,7 +43,7 @@ public class RequestBodyBuilderTest {
         RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
         String marketId = "1.23456789";
 
-        String body = "{\"marketIds\": [" + marketId + "],\"priceProjection\"" +
+        String body = "{\"marketIds\": [\"" + marketId + "\"],\"priceProjection\"" +
                 ": {\"priceData\": [\"EX_BEST_OFFERS\", \"EX_TRADED\"]," +
                 "\"virtualise\": \"true\"}}}";
 

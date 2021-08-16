@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" th:href="@{/styles/main.css}">
         <link rel="stylesheet" th:href="@{/styles/list.css}">
+        <link rel="stylesheet" th:href="@{/styles/marketCatalogue.css}">
         <title>Betfair API Bot - Market Book</title>
     </head>
     <body class="body">
@@ -15,20 +16,25 @@
                 <h1 class="mainTitle">Betfair API Bot</h1>
             </div>
 
-            <h2>Market Book</h2>
-
             <div th:unless="${ marketBook == null }">
-                <p class="marketName">
-                    <span>Showing best prices for </span>
-                    <span th:text="${ marketBook.getMarketName() }"></span>
-                </p>
+                <h2 class="marketTitle" th:text="${ marketBook.getMarketName() }"></h2>
+                <p class="eventType" th:text="${ marketBook.getEventTypeName() }"></p>
+                <p class="event" th:text="${ marketBook.getEventName() }"></p>
+                <div class="competition" th:unless="${ marketBook.getCompetitionName() == null ||
+                    marketBook.getCompetitionName().equals(marketBook.getEventName()) }">
+                    <p th:text="${ marketBook.getCompetitionName() }"></p>
+                </div>
+
                 <div th:each="runner : ${ marketBook.getRunners() }">
-                    <p th:text="${ runner.getRunnerName() }"></p>
-                    <div th:each="price : ${ runner.getAvailableToBack() }">
+                    <p class="runnerName" th:text="${ runner.getRunnerName() }"></p>
+                    <a th:href="@{/bets/new/{marketId}/{selectionId}(selectionId=${runner.getSelectionId()}, marketId=${marketBook.getMarketId()})}">
+                        <button class="button">Place A Bet</button>
+                    </a>
+                    <div class="priceSize" th:each="price : ${ runner.getAvailableToBack() }">
                         <p>
                             <span>Price: </span>
                             <span th:text="${ price.getPrice() }"></span>
-                            <span>, Size: </span>
+                            <span> Size: </span>
                             <span th:text="${ price.getSize() }"></span>
                         </p>
                     </div>
@@ -48,9 +54,6 @@
                             <span th:text="${ price.getSize() }"></span>
                         </p>
                     </div>
-                    <a th:href="@{/bets/new/{marketId}/{selectionId}(selectionId=${runner.getSelectionId()}, marketId=${marketBook.getMarketId()})}">
-                        <button class="button">Place A Bet</button>
-                    </a>
                 </div>
             </div>
         </div>

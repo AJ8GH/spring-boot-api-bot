@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" th:href="@{/styles/main.css}">
         <link rel="stylesheet" th:href="@{/styles/list.css}">
+        <link rel="stylesheet" th:href="@{/styles/marketCatalogue.css}">
         <title>Betfair API Bot - Market Catalogue</title>
     </head>
     <body class="body">
@@ -16,13 +17,20 @@
             </div>
 
             <h2>Market Catalogue</h2>
+            <section class="marketDescription">
+                <div th:text="${ marketCatalogue.get(0).getEventTypeName() }" class="eventType"></div>
+                <div th:unless="${ marketCatalogue.get(0).getCompetitionName() == null ||
+                        marketCatalogue.get(0).getCompetitionName().equals(marketCatalogue.get(0).getEventName()) }">
+                    <div th:text="${ marketCatalogue.get(0).getCompetitionName() }" class="competition"></div>
+                </div>
+                <div th:text="${ marketCatalogue.get(0).getEventName() }" class="event"></div>
+            </section>
 
-            <div th:unless="${ marketCatalogue == null || marketCatalogue.size() < 0 }">
-                <div th:each="market : ${ marketCatalogue }">
-                    <p th:text="${ market.getMarketName() }" class="marketName"></p>
-                    <a th:href="@{/listMarketBook/{marketId}(marketId=${market.getMarketId()})}">
-                        <button class="button">View Best Prices</button>
-                    </a>
+            <div th:unless="${ marketCatalogue == null }">
+                <div th:each="market : ${ marketCatalogue }" class="market">
+                    <div th:text="${ market.getMarketName() }" class="marketName"></div>
+                    <a th:href="@{/listMarketBook/{marketId}(marketId=${market.getMarketId()})}"><button class="button">View Best Prices</button></a>
+                    <a th:href="@{/marketSubscription/new/{marketId}(marketId=${market.getMarketId()})}"><button class="button">Subscribe to ESA</button></a>
                 </div>
             </div>
         </div>

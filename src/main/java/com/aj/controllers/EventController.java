@@ -2,7 +2,6 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
-import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.models.Event;
 import com.aj.models.EventType;
 import com.aj.repositories.EventRepository;
@@ -19,8 +18,6 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class EventController extends AbstractController {
-    private final EventTypeRepository eventTypeRepository;
-    private final EventRepository eventRepository;
     private final ApiClientService apiClient;
     private final DeserialisationService jsonDeserialiser;
 
@@ -30,7 +27,6 @@ public class EventController extends AbstractController {
 
         String response = apiClient.listEventTypes();
         List<EventType> eventTypes = jsonDeserialiser.mapToEventTypeList(response);
-        eventTypeRepository.saveAll(eventTypes);
         model.addAttribute("eventTypes", eventTypes);
         return "listEventTypes";
     }
@@ -42,7 +38,6 @@ public class EventController extends AbstractController {
 
         String response = apiClient.listEvents(eventTypeId);
         List<Event> events = jsonDeserialiser.mapToEventList(response);
-        eventRepository.saveAll(events);
         model.addAttribute("events", events);
         return "listEvents";
     }

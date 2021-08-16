@@ -1,4 +1,4 @@
-.username, .password, .button {
+.price, .size, .side {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -8,17 +8,11 @@
     border-radius: 5px;
     font-weight: 600;
     width: 20%;
-}
-
-.username, .password, .timeout {
-    color: #2B6777;
+    text-align: center;
     background-color: #C8D8E4;
+    color: #2B6777;
 }
 
-.loginForm {
-    margin-top: 30px;
-}
-
-.button {
-    margin-top: 10px;
+.side {
+    text-align-last:center;
 }

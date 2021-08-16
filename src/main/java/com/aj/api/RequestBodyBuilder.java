@@ -12,10 +12,11 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
     private final String LIST_CURRENT_ORDERS_BODY = "{\"orderProjection\": " +
             "\"EXECUTABLE\",\"betIds\": [\"%s\"]}";
     private final String LIST_MARKET_CATALOGUE_BODY =
-            "{\"filter\":{\"eventIds\":[%s]},\"marketProjection\": " +
-            "[\"RUNNER_DESCRIPTION\"],\"maxResults\":\"200\"}";
+            "{\"filter\":{\"%s\":[\"%s\"]},\"marketProjection\": " +
+            "[\"RUNNER_DESCRIPTION\", \"COMPETITION\", \"EVENT\", " +
+            "\"EVENT_TYPE\"],\"maxResults\":\"200\"}";
     private final String LIST_MARKET_BOOK_BODY =
-            "{\"marketIds\": [%s],\"priceProjection\"" +
+            "{\"marketIds\": [\"%s\"],\"priceProjection\"" +
             ": {\"priceData\": [\"EX_BEST_OFFERS\", \"EX_TRADED\"]," +
             "\"virtualise\": \"true\"}}}";
     private final String PLACE_ORDERS_BODY =
@@ -39,8 +40,8 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
     }
 
     @Override
-    public String listMarketCatalogueBody(long eventId) {
-        return String.format(LIST_MARKET_CATALOGUE_BODY, eventId);
+    public String listMarketCatalogueBody(String filter, String id) {
+        return String.format(LIST_MARKET_CATALOGUE_BODY, filter, id);
     }
 
     @Override

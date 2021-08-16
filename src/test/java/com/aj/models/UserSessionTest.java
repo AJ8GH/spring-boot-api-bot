@@ -11,12 +11,13 @@ class UserSessionTest {
     @Test
     void testUserSession() {
         UserSession userSession = new UserSession(9L, "status", "token",
-                "appKey", "product", "error", "props");
+                "appKey", "esaAppKey", "product", "error", "props");
 
         assertEquals(9L, userSession.getId());
         assertEquals("status", userSession.getStatus());
         assertEquals("token", userSession.getToken());
         assertEquals("appKey", userSession.getAppKey());
+        assertEquals("esaAppKey", userSession.getEsaAppKey());
         assertEquals("product", userSession.getProduct());
         assertEquals("error", userSession.getError());
         assertEquals("props", userSession.getProps());
@@ -33,12 +34,13 @@ class UserSessionTest {
     @Test
     void testToString() {
         UserSession userSession = new UserSession(9L, "status", "token",
-                "appKey", "product", "error", "props");
+                "appKey", "esaAppKey", "product", "error", "props");
 
         assertTrue(userSession.toString().contains(userSession.getId().toString()));
         assertTrue(userSession.toString().contains(userSession.getStatus()));
         assertTrue(userSession.toString().contains(userSession.getToken()));
         assertTrue(userSession.toString().contains(userSession.getAppKey()));
+        assertTrue(userSession.toString().contains(userSession.getEsaAppKey()));
         assertTrue(userSession.toString().contains(userSession.getError()));
     }
 
@@ -49,5 +51,7 @@ class UserSessionTest {
         userSession.loadAppKey();
 
         assertEquals("appKey", userSession.getAppKey());
+        assertEquals("esaAppKey", userSession.getEsaAppKey());
+        assertEquals(userSession, UserSession.getCurrentSession());
     }
 }

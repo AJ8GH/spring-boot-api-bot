@@ -1,8 +1,6 @@
 package com.aj.enrichment;
 
-import com.aj.models.MarketBook;
-import com.aj.models.MarketCatalogue;
-import com.aj.models.Runner;
+import com.aj.models.*;
 import com.aj.repositories.MarketCatalogueRepository;
 import org.junit.jupiter.api.Test;
 
@@ -17,42 +15,43 @@ class EnricherTest {
 
     @Test
     void testEnrichMarketBook() {
-        MarketBook marketBook = new MarketBook();
-        marketBook.setMarketId("1.1");
         Runner runner1 = new Runner();
         Runner runner2 = new Runner();
         runner1.setSelectionId(999L);
         runner2.setSelectionId(55L);
         List<Runner> runners = Arrays.asList(runner1, runner2);
-        marketBook.setRunners(runners);
 
-        MarketCatalogue market1 = new MarketCatalogue();
-        MarketCatalogue market2 = new MarketCatalogue();
-        MarketCatalogue market3 = new MarketCatalogue();
-        List<MarketCatalogue> marketList = Arrays.asList(market1, market2, market3);
-
-        market2.setMarketId("1.1");
-        market2.setMarketName("New Market Name");
+        MarketBook marketBook = MarketBook.builder()
+                .marketId("1.1")
+                .runners(runners)
+                .build();
 
         Runner runner3 = new Runner();
         Runner runner4 = new Runner();
         Runner runner5 = new Runner();
         runner4.setSelectionId(999L);
         runner5.setSelectionId(55L);
+        runner4.setRunnerName("999 Runner");
+        runner5.setRunnerName("55 Runner");
         List<Runner> runners2 = Arrays.asList(runner3, runner4, runner5);
-        market2.setRunners(runners2);
 
-        runner4.setRunnerName("999 Runner Name");
-        runner5.setRunnerName("55 Runner Name");
+        MarketCatalogue marketCatalogue = MarketCatalogue.builder()
+                .marketId("1.1")
+                .marketName("New Market")
+                .runners(runners2)
+                .eventName("event")
+                .eventTypeName("eventType")
+                .competitionName("competition")
+                .build();
 
-        MarketCatalogueRepository repository = mock(MarketCatalogueRepository.class);
-        when(repository.findAll()).thenReturn(marketList);
+        Enricher enricher = new Enricher();
+        enricher.enrichMarketBook(marketBook, List.of(marketCatalogue));
 
-        Enricher enricher = new Enricher(repository);
-        enricher.enrichMarketBook(marketBook);
-
-        assertEquals("New Market Name", marketBook.getMarketName());
-        assertEquals("999 Runner Name", runner1.getRunnerName());
-        assertEquals("55 Runner Name", runner2.getRunnerName());
+        assertEquals("New Market", marketBook.getMarketName());
+        assertEquals("999 Runner", runner1.getRunnerName());
+        assertEquals("55 Runner", runner2.getRunnerName());
+        assertEquals("event", marketBook.getEventName());
+        assertEquals("eventType", marketBook.getEventTypeName());
+        assertEquals("competition", marketBook.getCompetitionName());
     }
 }
