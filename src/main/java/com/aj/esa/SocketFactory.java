@@ -1,16 +1,20 @@
 package com.aj.esa;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.Socket;
 
 @Service
+@Setter
+@Getter
 public class SocketFactory {
-    private static final String DEFAULT_HOST = "esa.nxt.internal";
-    private static final int DEFAULT_PORT = 443;
+    private String host = "esa.nxt.internal";
+    private int port = 443;
 
     public Socket getDefault() throws IOException {
-        return new Socket(DEFAULT_HOST, DEFAULT_PORT);
+        return new Socket(host, port);
     }
 }
