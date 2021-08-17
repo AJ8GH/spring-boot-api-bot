@@ -30,7 +30,7 @@ public class Enricher implements EnrichmentService {
     public void enrichMessage(ResponseMessage message, Iterable<MarketCatalogue> catalogues) {
         for (MarketChange marketChange : message.getMc()) {
             MarketCatalogue catalogue = findById(marketChange.getMarketId(), catalogues);
-            if (catalogue == null) continue;
+            if (catalogue == null) return;
 
             marketChange.setMarketName(catalogue.getMarketName());
             marketChange.setEventName(catalogue.getEventName());

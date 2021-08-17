@@ -67,14 +67,19 @@ public class MarketController extends AbstractController {
     public String showMarketSubscription(@PathVariable("marketId") String marketId,
                                      @RequestParam("timeout") int timeout,
                                      Model model) throws IOException {
+
         esaClient.setUserSession(UserSession.getCurrentSession());
         esaClient.connect(timeout);
         esaClient.authenticate();
-        String response = esaClient.subscribeToMarkets(marketId);
-        ResponseMessage message = jsonDeserialiser.mapToObject(response, ResponseMessage.class);
+
+        String status = esaClient.subscribeToMarkets(marketId);
+        String response2 = esaClient.getLatest();
+        ResponseMessage message = jsonDeserialiser.mapToObject(response2, ResponseMessage.class);
+
         enricher.enrichMessage(message, marketCatalogueRepository.findAll());
         cache.addMessage(message);
         model.addAttribute("snapshot", message);
+
         return "redirect:/marketChange";
     }
 

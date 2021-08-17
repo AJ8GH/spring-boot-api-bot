@@ -19,7 +19,12 @@
             <h2>Market Subscription</h2>
 
             <main th:each="mc : ${ responseMessage.getMc() }">
+                <p th:text="${ mc.getEventTypeName() }"></p>
+                <p th:text="${ mc.getEventName() }"></p>
+                <p th:text="${ mc.getCompetitionName() }"></p>
+                <p th:text="${ mc.getMarketName() }"></p>
                 <div th:each="rc : ${ mc.getRc() }">
+                    <p th:text="${ rc.getRunnerName() }"></p>
 
                     <p>Best available to lay</p>
                     <section class="data"  th:each="batl : ${ rc.getBatl() }">

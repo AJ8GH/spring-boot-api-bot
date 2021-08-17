@@ -10,6 +10,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class RunnerChange {
     @JsonProperty("id")
     private Long selectionId;
