@@ -4,6 +4,7 @@ import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
 import com.aj.enrichment.EnrichmentService;
 import com.aj.esa.EsaClient;
+import com.aj.esa.cache.MarketSubscriptionCache;
 import com.aj.models.*;
 import com.aj.repositories.MarketBookRepository;
 import com.aj.repositories.MarketCatalogueRepository;
@@ -42,6 +43,8 @@ class MarketControllerTest {
     EnrichmentService enricher;
     @MockBean
     MarketCatalogueRepository marketCatalogueRepository;
+    @MockBean
+    MarketSubscriptionCache cache;
     @MockBean
     EsaClient esaClient;
 

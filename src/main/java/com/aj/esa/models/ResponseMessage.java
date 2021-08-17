@@ -1,16 +1,19 @@
 package com.aj.esa.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ResponseMessage {
     private String op;
     private Long id;
-    private int heartbeatms;
+    private int heartbeatMs;
     private int status;
+    private String ct;
     private List<MarketChange> mc;
 }

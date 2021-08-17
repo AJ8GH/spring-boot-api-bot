@@ -4,6 +4,7 @@ import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
 import com.aj.enrichment.EnrichmentService;
 import com.aj.esa.EsaClient;
+import com.aj.esa.cache.MarketSubscriptionCache;
 import com.aj.esa.models.ResponseMessage;
 import com.aj.models.MarketBook;
 import com.aj.models.MarketCatalogue;
@@ -26,6 +27,7 @@ public class MarketController extends AbstractController {
     private final DeserialisationService jsonDeserialiser;
     private final EnrichmentService enricher;
     private final MarketCatalogueRepository marketCatalogueRepository;
+    private final MarketSubscriptionCache cache;
     private final EsaClient esaClient;
 
     @RequestMapping("/listMarketCatalogue/{eventId}")
@@ -70,14 +72,19 @@ public class MarketController extends AbstractController {
         esaClient.authenticate();
         String response = esaClient.subscribeToMarkets(marketId);
         ResponseMessage message = jsonDeserialiser.mapToObject(response, ResponseMessage.class);
+        enricher.enrichMessage(message, marketCatalogueRepository.findAll());
+        cache.addMessage(message);
         model.addAttribute("snapshot", message);
         return "redirect:/marketChange";
     }
 
     @RequestMapping("/marketChange")
     public String marketChange(Model model) throws IOException {
-        String marketChange = esaClient.getLatest();
-        model.addAttribute("marketChange", marketChange);
+        String response = esaClient.getLatest();
+        ResponseMessage message = jsonDeserialiser.mapToObject(response, ResponseMessage.class);
+        if (message.getCt().equals("SUB_IMAGE")) cache.addMessage(message);
+        ResponseMessage currentMarketUpdate = cache.getMessage(message.getId());
+        model.addAttribute("responseMessage", currentMarketUpdate);
         return "marketSubscription";
     }
 }

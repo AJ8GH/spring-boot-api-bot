@@ -18,9 +18,46 @@
 
             <h2>Market Subscription</h2>
 
-            <div>
-                <p th:text="${marketChange}"></p>
-            </div>
+            <main th:each="mc : ${ responseMessage.getMc() }">
+                <div th:each="rc : ${ mc.getRc() }">
+
+                    <p>Best available to lay</p>
+                    <section class="data"  th:each="batl : ${ rc.getBatl() }">
+                        <div class="priceLabel">Price: </div>
+                        <div class="priceSize" th:text="${ batl.get(1) }"></div>
+                        <div class="sizeLabel">Size: </div>
+                        <div class="priceSize" th:text="${ batl.get(2) }"></div><br>
+                    </section>
+
+                    <p>Best available to back</p>
+                    <section class="data" th:each="batb : ${ rc.getBatb() }">
+                        <div class="priceLabel">Price: </div>
+                        <div class="priceSize" th:text="${ batb.get(1) }"></div>
+                        <div class="sizeLabel">Size: </div>
+                        <div class="priceSize" th:text="${ batb.get(2) }"></div><br>
+                    </section>
+
+                    <p>Best virtual available to lay</p>
+                    <section class="data" th:each="bdatl : ${ rc.getBdatl() }">
+                        <div th:unless="${ bdatl.get(1) + bdatl.get(2) == 0 }">
+                            <div class="priceLabel">Price: </div>
+                            <div class="priceSize" th:text="${ bdatl.get(1) }"></div>
+                            <div class="sizeLabel">Size: </div>
+                            <div class="priceSize" th:text="${ bdatl.get(2) }"></div><br>
+                        </div>
+                    </section>
+
+                    <p>Best virtual available to back</p>
+                    <section class="data" th:each="bdatb : ${ rc.getBdatb() }">
+                        <div th:unless="${ bdatb.get(1) + bdatb.get(2) == 0 }">
+                            <div class="priceLabel">Price: </div>
+                            <div class="priceSize" th:text="${ bdatb.get(1) }"></div>
+                            <div class="sizeLabel">Size: </div>
+                            <div class="priceSize" th:text="${ bdatb.get(2) }"></div><br>
+                        </div>
+                    </section>
+                </div>
+            </main>
         </div>
     </body>
 </html>

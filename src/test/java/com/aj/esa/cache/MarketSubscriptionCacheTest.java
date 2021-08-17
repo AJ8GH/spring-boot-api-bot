@@ -9,8 +9,10 @@ class MarketSubscriptionCacheTest {
     @Test
     public void testAddMessage() {
         MarketSubscriptionCache cache = new MarketSubscriptionCache();
-        ResponseMessage message = new ResponseMessage();
-        message.setId(99L);
+        ResponseMessage message = ResponseMessage.builder()
+                .id(99L)
+                .build();
+
         cache.addMessage(message);
         ResponseMessage cachedMessage = cache.getMessage(99L);
 
