@@ -4,6 +4,7 @@ import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
 import com.aj.enrichment.EnrichmentService;
 import com.aj.esa.EsaClient;
+import com.aj.esa.models.ResponseMessage;
 import com.aj.models.MarketBook;
 import com.aj.models.MarketCatalogue;
 import com.aj.models.UserSession;
@@ -67,8 +68,9 @@ public class MarketController extends AbstractController {
         esaClient.setUserSession(UserSession.getCurrentSession());
         esaClient.connect(timeout);
         esaClient.authenticate();
-        String snapShot = esaClient.subscribeToMarkets(marketId);
-        model.addAttribute("snapshot", snapShot);
+        String response = esaClient.subscribeToMarkets(marketId);
+        ResponseMessage message = jsonDeserialiser.mapToObject(response, ResponseMessage.class);
+        model.addAttribute("snapshot", message);
         return "redirect:/marketChange";
     }
 
