@@ -13,8 +13,8 @@
         <div class="pageContainer">
             <header th:insert="fragments/header.html :: header"></header>
 
-            <h2 class="heading">Place Bet</h2>
-            <form th:action="@{/placeOrders}" method="post">
+            <h2 class="title">Place Bet</h2>
+            <form class="form" th:action="@{/placeOrders}" method="post">
                 <input class="price" required type="number" min="1.01" step="0.01" placeholder="Price" name="price">
                 <input class="size" required type="number" min="0.01" step="0.01" placeholder="Size" name="size">
                 <select class="side" name="side">

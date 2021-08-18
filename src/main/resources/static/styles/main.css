@@ -59,12 +59,12 @@ a {
     border-radius: 5px;
 }
 
-.button:hover, .home:hover {
+.button:hover, .home:hover, .side:hover {
     opacity: 0.5;
     cursor: pointer;
 }
 
-.button, .username, .password, .bet, .eventTypeData, .marketName, .timeout, .runnerName, .price, .size, .side, .home {
+.button, .username, .password, .betData, .eventTypeData, .marketName, .timeout, .runnerName, .price, .size, .side, .home {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 

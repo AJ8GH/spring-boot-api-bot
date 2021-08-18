@@ -18,11 +18,18 @@
 }
 
 .marketName, .runnerName {
-    min-width: 50%;
     padding: 20px;
     font-size: 18px;
     font-weight: 900;
     height: 100%;
+}
+
+.marketName {
+    min-width: 50%;
+}
+
+.runnerName {
+    min-width: 20%;
 }
 
 .marketName, a, .button, .runnerName {
@@ -33,8 +40,13 @@
     margin: 5px;
 }
 
-.marketContainer, .runnerContainer {
-    width: 50%;
+.marketContainer {
+    min-width: 50%;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.runnerContainer {
+    min-width: 30%;
 }

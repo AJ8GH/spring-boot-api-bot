@@ -11,7 +11,7 @@ import java.io.IOException;
 @Service
 public class ApiClient implements ApiClientService {
     private UserSession userSession;
-    private final Logger LOG = LoggerFactory.getLogger(ApiClient.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ApiClient.class);
     private final UrlBuilder urlBuilder;
     private final RequestBodyBuilder requestBodyBuilder;
     private final OkHttpClient CLIENT = new OkHttpClient();
@@ -42,56 +42,49 @@ public class ApiClient implements ApiClientService {
     @Override
     public String login(String username, String password) throws IOException {
         HttpUrl url = urlBuilder.createLoginUrl(username, password);
-        Request request = createLoginRequest(url);
-        return CLIENT.newCall(request).execute().body().string();
+        return createRequestAndMakeLoginCall(url);
     }
 
     @Override
     public String listEventTypes() throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENT_TYPES);
         String body = requestBodyBuilder.listEventTypesBody();
-        Request request = createBettingRequest(url, body);
-        return CLIENT.newCall(request).execute().body().string();
+        return createRequestAndMakeCall(url, body);
     }
 
     @Override
     public String listEvents(long eventTypeId) throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENTS);
         String body = requestBodyBuilder.listEventsBody(eventTypeId);
-        Request request = createBettingRequest(url, body);
-        return CLIENT.newCall(request).execute().body().string();
+        return createRequestAndMakeCall(url, body);
     }
 
     @Override
     public String listMarketCatalogue(String filter, String id) throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
         String body = requestBodyBuilder.listMarketCatalogueBody(filter, id);
-        Request request = createBettingRequest(url, body);
-        return CLIENT.newCall(request).execute().body().string();
+        return createRequestAndMakeCall(url, body);
     }
 
     @Override
     public String listMarketBook(String marketId) throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_BOOK);
         String body = requestBodyBuilder.listMarketBookBody(marketId);
-        Request request = createBettingRequest(url, body);
-        return CLIENT.newCall(request).execute().body().string();
+        return createRequestAndMakeCall(url, body);
     }
 
     @Override
     public String listCurrentOrders(String betId) throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
         String body = requestBodyBuilder.listCurrentOrdersBody(betId);
-        Request request = createBettingRequest(url, body);
-        return CLIENT.newCall(request).execute().body().string();
+        return createRequestAndMakeCall(url, body);
     }
 
     @Override
     public String listCurrentOrders() throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
         String body = requestBodyBuilder.listCurrentOrdersBody();
-        Request request = createBettingRequest(url, body);
-        return CLIENT.newCall(request).execute().body().string();
+        return createRequestAndMakeCall(url, body);
     }
 
     @Override
@@ -99,17 +92,35 @@ public class ApiClient implements ApiClientService {
                               double size, double price) throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.PLACE_ORDERS);
         String body = requestBodyBuilder.placeOrdersBody(marketId, selectionId, side, size, price);
-        Request request = createBettingRequest(url, body);
-        return CLIENT.newCall(request).execute().body().string();
+        return createRequestAndMakeCall(url, body);
     }
 
     @Override
     public String cancelOrders(String marketId, long betId) throws IOException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.CANCEL_ORDERS);
         String body = requestBodyBuilder.cancelOrdersBody(marketId, betId);
-        Request request = createBettingRequest(url, body);
-        return CLIENT.newCall(request).execute().body().string();
+        return createRequestAndMakeCall(url, body);
     }
+
+    private String createRequestAndMakeCall(HttpUrl url, String body)
+            throws IOException {
+        Request request = createBettingRequest(url, body);
+        return makeCall(request);
+    }
+
+    private String createRequestAndMakeLoginCall(HttpUrl url)
+            throws IOException {
+        Request request = createLoginRequest(url);
+        return makeCall(request);
+    }
+
+    private String makeCall(Request request) throws IOException {
+        String response = CLIENT.newCall(request).execute().body().string();
+        LOGGER.info("Response: {}", response);
+        return response;
+    }
+
+
 
     private Request createLoginRequest(HttpUrl url) {
         return new Request.Builder()

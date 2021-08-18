@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Service
 public class EsaClient {
-    private final Logger LOG = LoggerFactory.getLogger(EsaClient.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(EsaClient.class);
     private final SocketFactory socketFactory;
     private final ObjectMapper mapper;
     private final MessageFactory messageFactory;
@@ -50,8 +50,8 @@ public class EsaClient {
         InputStreamReader in = new InputStreamReader(client.getInputStream());
         reader = new BufferedReader(in);
         writer = new PrintWriter(client.getOutputStream());
-        LOG.info(reader.readLine());
         isConnected = true;
+        getLatest();
     }
 
     public String authenticate() throws IOException {
@@ -61,7 +61,7 @@ public class EsaClient {
 
         String payLoad = mapper.writeValueAsString(message);
         writer.println(payLoad);
-        LOG.info("Authenticating: " + payLoad);
+        LOGGER.info("Authenticating: {}", payLoad);
         writer.flush();
         return getLatest();
     }
@@ -72,14 +72,14 @@ public class EsaClient {
 
         String payload = mapper.writeValueAsString(message);
         writer.println(payload);
-        LOG.info("Subscribing to Market: " + payload);
+        LOGGER.info("Subscribing to Market: {}", payload);
         writer.flush();
         return getLatest();
     }
 
     public String getLatest() throws IOException {
         String data = reader.readLine();
-        LOG.info("Message received: " + data);
+        LOGGER.info("Message received: {}", data);
         return data;
     }
 

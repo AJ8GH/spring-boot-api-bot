@@ -14,22 +14,24 @@
             <header th:insert="fragments/header.html :: header"></header>
 
             <h2>Current Bets</h2>
-            <div th:each="bet : ${ bets }" class="bet">
-                <span class="betDetailLabel">Market ID: </span><span th:text="${ bet.getMarketId() }" class="betDetail"></span><br>
-                <span class="betDetailLabel">Selection ID: </span><span th:text="${ bet.getSelectionId() }" class="betDetail"></span><br>
-                <span class="betDetailLabel">Bet ID: </span><span th:text="${ bet.getBetId() }" class="betDetail"></span><br>
-                <span class="betDetailLabel">Status: </span><span th:text="${ bet.getStatus() }" class="betDetail"></span><br>
-                <span class="betDetailLabel">Side: </span><span th:text="${ bet.getSide() }" class="betDetail"></span><br>
-                <span class="betDetailLabel">Price: </span><span th:text="${ bet.getPrice() }" class="betDetail"></span><br>
-                <span class="betDetailLabel">Size: </span><span th:text="${ bet.getSize() }" class="betDetail"></span><br>
-                <span class="betDetailLabel">Date: </span><span th:text="${ bet.getPlacedDate() }" class="betDetail"></span><br>
+            <article th:each="bet : ${ bets }" class="bet">
+                <div class="betData">
+                    <span class="betDetailLabel">Market ID: </span><span th:text="${ bet.getMarketId() }" class="betDetail"></span><br>
+                    <span class="betDetailLabel">Selection ID: </span><span th:text="${ bet.getSelectionId() }" class="betDetail"></span><br>
+                    <span class="betDetailLabel">Bet ID: </span><span th:text="${ bet.getBetId() }" class="betDetail"></span><br>
+                    <span class="betDetailLabel">Status: </span><span th:text="${ bet.getStatus() }" class="betDetail"></span><br>
+                    <span class="betDetailLabel">Side: </span><span th:text="${ bet.getSide() }" class="betDetail"></span><br>
+                    <span class="betDetailLabel">Price: </span><span th:text="${ bet.getPrice() }" class="betDetail"></span><br>
+                    <span class="betDetailLabel">Size: </span><span th:text="${ bet.getSize() }" class="betDetail"></span><br>
+                    <span class="betDetailLabel">Date: </span><span th:text="${ bet.getPlacedDate() }" class="betDetail"></span><br>
+                </div>
 
                 <form th:action="@{/cancelOrders}" method="post" class="cancelButton">
                     <input type="hidden" th:value="${ bet.getMarketId() }" name="marketId">
                     <input type="hidden" th:value="${ bet.getBetId() }" name="betId">
-                    <input type="submit" value="Cancel Bet" class="button">
+                    <input type="submit" value="Cancel Bet" class="button" id="cancelButton">
                 </form>
-            </div>
+            </article>
         </div>
     </body>
 </html>
