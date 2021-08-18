@@ -16,8 +16,9 @@
             <h2>Current Bets</h2>
             <article th:each="bet : ${ bets }" class="bet">
                 <div class="betData">
-                    <span class="betDetailLabel">Market ID: </span><span th:text="${ bet.getMarketId() }" class="betDetail"></span><br>
-                    <span class="betDetailLabel">Selection ID: </span><span th:text="${ bet.getSelectionId() }" class="betDetail"></span><br>
+                    <span th:text="${ bet.getEventName() }" class="betDetail"></span><br>
+                    <span th:text="${ bet.getMarketName() }" class="betDetail"></span><br>
+                    <span th:text="${ bet.getRunnerName() }" class="betDetail"></span><br>
                     <span class="betDetailLabel">Bet ID: </span><span th:text="${ bet.getBetId() }" class="betDetail"></span><br>
                     <span class="betDetailLabel">Status: </span><span th:text="${ bet.getStatus() }" class="betDetail"></span><br>
                     <span class="betDetailLabel">Side: </span><span th:text="${ bet.getSide() }" class="betDetail"></span><br>
