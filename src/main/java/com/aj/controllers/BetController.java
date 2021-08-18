@@ -28,7 +28,6 @@ import java.util.Optional;
 public class BetController extends AbstractController {
     private final ApiClientService apiClient;
     private final BetRepository betRepository;
-    private final MarketCatalogueRepository catalogueRepository;
     private final DeserialisationService jsonDeserialiser;
     private final EnrichmentService enricher;
     private final CancelExecutionReportRepository reportRepository;
@@ -39,9 +38,8 @@ public class BetController extends AbstractController {
 
         String response = apiClient.listCurrentOrders();
         List<Bet> bets = jsonDeserialiser.mapToBetList(response);
-        enrichBets(bets);
+        for (Bet bet : bets) enrichBet(bet);
         betRepository.saveAll(bets);
-
         model.addAttribute("bets", bets);
         return "listCurrentOrders";
     }
@@ -78,6 +76,8 @@ public class BetController extends AbstractController {
 
         String response = apiClient.listCurrentOrders(betId);
         Bet bet = jsonDeserialiser.mapToBetList(response).get(0);
+        enrichBet(bet);
+
         model.addAttribute("bet", bet);
         return "showBet";
     }
@@ -106,15 +106,13 @@ public class BetController extends AbstractController {
         return "cancelExecutionReport";
     }
 
-    private void enrichBets(List<Bet> bets) throws IOException {
-        for (Bet bet : bets) {
-            String response = apiClient
-                    .listMarketCatalogue("marketIds", bet.getMarketId());
+    private void enrichBet(Bet bet) throws IOException {
+        String response = apiClient
+                .listMarketCatalogue("marketIds", bet.getMarketId());
 
-            List<MarketCatalogue> catalogues = jsonDeserialiser
-                    .mapToMarketCatalogue(response);
+        List<MarketCatalogue> catalogues = jsonDeserialiser
+                .mapToMarketCatalogue(response);
 
-            enricher.enrichBet(bet, catalogues.get(0));
-        }
+        enricher.enrichBet(bet, catalogues.get(0));
     }
 }

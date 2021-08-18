@@ -13,14 +13,14 @@
             <header th:insert="fragments/header.html :: header"></header>
 
             <h2>Bet Confirmation</h2>
-            <span>Market ID: </span><span th:text="${ bet.getMarketId() }" class="marketId"></span><br>
-            <span>Selection ID: </span><span th:text="${ bet.getSelectionId() }"></span><br>
-            <span>Bet ID: </span><span th:text="${ bet.getBetId() }"></span><br>
+            <span th:text="${ bet.getEventName() }" class="marketId"></span><br>
+            <span th:text="${ bet.getMarketName() }"></span><br>
+            <span th:text="${ bet.getRunnerName() }"></span><br>
             <span>Status: </span><span th:text="${ bet.getStatus() }"></span><br>
             <span>Side: </span><span th:text="${ bet.getSide() }"></span><br>
             <span>Price: </span><span th:text="${ bet.getPrice() }"></span><br>
             <span>Size: </span><span th:text="${ bet.getSize() }"></span><br>
-            <span>Date: </span><span th:text="${ bet.getPlacedDate() }"></span><br>
+            <span>Placed on </span><span th:text="${ bet.getPlacedDate() }"></span><br>
 
             <form th:action="@{/cancelOrders}" method="post" class="cancelButton">
                 <input type="hidden" th:value="${ bet.getMarketId() }" name="marketId">
