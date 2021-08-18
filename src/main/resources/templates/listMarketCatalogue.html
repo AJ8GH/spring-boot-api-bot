@@ -24,7 +24,7 @@
                 <div th:text="${ marketCatalogue.get(0).getEventName() }" class="event"></div>
             </section>
 
-            <div th:unless="${ marketCatalogue == null }">
+            <div class="marketContainer" th:unless="${ marketCatalogue == null }">
                 <div th:each="market : ${ marketCatalogue }" class="market">
                     <div th:text="${ market.getMarketName() }" class="marketName"></div>
                     <a th:href="@{/listMarketBook/{marketId}(marketId=${market.getMarketId()})}"><button class="button">View Best Prices</button></a>

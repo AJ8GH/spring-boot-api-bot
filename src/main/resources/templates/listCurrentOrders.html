@@ -11,12 +11,9 @@
     </head>
     <body class="body">
         <div class="pageContainer">
-            <header class="heading">
-                <h1 class="mainTitle">Betfair API Bot</h1>
-            </header>
+            <header th:insert="fragments/header.html :: header"></header>
 
             <h2>Current Bets</h2>
-
             <div th:each="bet : ${ bets }" class="bet">
                 <span class="betDetailLabel">Market ID: </span><span th:text="${ bet.getMarketId() }" class="betDetail"></span><br>
                 <span class="betDetailLabel">Selection ID: </span><span th:text="${ bet.getSelectionId() }" class="betDetail"></span><br>

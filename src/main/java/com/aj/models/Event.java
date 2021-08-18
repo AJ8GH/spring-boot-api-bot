@@ -14,7 +14,6 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
-@Table(name = "event")
 public class Event {
 
     @Id

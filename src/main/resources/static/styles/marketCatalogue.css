@@ -14,23 +14,15 @@
 }
 
 .button {
-    display: inline;
-}
-
-.button {
-    width: 200px;
     font-size: 18px;
-}
-
-a {
-    text-decoration: none;
 }
 
 .marketName, .runnerName {
-    width: 250px;
+    min-width: 50%;
     padding: 20px;
     font-size: 18px;
     font-weight: 900;
+    height: 100%;
 }
 
 .marketName, a, .button, .runnerName {
@@ -39,4 +31,10 @@ a {
 
 .marketName, .button {
     margin: 5px;
+}
+
+.marketContainer, .runnerContainer {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
 }

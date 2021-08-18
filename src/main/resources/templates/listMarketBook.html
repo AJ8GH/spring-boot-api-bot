@@ -23,35 +23,31 @@
                     <p th:text="${ marketBook.getCompetitionName() }"></p>
                 </div>
 
-                <div th:each="runner : ${ marketBook.getRunners() }">
-                    <p class="runnerName" th:text="${ runner.getRunnerName() }"></p>
-                    <a th:href="@{/bets/new/{marketId}/{selectionId}(selectionId=${runner.getSelectionId()}, marketId=${marketBook.getMarketId()})}">
-                        <button class="button">Place A Bet</button>
-                    </a>
-                    <div class="priceSize" th:each="price : ${ runner.getAvailableToBack() }">
-                        <p>
+                <div class="runnerContainer">
+                    <article class="runner" th:each="runner : ${ marketBook.getRunners() }">
+                        <p class="runnerName" th:text="${ runner.getRunnerName() }"></p>
+                        <a th:href="@{/bets/new/{marketId}/{selectionId}(selectionId=${runner.getSelectionId()}, marketId=${marketBook.getMarketId()})}">
+                            <button class="button">Place A Bet</button>
+                        </a>
+                        <div class="priceSize" th:each="price : ${ runner.getAvailableToBack() }">
                             <span>Price: </span>
                             <span th:text="${ price.getPrice() }"></span>
                             <span> Size: </span>
                             <span th:text="${ price.getSize() }"></span>
-                        </p>
-                    </div>
-                    <div th:each="price : ${ runner.getAvailableToLay() }">
-                        <p>
+                        </div>
+                        <div th:each="price : ${ runner.getAvailableToLay() }">
                             <span>Price: </span>
                             <span th:text="${ price.getPrice() }"></span>
                             <span>, Size: </span>
                             <span th:text="${ price.getSize() }"></span>
-                        </p>
-                    </div>
-                    <div th:each="price : ${ runner.getTradedVolume() }">
-                        <p>
+                        </div>
+                        <div th:each="price : ${ runner.getTradedVolume() }">
                             <span>Price: </span>
                             <span th:text="${ price.getPrice() }"></span>
                             <span>, Size: </span>
                             <span th:text="${ price.getSize() }"></span>
-                        </p>
-                    </div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </div>

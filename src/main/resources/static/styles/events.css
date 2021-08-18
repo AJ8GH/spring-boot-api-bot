@@ -10,6 +10,8 @@
 .eventData {
     width: 70%;
     border-radius: 5px;
+    height: 90%;
+    padding: 10px;
 }
 
 .event {
@@ -24,13 +26,10 @@
 }
 
 .buttonContainer {
-    height: 100%;
-}
-
-.eventData, .button {
-    height: 160px;
+    height: 90%;
 }
 
 .button {
     margin-left: 10px;
+    height: 100%
 }

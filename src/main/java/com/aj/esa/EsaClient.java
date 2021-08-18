@@ -61,6 +61,7 @@ public class EsaClient {
 
         String payLoad = mapper.writeValueAsString(message);
         writer.println(payLoad);
+        LOG.info("Authenticating: " + payLoad);
         writer.flush();
         return getLatest();
     }
@@ -71,13 +72,14 @@ public class EsaClient {
 
         String payload = mapper.writeValueAsString(message);
         writer.println(payload);
+        LOG.info("Subscribing to Market: " + payload);
         writer.flush();
         return getLatest();
     }
 
     public String getLatest() throws IOException {
         String data = reader.readLine();
-        LOG.info(data);
+        LOG.info("Message received: " + data);
         return data;
     }
 

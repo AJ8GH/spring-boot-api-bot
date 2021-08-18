@@ -2,6 +2,8 @@ package com.aj.api;
 
 import com.aj.models.UserSession;
 import okhttp3.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.io.IOException;
 @Service
 public class ApiClient implements ApiClientService {
     private UserSession userSession;
+    private final Logger LOG = LoggerFactory.getLogger(ApiClient.class);
     private final UrlBuilder urlBuilder;
     private final RequestBodyBuilder requestBodyBuilder;
     private final OkHttpClient CLIENT = new OkHttpClient();
