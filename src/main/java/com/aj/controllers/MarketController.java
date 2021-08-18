@@ -10,7 +10,6 @@ import com.aj.models.MarketBook;
 import com.aj.models.MarketCatalogue;
 import com.aj.models.UserSession;
 import com.aj.repositories.MarketCatalogueRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +20,6 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@AllArgsConstructor
 public class MarketController extends AbstractController {
     private final ApiClientService apiClient;
     private final DeserialisationService jsonDeserialiser;
@@ -29,6 +27,21 @@ public class MarketController extends AbstractController {
     private final MarketCatalogueRepository marketCatalogueRepository;
     private final MarketSubscriptionCache cache;
     private final EsaClient esaClient;
+    private int heartbeatCount;
+
+    public MarketController(ApiClientService apiClient,
+                            DeserialisationService jsonDeserialiser,
+                            EnrichmentService enricher,
+                            MarketCatalogueRepository marketCatalogueRepository,
+                            MarketSubscriptionCache cache,
+                            EsaClient esaClient) {
+        this.apiClient = apiClient;
+        this.jsonDeserialiser = jsonDeserialiser;
+        this.enricher = enricher;
+        this.marketCatalogueRepository = marketCatalogueRepository;
+        this.cache = cache;
+        this.esaClient = esaClient;
+    }
 
     @RequestMapping("/listMarketCatalogue/{eventId}")
     public String listMarketCatalogue(@PathVariable("eventId") String eventId,
@@ -71,8 +84,8 @@ public class MarketController extends AbstractController {
         esaClient.setUserSession(UserSession.getCurrentSession());
         esaClient.connect(timeout);
         esaClient.authenticate();
+        esaClient.subscribeToMarkets(marketId);
 
-        String status = esaClient.subscribeToMarkets(marketId);
         String response2 = esaClient.getLatest();
         ResponseMessage message = jsonDeserialiser.mapToObject(response2, ResponseMessage.class);
 
@@ -85,11 +98,25 @@ public class MarketController extends AbstractController {
 
     @RequestMapping("/marketChange")
     public String marketChange(Model model) throws IOException {
+        if (isTimedOut()) return "redirect:/";
+
         String response = esaClient.getLatest();
         ResponseMessage message = jsonDeserialiser.mapToObject(response, ResponseMessage.class);
         if (message.getCt().equals("SUB_IMAGE")) cache.addMessage(message);
+
         ResponseMessage currentMarketUpdate = cache.getMessage(message.getId());
         model.addAttribute("responseMessage", currentMarketUpdate);
+
         return "marketSubscription";
+    }
+
+    private boolean isTimedOut() throws IOException {
+        heartbeatCount += 1;
+        if (esaClient.getTimeout() <= heartbeatCount * 5000) {
+            esaClient.close();
+            heartbeatCount = 0;
+            return true;
+        }
+        return false;
     }
 }

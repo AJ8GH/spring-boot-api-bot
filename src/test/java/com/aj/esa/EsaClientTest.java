@@ -12,6 +12,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,5 +122,13 @@ class EsaClientTest {
 
         client.close();
         assertFalse(client.isConnected());
+    }
+
+    @Test
+    void getTimeout() throws IOException {
+        client.connect(3);
+        client.getTimeout();
+
+        verify(socket).getSoTimeout();
     }
 }

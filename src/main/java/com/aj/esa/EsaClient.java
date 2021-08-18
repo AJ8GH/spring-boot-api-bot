@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +82,6 @@ public class EsaClient {
 
         String payload = mapper.writeValueAsString(message);
         writer.println(payload);
-
         writer.flush();
         return getLatest();
     }
@@ -99,5 +99,9 @@ public class EsaClient {
 
     public boolean isConnected() {
         return isConnected;
+    }
+
+    public int getTimeout() throws SocketException {
+        return client.getSoTimeout();
     }
 }
