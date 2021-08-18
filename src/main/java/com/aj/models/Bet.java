@@ -15,6 +15,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
+@Builder
 public class Bet {
 
     @Id
@@ -25,6 +26,7 @@ public class Bet {
     private Long selectionId;
     private String marketName;
     private String runnerName;
+    private String eventName;
     private String placedDate;
     private Double price;
     private Double size;

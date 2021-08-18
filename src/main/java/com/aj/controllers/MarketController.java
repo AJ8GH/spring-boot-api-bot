@@ -89,7 +89,10 @@ public class MarketController extends AbstractController {
         String response2 = esaClient.getLatest();
         ResponseMessage message = jsonDeserialiser.mapToObject(response2, ResponseMessage.class);
 
-        enricher.enrichMessage(message, marketCatalogueRepository.findAll());
+        if (message.getMc() != null) {
+            enricher.enrichMessage(message, marketCatalogueRepository.findAll());
+        }
+
         cache.addMessage(message);
         model.addAttribute("snapshot", message);
 

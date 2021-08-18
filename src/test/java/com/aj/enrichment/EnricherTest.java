@@ -5,6 +5,7 @@ import com.aj.esa.models.ResponseMessage;
 import com.aj.esa.models.RunnerChange;
 import com.aj.models.*;
 import com.aj.repositories.MarketCatalogueRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.error.Mark;
 
@@ -17,6 +18,29 @@ import static org.mockito.Mockito.when;
 
 class EnricherTest {
 
+    private MarketCatalogue marketCatalogue;
+
+    @BeforeEach
+    void setUp() {
+        Runner runner1 = new Runner();
+        Runner runner2 = new Runner();
+        Runner runner3 = new Runner();
+        runner2.setSelectionId(999L);
+        runner3.setSelectionId(55L);
+        runner2.setRunnerName("999 Runner");
+        runner3.setRunnerName("55 Runner");
+        List<Runner> runners = Arrays.asList(runner1, runner2, runner3);
+
+        marketCatalogue = MarketCatalogue.builder()
+                .marketId("1.1")
+                .marketName("New Market")
+                .runners(runners)
+                .eventName("event")
+                .eventTypeName("eventType")
+                .competitionName("competition")
+                .build();
+    }
+
     @Test
     void testEnrichMarketBook() {
         Runner runner1 = new Runner();
@@ -28,24 +52,6 @@ class EnricherTest {
         MarketBook marketBook = MarketBook.builder()
                 .marketId("1.1")
                 .runners(runners)
-                .build();
-
-        Runner runner3 = new Runner();
-        Runner runner4 = new Runner();
-        Runner runner5 = new Runner();
-        runner4.setSelectionId(999L);
-        runner5.setSelectionId(55L);
-        runner4.setRunnerName("999 Runner");
-        runner5.setRunnerName("55 Runner");
-        List<Runner> runners2 = Arrays.asList(runner3, runner4, runner5);
-
-        MarketCatalogue marketCatalogue = MarketCatalogue.builder()
-                .marketId("1.1")
-                .marketName("New Market")
-                .runners(runners2)
-                .eventName("event")
-                .eventTypeName("eventType")
-                .competitionName("competition")
                 .build();
 
         Enricher enricher = new Enricher();
@@ -78,24 +84,6 @@ class EnricherTest {
                 .mc(List.of(marketChange))
                 .build();
 
-        Runner runner3 = new Runner();
-        Runner runner4 = new Runner();
-        Runner runner5 = new Runner();
-        runner4.setSelectionId(999L);
-        runner5.setSelectionId(55L);
-        runner4.setRunnerName("999 Runner");
-        runner5.setRunnerName("55 Runner");
-        List<Runner> runners2 = Arrays.asList(runner3, runner4, runner5);
-
-        MarketCatalogue marketCatalogue = MarketCatalogue.builder()
-                .marketId("1.1")
-                .marketName("New Market")
-                .runners(runners2)
-                .eventName("event")
-                .eventTypeName("eventType")
-                .competitionName("competition")
-                .build();
-
         Enricher enricher = new Enricher();
         enricher.enrichMessage(message, List.of(marketCatalogue));
 
@@ -107,5 +95,20 @@ class EnricherTest {
         assertEquals("event", message.getMc().get(0).getEventName());
         assertEquals("eventType", message.getMc().get(0).getEventTypeName());
         assertEquals("competition", message.getMc().get(0).getCompetitionName());
+    }
+
+    @Test
+    void enrichBet() {
+        Bet bet = Bet.builder()
+                .marketId("1.1")
+                .selectionId(999L)
+                .build();
+
+        Enricher enricher = new Enricher();
+        enricher.enrichBet(bet, List.of(marketCatalogue));
+
+        assertEquals("New Market", bet.getMarketName());
+        assertEquals("999 Runner", bet.getRunnerName());
+        assertEquals("event", bet.getEventName());
     }
 }
