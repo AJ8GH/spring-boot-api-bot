@@ -44,10 +44,7 @@ public class Enricher implements EnrichmentService {
         }
     }
 
-    public void enrichBet(Bet bet, Iterable<MarketCatalogue> catalogues) {
-        MarketCatalogue catalogue = findById(bet.getMarketId(), catalogues);
-        if (catalogue == null) return;
-
+    public void enrichBet(Bet bet, MarketCatalogue catalogue) {
         bet.setMarketName(catalogue.getMarketName());
         bet.setEventName(catalogue.getEventName());
 

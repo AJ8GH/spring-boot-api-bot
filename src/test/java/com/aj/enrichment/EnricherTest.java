@@ -105,7 +105,7 @@ class EnricherTest {
                 .build();
 
         Enricher enricher = new Enricher();
-        enricher.enrichBet(bet, List.of(marketCatalogue));
+        enricher.enrichBet(bet, marketCatalogue);
 
         assertEquals("New Market", bet.getMarketName());
         assertEquals("999 Runner", bet.getRunnerName());

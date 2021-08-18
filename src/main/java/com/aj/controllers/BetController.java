@@ -2,11 +2,14 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
+import com.aj.enrichment.EnrichmentService;
 import com.aj.models.Bet;
 import com.aj.models.CancelExecutionReport;
 
+import com.aj.models.MarketCatalogue;
 import com.aj.repositories.BetRepository;
 import com.aj.repositories.CancelExecutionReportRepository;
+import com.aj.repositories.MarketCatalogueRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +28,9 @@ import java.util.Optional;
 public class BetController extends AbstractController {
     private final ApiClientService apiClient;
     private final BetRepository betRepository;
+    private final MarketCatalogueRepository catalogueRepository;
     private final DeserialisationService jsonDeserialiser;
+    private final EnrichmentService enricher;
     private final CancelExecutionReportRepository reportRepository;
 
     @RequestMapping("/listCurrentOrders")
@@ -34,7 +39,9 @@ public class BetController extends AbstractController {
 
         String response = apiClient.listCurrentOrders();
         List<Bet> bets = jsonDeserialiser.mapToBetList(response);
+        enrichBets(bets);
         betRepository.saveAll(bets);
+
         model.addAttribute("bets", bets);
         return "listCurrentOrders";
     }
@@ -97,5 +104,17 @@ public class BetController extends AbstractController {
         Optional<CancelExecutionReport> report = reportRepository.findById(reportId);
         model.addAttribute("report", report);
         return "cancelExecutionReport";
+    }
+
+    private void enrichBets(List<Bet> bets) throws IOException {
+        for (Bet bet : bets) {
+            String response = apiClient
+                    .listMarketCatalogue("marketIds", bet.getMarketId());
+
+            List<MarketCatalogue> catalogues = jsonDeserialiser
+                    .mapToMarketCatalogue(response);
+
+            enricher.enrichBet(bet, catalogues.get(0));
+        }
     }
 }
