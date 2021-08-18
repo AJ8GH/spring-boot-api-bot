@@ -11,15 +11,13 @@
     </head>
     <body class="body">
         <div class="pageContainer">
-            <div class="heading">
-                <h1 class="mainTitle">Betfair API Bot</h1>
-            </div>
+            <header th:insert="fragments/header.html :: header"></header>
 
-            <h2>Choose how many seconds you want to connect for (Max 10 minutes)</h2>
+            <h2>Choose how many seconds you want to connect for (min 10 seconds, max 10 minutes)</h2>
 
             <div>
                 <form th:action="@{/marketSubscription/{marketId}(marketId=${marketId})}" class="timeoutForm">
-                    <input type="number" max="600" min="1" step="1" name="timeout" class="timeout">
+                    <input type="number" max="600" min="5" step="1" name="timeout" class="timeout">
                     <input type="submit" value="Submit" class="button">
                 </form>
             </div>

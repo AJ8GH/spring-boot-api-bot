@@ -12,12 +12,9 @@
     </head>
     <body class="body">
         <div class="pageContainer">
-            <header class="heading">
-                <h1 class="mainTitle">Betfair API Bot</h1>
-            </header>
+            <header th:insert="fragments/header.html :: header"></header>
 
             <h2>Events</h2>
-
             <div th:unless="${ events == null || events.size() == 0 }">
                 <article th:each="event : ${ events }" class="event">
                     <div class="eventData">

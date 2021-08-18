@@ -12,9 +12,7 @@
     </head>
     <body class="body">
         <div class="pageContainer">
-            <div class="heading">
-                <h1 class="mainTitle">Betfair API Bot</h1>
-            </div>
+            <header th:insert="fragments/header.html :: header"></header>
 
             <div th:unless="${ marketBook == null }">
                 <h2 class="marketTitle" th:text="${ marketBook.getMarketName() }"></h2>

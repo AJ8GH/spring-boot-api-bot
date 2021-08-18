@@ -93,10 +93,10 @@ public class MarketController extends AbstractController {
         cache.addMessage(message);
         model.addAttribute("snapshot", message);
 
-        return "redirect:/marketChange";
+        return "redirect:/marketChange/" + marketId;
     }
 
-    @RequestMapping("/marketChange")
+    @RequestMapping("/marketChange/{marketId}")
     public String marketChange(Model model) throws IOException {
         if (isTimedOut()) return "redirect:/";
 
@@ -112,7 +112,7 @@ public class MarketController extends AbstractController {
 
     private boolean isTimedOut() throws IOException {
         heartbeatCount += 1;
-        if (esaClient.getTimeout() <= heartbeatCount * 5000) {
+        if (esaClient.getTimeout() <= (heartbeatCount - 1) * 5000) {
             esaClient.close();
             heartbeatCount = 0;
             return true;

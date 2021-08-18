@@ -10,12 +10,9 @@
     </head>
     <body class="body">
         <div class="pageContainer">
-            <div class="heading">
-                <h1 class="mainTitle">Betfair API Bot</h1>
-            </div>
+            <header th:insert="fragments/header.html :: header"></header>
 
             <h2>Bet Confirmation</h2>
-
             <span>Market ID: </span><span th:text="${ bet.getMarketId() }" class="marketId"></span><br>
             <span>Selection ID: </span><span th:text="${ bet.getSelectionId() }"></span><br>
             <span>Bet ID: </span><span th:text="${ bet.getBetId() }"></span><br>

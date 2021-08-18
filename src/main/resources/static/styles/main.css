@@ -7,6 +7,10 @@
     color: #F2F2F2;
 }
 
+a {
+    text-decoration: none;
+}
+
 .subTitle {
     margin-top: 40px;
 }
@@ -18,11 +22,17 @@
 .mainTitle {
     font-size: 40px;
     font-weight: 900;
+    position: relative;
 }
 
 .heading {
     height: 8%;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 5%;
+    padding-left: 5%;
 }
 
 .mainTitle, .heading {
@@ -40,7 +50,7 @@
     margin: 0;
 }
 
-.button {
+.button, .home {
     padding: 20px;
     background-color: #52AB98;
     color: #F2F2F2;
@@ -49,11 +59,20 @@
     border-radius: 5px;
 }
 
-.button:hover {
+.button:hover, .home:hover {
     opacity: 0.5;
     cursor: pointer;
 }
 
-.button, .username, .password, .bet, .eventTypeData, .marketName, .timeout, .runnerName, .price, .size, .side {
+.button, .username, .password, .bet, .eventTypeData, .marketName, .timeout, .runnerName, .price, .size, .side, .home {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.home {
+    right: 20px;
+    position: absolute;
+}
+
+.home, .mainTitle {
+    display: inline;
 }

@@ -11,12 +11,9 @@
     </head>
     <body class="body">
         <div class="pageContainer">
-            <div class="heading">
-                <h1 class="mainTitle">Betfair API Bot</h1>
-            </div>
+            <header th:insert="fragments/header.html :: header"></header>
 
             <h2 class="heading">Place Bet</h2>
-
             <form th:action="@{/placeOrders}" method="post">
                 <input class="price" required type="number" min="1.01" step="0.01" placeholder="Price" name="price">
                 <input class="size" required type="number" min="0.01" step="0.01" placeholder="Size" name="size">

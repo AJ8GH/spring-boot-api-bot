@@ -3,6 +3,7 @@ package com.aj.esa.models;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ import java.util.Map;
 @Getter
 @Setter
 @Builder
+@ToString
 public class MarketSubscriptionMessage {
     private String op;
     @Id

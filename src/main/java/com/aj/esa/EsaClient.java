@@ -20,6 +20,7 @@ public class EsaClient {
     private final Logger LOG = LoggerFactory.getLogger(EsaClient.class);
     private final SocketFactory socketFactory;
     private final ObjectMapper mapper;
+    private final MessageFactory messageFactory;
     private BufferedReader reader;
     private PrintWriter writer;
     private UserSession userSession;
@@ -28,11 +29,11 @@ public class EsaClient {
 
     public EsaClient(
             SocketFactory socketFactory,
-            UserSession userSession,
-            ObjectMapper mapper) {
+            ObjectMapper mapper,
+            MessageFactory messageFactory) {
         this.socketFactory = socketFactory;
-        this.userSession = userSession;
         this.mapper = mapper;
+        this.messageFactory = messageFactory;
     }
 
     public void setUserSession(UserSession userSession) {
@@ -54,10 +55,9 @@ public class EsaClient {
     }
 
     public String authenticate() throws IOException {
-        AuthenticationMessage message = AuthenticationMessage.builder()
-                .op("authentication")
-                .appKey(userSession.getEsaAppKey())
-                .session(userSession.getToken()).build();
+        AuthenticationMessage message = messageFactory.authenticationMessage(
+                userSession.getEsaAppKey(),
+                userSession.getToken());
 
         String payLoad = mapper.writeValueAsString(message);
         writer.println(payLoad);
@@ -66,19 +66,8 @@ public class EsaClient {
     }
 
     public String subscribeToMarkets(String marketId) throws IOException {
-        List<String> marketIds = List.of(marketId);
-        Map<String, List<String>> marketFilter = new HashMap<>();
-        marketFilter.put("marketIds", marketIds);
-
-        List<String> fields = List.of("EX_BEST_OFFERS_DISP", "EX_BEST_OFFERS", "EX_MARKET_DEF");
-        Map<String, List<String>> marketDataFilter = new HashMap<>();
-        marketDataFilter.put("fields", fields);
-
-        MarketSubscriptionMessage message = MarketSubscriptionMessage.builder()
-                .op("marketSubscription")
-                .marketFilter(marketFilter)
-                .marketDataFilter(marketDataFilter)
-                .build();
+        MarketSubscriptionMessage message = messageFactory
+                .marketSubscriptionMessage(marketId);
 
         String payload = mapper.writeValueAsString(message);
         writer.println(payload);

@@ -12,7 +12,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +25,7 @@ class EsaClientTest {
     private ObjectMapper mapper;
     private ByteArrayOutputStream outputStream;
     private EsaClient client;
+    private MessageFactory messageFactory;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -44,8 +44,10 @@ class EsaClientTest {
         when(userSession.getToken()).thenReturn("Session");
 
         mapper = mock(ObjectMapper.class);
+        messageFactory = mock(MessageFactory.class);
 
-        client = new EsaClient(factory, userSession, mapper);
+        client = new EsaClient(factory, mapper, messageFactory);
+        client.setUserSession(userSession);
     }
 
     @AfterEach
@@ -69,6 +71,8 @@ class EsaClientTest {
                 .op("authentication")
                 .appKey("AppKey")
                 .session("Session").build();
+
+        when(messageFactory.authenticationMessage(any(), any())).thenReturn(message);
 
         ObjectMapper om = new ObjectMapper();
         String payLoad = om.writeValueAsString(message);
@@ -98,6 +102,8 @@ class EsaClientTest {
                 .marketFilter(marketFilter)
                 .marketDataFilter(marketDataFilter)
                 .build();
+
+        when(messageFactory.marketSubscriptionMessage(any())).thenReturn(message);
 
         ObjectMapper om = new ObjectMapper();
         String payLoad = om.writeValueAsString(message);
