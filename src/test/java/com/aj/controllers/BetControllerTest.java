@@ -2,11 +2,14 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
+import com.aj.enrichment.EnrichmentService;
 import com.aj.models.Bet;
 import com.aj.models.CancelExecutionReport;
+import com.aj.models.MarketCatalogue;
 import com.aj.models.UserSession;
 import com.aj.repositories.BetRepository;
 import com.aj.repositories.CancelExecutionReportRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
@@ -40,12 +44,19 @@ class BetControllerTest {
     CancelExecutionReportRepository reportRepository;
     @MockBean
     BetRepository betRepository;
+    @MockBean
+    EnrichmentService enricher;
 
     @BeforeEach
-    void setup() {
+    void setup() throws JsonProcessingException {
         UserSession userSession = mock(UserSession.class);
         when(userSession.getStatus()).thenReturn("SUCCESS");
         when(apiClient.getUserSession()).thenReturn(userSession);
+
+        Bet bet = mock(Bet.class);
+        MarketCatalogue catalogue = mock(MarketCatalogue.class);
+        when(jsonDeserialiser.mapToBetList(any())).thenReturn(List.of(bet));
+        when(jsonDeserialiser.mapToMarketCatalogue(any())).thenReturn(List.of(catalogue));
     }
 
     @Test
@@ -66,8 +77,6 @@ class BetControllerTest {
 
     @Test
     void testShowBet() throws Exception {
-        Bet bet = mock(Bet.class);
-        when(jsonDeserialiser.mapToBetList(any())).thenReturn(Collections.singletonList(bet));
 
         mockMvc.perform(get("/bets/1"))
                 .andExpect(status().isOk())
