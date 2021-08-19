@@ -65,7 +65,7 @@ a {
 }
 
 .button, .username, .password, .betData, .eventTypeData, .marketName,
-.timeout, .runnerName, .price, .size, .side, .home, .betData {
+.timeout, .price, .size, .side, .home, .betData, .runnerData {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 

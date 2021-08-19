@@ -13,40 +13,64 @@
     margin-bottom: 20px;
 }
 
-.button {
-    font-size: 18px;
-}
-
 .marketName, .runnerName {
-    padding: 20px;
     font-size: 18px;
     font-weight: 900;
+}
+
+.marketName, .runnerData {
     height: 100%;
+    padding: 20px;
 }
 
 .marketName {
     min-width: 50%;
 }
 
-.runnerName {
-    min-width: 20%;
+.runner {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
 }
 
-.marketName, a, .button, .runnerName {
+.marketName, a, .button, .runnerData {
     display: inline-block;
 }
 
-.marketName, .button {
+.marketName, .runnerData, .button {
     margin: 5px;
 }
 
 .marketContainer {
-    min-width: 50%;
+    min-width: 900px;
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
 
-.runnerContainer {
-    min-width: 30%;
+.prices {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.runnerData, .noPrices, .priceType, .prices, .priceData, .label, .thContainer, .priceSize {
+    background-color: #C8D8E4;
+    color: #2B6777;
+}
+
+.runnerData {
+    border-radius: 5px;
+    min-width: 70%;
+}
+
+.priceType {
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+#placeBetButton {
+    height: 95%;
 }
