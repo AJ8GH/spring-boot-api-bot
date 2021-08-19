@@ -7,10 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -26,12 +24,8 @@ public class CancelExecutionReport {
     private Long id;
     private String status;
     private String marketId;
-    private Double sizeCancelled;
-    private String cancelledDate;
-
-    @JsonProperty("instructionReports")
-    private void unpackNested(List<Map<String, Object>> report) {
-        this.sizeCancelled = (Double) report.get(0).get("sizeCancelled");
-        this.cancelledDate = (String) report.get(0).get("cancelledDate");
-    }
+    private String eventName;
+    private String marketName;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<InstructionReport> instructionReports;
 }

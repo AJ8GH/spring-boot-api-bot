@@ -198,8 +198,8 @@ class JsonDeserialiserTest {
 
         assertEquals("SUCCESS", cancelExecutionReport.getStatus());
         assertEquals("1.179344550", cancelExecutionReport.getMarketId());
-        assertEquals(0.1, cancelExecutionReport.getSizeCancelled());
-        assertEquals("2021-08-07T18:59:28.000Z", cancelExecutionReport.getCancelledDate());
+        assertEquals(0.1, cancelExecutionReport.getInstructionReports().get(0).getSizeCancelled());
+        assertEquals("2021-08-07T18:59:28.000Z", cancelExecutionReport.getInstructionReports().get(0).getCancelledDate());
     }
 
     @Test

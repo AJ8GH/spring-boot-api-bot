@@ -3,10 +3,7 @@ package com.aj.controllers;
 import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
 import com.aj.enrichment.EnrichmentService;
-import com.aj.models.Bet;
-import com.aj.models.CancelExecutionReport;
-import com.aj.models.MarketCatalogue;
-import com.aj.models.UserSession;
+import com.aj.models.*;
 import com.aj.repositories.BetRepository;
 import com.aj.repositories.CancelExecutionReportRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.in;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -86,8 +84,10 @@ class BetControllerTest {
 
     @Test
     void testShowCancelExecutionReport() throws Exception {
-        when(reportRepository.findById(1L))
-                .thenReturn(java.util.Optional.of(new CancelExecutionReport()));
+        List<InstructionReport> instructions = List.of(new InstructionReport());
+        var report = new CancelExecutionReport();
+        report.setInstructionReports(instructions);
+        when(reportRepository.findById(1L)).thenReturn(java.util.Optional.of(report));
 
         mockMvc.perform(get("/cancelExecutionReport/1"))
                 .andExpect(status().isOk())

@@ -111,4 +111,26 @@ class EnricherTest {
         assertEquals("999 Runner", bet.getRunnerName());
         assertEquals("event", bet.getEventName());
     }
+
+    @Test
+    void enrichCancelExecution() {
+        Bet bet = Bet.builder()
+                .betId("82")
+                .eventName("Event Name")
+                .marketName("Market Name")
+                .runnerName("Runner Name")
+                .build();
+
+        List<InstructionReport> reports = List.of(new InstructionReport());
+        CancelExecutionReport report = new CancelExecutionReport();
+        report.setInstructionReports(reports);
+
+        Enricher enricher = new Enricher();
+        enricher.enrichCancelExecution(bet, report);
+
+        assertEquals("Event Name", report.getEventName());
+        assertEquals("Market Name", report.getMarketName());
+        assertEquals("Runner Name", report.getInstructionReports()
+                .get(0).getRunnerName());
+    }
 }

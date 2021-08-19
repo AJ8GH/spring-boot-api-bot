@@ -77,6 +77,7 @@ public class BetController extends AbstractController {
         String response = apiClient.listCurrentOrders(betId);
         Bet bet = jsonDeserialiser.mapToBetList(response).get(0);
         enrichBet(bet);
+        betRepository.save(bet);
 
         model.addAttribute("bet", bet);
         return "showBet";

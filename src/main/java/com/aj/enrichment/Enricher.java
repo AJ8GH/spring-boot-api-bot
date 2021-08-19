@@ -3,10 +3,7 @@ package com.aj.enrichment;
 import com.aj.esa.models.MarketChange;
 import com.aj.esa.models.ResponseMessage;
 import com.aj.esa.models.RunnerChange;
-import com.aj.models.Bet;
-import com.aj.models.MarketBook;
-import com.aj.models.MarketCatalogue;
-import com.aj.models.Runner;
+import com.aj.models.*;
 import com.aj.repositories.MarketCatalogueRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -52,6 +49,14 @@ public class Enricher implements EnrichmentService {
             if (Objects.equals(runner.getSelectionId(), bet.getSelectionId())) {
                 bet.setRunnerName(runner.getRunnerName());
             }
+        }
+    }
+
+    public void enrichCancelExecution(Bet bet, CancelExecutionReport report) {
+        report.setEventName(bet.getEventName());
+        report.setMarketName(bet.getMarketName());
+        if (report.getInstructionReports() != null && report.getInstructionReports().size() > 0) {
+            report.getInstructionReports().get(0).setRunnerName(bet.getRunnerName());
         }
     }
 
