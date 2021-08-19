@@ -34,6 +34,13 @@ public class Bet {
     private Double bspLiability;
     private String status;
 
+    public static Bet findByBetId(String betId, Iterable<Bet> bets) {
+        for (Bet bet : bets) {
+            if (bet.getBetId().equals(betId)) return bet;
+        }
+        return null;
+    }
+
     @JsonProperty("priceSize")
     private void unpackNested(Map<String, Object> priceSize) {
         this.price = (Double) priceSize.get("price");

@@ -103,6 +103,9 @@ public class BetController extends AbstractController {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
         Optional<CancelExecutionReport> report = reportRepository.findById(reportId);
+        String betId = report.get().getInstructionReports().get(0).getBetId();
+        Bet bet = Bet.findByBetId(betId, betRepository.findAll());
+        enricher.enrichCancelExecution(bet, report.get());
         model.addAttribute("report", report);
         return "cancelExecutionReport";
     }

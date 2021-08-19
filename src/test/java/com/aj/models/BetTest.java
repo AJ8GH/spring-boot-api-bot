@@ -2,6 +2,8 @@ package com.aj.models;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BetTest {
@@ -39,5 +41,16 @@ class BetTest {
         assertEquals(5.0, bet.getBspLiability());
         assertEquals("EXECUTABLE", bet.getStatus());
         assertEquals("2021-02-25T15:44:53.000Z", bet.getPlacedDate());
+    }
+
+    @Test
+    void testFindByBetId() {
+        Bet bet = Bet.builder().betId("123").build();
+        Bet bet2 = Bet.builder().betId("456").build();
+        Bet bet3 = Bet.builder().betId("789").build();
+
+        Bet foundBet = Bet.findByBetId("456", List.of(bet, bet2, bet3));
+
+        assertEquals(bet2, foundBet);
     }
 }
