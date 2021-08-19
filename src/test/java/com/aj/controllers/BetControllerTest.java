@@ -87,7 +87,7 @@ class BetControllerTest {
         List<InstructionReport> instructions = List.of(new InstructionReport());
         var report = new CancelExecutionReport();
         report.setInstructionReports(instructions);
-        report.setStatus("SUCCESS");
+        report.setStatus("FAILURE");
         when(reportRepository.findById(1L)).thenReturn(java.util.Optional.of(report));
 
         mockMvc.perform(get("/cancelExecutionReport/1"))

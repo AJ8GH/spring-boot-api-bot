@@ -64,9 +64,16 @@
     font-size: 24px;
 }
 
-.placedBetMarket, .placedBetRunner, .cancelledBetRunner, .cancelledBetMarket {
+.placedBetMarket, .placedBetRunner, .cancelledBetMarket, .cancelledBetRunner {
     font-weight: 600;
+}
+
+.placedBetMarket, .placedBetRunner, .cancelledBetMarket {
     font-size: 22px;
+}
+
+.cancelledBetRunner {
+    font-size: 18px;
 }
 
 .betData {
@@ -79,7 +86,8 @@
 }
 
 .betData, .placedBetRunner, .placedBetMarket, .placedBetEvent, .label, .data,
-.cancelledBetEvent, .cancelledBetRunner, .cancelledBetMarket, .runnerlabel {
+.cancelledBetEvent, .cancelledBetRunner, .cancelledBetMarket,
+.dataContainer, .date, .time {
     background-color: #C8D8E4;
     color: #2B6777;
 }
@@ -96,4 +104,8 @@
 .runnerlabel {
     font-size: 18px;
     font-weight: 400;
+}
+
+.data {
+    font-weight: 600;
 }
