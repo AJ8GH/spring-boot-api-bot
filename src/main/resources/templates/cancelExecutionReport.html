@@ -6,20 +6,31 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" th:href="@{/styles/main.css}">
+        <link rel="stylesheet" th:href="@{/styles/bets.css}">
         <title>Betfair API Bot - Cancel Execution Report</title>
     </head>
     <body class="body">
         <div class="pageContainer">
             <header th:insert="fragments/header.html :: header"></header>
 
-            <h2>Cancel Execution Report</h2>
-            <span>Cancel status: </span><span th:text="${ report.get().getStatus() }"></span><br>
-            <span th:text="${ report.get().getEventName() }"></span><br>
-            <span th:text="${ report.get().getMarketName() }"></span><br>
-            <div th:unless="${ report.get().getInstructionReports() == null || report.get().getInstructionReports().size() == 0 }"></div>
-            <span>Runner :</span><span th:text="${ report.get().getInstructionReports().get(0).getRunnerName() }"></span><br>
-            <span>Size cancelled: </span><span th:text="${ report.get().getInstructionReports().get(0).getSizeCancelled() }"></span><br>
-            <span>Cancelled date :</span><span th:text="${ report.get().getInstructionReports().get(0).getCancelledDate() }"></span><br>
+            <div th:if="${ report.get().getStatus().equals('SUCCESS') }">
+                <div class="cancelStatus">Bet successfully cancelled</div>
+            </div>
+            <div th:unless="${ report.get().getStatus().equals('SUCCESS') }">
+                <div class="cancelStatus">Something went wrong, the bet couldn't be cancelled</div>
+            </div>
+
+            <article class="betData">
+                <span class="cancelledBetEvent" th:text="${ report.get().getEventName() }"></span><br>
+                <span class="cancelledBetMarket" th:text="${ report.get().getMarketName() }"></span><br>
+                <div th:unless="${ report.get().getInstructionReports() == null || report.get().getInstructionReports().size() == 0 }"></div>
+                <span class="runnerlabel">Selection: </span><span class="cancelledBetRunner" th:text="${ report.get().getInstructionReports().get(0).getRunnerName() }"></span><br>
+
+                <div th:if="${ report.get().getStatus().equals('SUCCESS') }">
+                    <span class="label">Size cancelled: </span><span class="data" th:text="${ report.get().getInstructionReports().get(0).getSizeCancelled() }"></span><br>
+                    <span class="label">Cancelled date :</span><span class="data" th:text="${ report.get().getInstructionReports().get(0).getCancelledDate() }"></span><br>
+                </div>
+            </article>
         </div>
     </body>
 </html>

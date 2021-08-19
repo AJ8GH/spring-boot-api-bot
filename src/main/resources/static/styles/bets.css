@@ -59,12 +59,12 @@
 
 /* Show placed bet */
 
-.placedBetEvent {
+.placedBetEvent, .cancelledBetEvent {
     font-weight: 900;
     font-size: 24px;
 }
 
-.placedBetMarket, .placedBetRunner {
+.placedBetMarket, .placedBetRunner, .cancelledBetRunner, .cancelledBetMarket {
     font-weight: 600;
     font-size: 22px;
 }
@@ -78,7 +78,22 @@
     padding: 20px;
 }
 
-.betData, .placedBetRunner, .placedBetMarket, .placedBetEvent, .label, .data {
+.betData, .placedBetRunner, .placedBetMarket, .placedBetEvent, .label, .data,
+.cancelledBetEvent, .cancelledBetRunner, .cancelledBetMarket, .runnerlabel {
     background-color: #C8D8E4;
     color: #2B6777;
+}
+
+/* Cancel report */
+
+.cancelStatus {
+    font-size: 24px;
+    font-weight: 900;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.runnerlabel {
+    font-size: 18px;
+    font-weight: 400;
 }
