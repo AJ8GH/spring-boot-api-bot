@@ -13,6 +13,11 @@ a {
 
 .subTitle {
     margin-top: 40px;
+    color: #C8D8E4;
+}
+
+.title {
+    color: #C8D8E4;
 }
 
 .body {
@@ -37,7 +42,7 @@ a {
 
 .mainTitle, .heading {
     width: 100%;
-    background-color: #C8D8E4;
+    background-color: #F2F2F2;
     color: #2B6777;
 }
 

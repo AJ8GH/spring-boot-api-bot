@@ -25,7 +25,7 @@
 }
 
 .marketCount {
-    font-size: 18px;
+    font-weight: 600;
 }
 
 .buttonContainer {
@@ -36,4 +36,8 @@
 .button, .eventTypeData {
     height: 100px;
     margin: 5px;
+}
+
+.title {
+    margin-bottom: 30px;
 }

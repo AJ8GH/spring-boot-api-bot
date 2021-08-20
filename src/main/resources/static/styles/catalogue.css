@@ -6,7 +6,6 @@
     margin-right: auto;
 }
 
-
 .marketName {
     width: 70%;
     border-radius: 5px;
@@ -33,4 +32,22 @@
 .runnerData, .runnerName, .noPrices, .priceType, .prices, .priceData, .label, .thContainer, .priceSize {
     background-color: #C8D8E4;
     color: #2B6777;
+}
+
+.catalogueLabel, .event, .eventType, .competition {
+    color: #C8D8E4;
+}
+
+.eventType, .competition {
+    font-size: 20px;
+}
+
+.catalogueLabel, .event {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.marketDescription {
+    margin-bottom: 20px;
+    margin-top: 20px;
 }

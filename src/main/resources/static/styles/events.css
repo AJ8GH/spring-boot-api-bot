@@ -1,4 +1,4 @@
-.eventData, .eventName, .country, .marketCount, .date, .time, .dateContainer, .at, .marketCountLabel {
+.eventData, .eventName, .country, .countryLabel, .dateLabel, .marketCount, .date, .time, .dateContainer, .at, .marketCountLabel {
     background-color: #C8D8E4;
     color: #2B6777;
 }
@@ -12,6 +12,7 @@
     border-radius: 5px;
     height: 90%;
     padding: 10px;
+    line-height: 25px;
 }
 
 .event {
@@ -32,4 +33,8 @@
 .button {
     margin-left: 10px;
     height: 100%
+}
+
+.marketCount, .country {
+    font-weight: 600;
 }

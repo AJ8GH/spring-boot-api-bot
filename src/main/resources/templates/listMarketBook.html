@@ -16,18 +16,22 @@
 
             <div th:unless="${ marketBook == null }">
                 <div class="marketDescription">
-                    <h2 class="marketTitle" th:text="${ marketBook.getMarketName() }"></h2>
+                    <span class="marketBookLabel">Best prices for </span>
+                    <span class="event" th:text="${ marketBook.getEventName() }"></span>
+                    <span class="marketBookLabel"> - </span><span class="market" th:text="${ marketBook.getMarketName() }"></span>
                     <div class="eventType" th:text="${ marketBook.getEventTypeName() }"></div>
-                    <div class="event" th:text="${ marketBook.getEventName() }"></div>
-                    <div class="competition" th:unless="${ marketBook.getCompetitionName() == null ||
+                    <div class="competitionContainer" th:unless="${ marketBook.getCompetitionName() == null ||
                         marketBook.getCompetitionName().equals(marketBook.getEventName()) }">
-                        <div th:text="${ marketBook.getCompetitionName() }"></div>
+                        <div class="competition" th:text="${ marketBook.getCompetitionName() }"></div>
                     </div>
                 </div>
 
                 <article class="runner" th:each="runner : ${ marketBook.getRunners() }">
                     <div class="runnerData">
                         <div class="runnerName" th:text="${ runner.getRunnerName() }"></div>
+                        <div class="handicap" th:if="${ runner.getHandicap() != null }">
+                            <span class="label">Handicap: </span><span class="handicapData" th:text="${ runner.getHandicap() }"></span>
+                        </div>
                         <div class="prices">
                             <div class="thContainer" th:unless="${ runner.getAvailableToBack().size == 0 }">
                                 <div class="priceType">Available to back</div>
