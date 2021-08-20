@@ -120,8 +120,6 @@ public class ApiClient implements ApiClientService {
         return response;
     }
 
-
-
     private Request createLoginRequest(HttpUrl url) {
         return new Request.Builder()
                 .url(url)

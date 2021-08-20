@@ -9,7 +9,6 @@ import com.aj.models.CancelExecutionReport;
 import com.aj.models.MarketCatalogue;
 import com.aj.repositories.BetRepository;
 import com.aj.repositories.CancelExecutionReportRepository;
-import com.aj.repositories.MarketCatalogueRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
