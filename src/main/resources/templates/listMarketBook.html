@@ -19,11 +19,11 @@
                     <span class="marketBookLabel">Best prices for </span>
                     <span class="event" th:text="${ marketBook.getEventName() }"></span>
                     <span class="marketBookLabel"> - </span><span class="market" th:text="${ marketBook.getMarketName() }"></span>
-                    <div class="eventType" th:text="${ marketBook.getEventTypeName() }"></div>
                     <div class="competitionContainer" th:unless="${ marketBook.getCompetitionName() == null ||
                         marketBook.getCompetitionName().equals(marketBook.getEventName()) }">
                         <div class="competition" th:text="${ marketBook.getCompetitionName() }"></div>
                     </div>
+                    <div class="eventType" th:text="${ marketBook.getEventTypeName() }"></div>
                 </div>
 
                 <article class="runner" th:each="runner : ${ marketBook.getRunners() }">
@@ -72,7 +72,7 @@
                     </div>
 
                     <a class="link" th:href="@{/bets/new/{marketId}/{selectionId}(selectionId=${runner.getSelectionId()}, marketId=${marketBook.getMarketId()})}">
-                        <button id="placeBetButton" class="button">Place A Bet</button>
+                        <button id="placeBetButton" class="button">Place Bet</button>
                     </a>
                 </article>
             </div>

@@ -13,7 +13,8 @@
         <div class="pageContainer">
             <header th:insert="fragments/header.html :: header"></header>
 
-            <h2>Choose how many seconds you want to connect for (min 10 seconds, max 10 minutes)</h2>
+            <h2 class="title">Choose how many seconds to connect</h2>
+            <div class="subscriptionSubTitle">10 seconds - 10 minutes</div>
 
             <div>
                 <form th:action="@{/marketSubscription/{marketId}(marketId=${marketId})}" class="timeoutForm">

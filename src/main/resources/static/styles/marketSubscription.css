@@ -1,14 +1,6 @@
-.button {
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
 .timeout {
-    height: 100px;
-    width: 200px;
     color: #2B6777;
     border-radius: 5px;
-    background-color: #C8D8E4;
     padding: 20px;
     font-size: 24px;
     margin-top: 10px;
@@ -16,11 +8,74 @@
 }
 
 .timeoutForm {
-    width: 20%;
+    max-width: 400px;
     margin-right: auto;
     margin-left: auto;
 }
 
-.priceLabel, .sizeLabel, .priceSize, .data {
-    display: inline-block;
+.button, .timeout {
+    display: block;
+    width: 100%;
+    margin: 10px;
+}
+
+.marketSnapshotLabel, .event, .market, .eventType, .competition {
+    color: #C8D8E4;
+}
+
+.eventType, .competition {
+    font-size: 20px;
+}
+
+.marketSnapshotLabel, .event, .market {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.runnerChange, .noPriceData, .timeout, .runner, .data, .priceLabel, .priceSize, .sizeLabel, .priceType, .priceContainer {
+    background-color: #C8D8E4;
+    color: #2B6777;
+}
+
+.noPriceData {
+    width: 80%;
+    font-size: 20px;
+}
+
+.runnerChange, .noPriceData {
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 10px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.marketChangeDescription {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.marketChangeTitle {
+    line-height: 50px;
+}
+
+.runner {
+    font-size: 20px;
+    line-height: 40px;
+}
+
+.priceType, .priceSize, .runner, .noPriceData {
+    font-weight: 600;
+}
+
+.priceType {
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.subscriptionSubTitle {
+    color: #C8D8E4;
+    font-size: 20px;
+    margin-bottom: 30px;
 }

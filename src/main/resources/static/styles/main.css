@@ -18,6 +18,7 @@ a {
 
 .title {
     color: #C8D8E4;
+    line-height: 40px;
 }
 
 .body {
@@ -51,8 +52,8 @@ a {
     width: 100%;
     display: flex;
     flex-flow: column;
-    padding: 0;
     margin: 0;
+    padding: 0 0 50px;
 }
 
 .button, .home {
@@ -70,8 +71,9 @@ a {
 }
 
 .button, .username, .password, .betData, .eventTypeData, .marketName,
-.timeout, .price, .size, .side, .home, .betData, .runnerData {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+.timeout, .price, .size, .side, .home, .betData, .runnerData, .runnerChange,
+.eventData, .noPriceData {
+    box-shadow: 1px 2px 8px 1px rgba(0,0,0,0.4);
 }
 
 .home {

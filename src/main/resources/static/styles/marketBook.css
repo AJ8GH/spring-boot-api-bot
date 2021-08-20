@@ -1,16 +1,17 @@
 .runner {
     margin-top: 10px;
     display: flex;
-    width: 40%;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .runnerData {
-    width: 70%;
+    width: 100%;
     border-radius: 5px;
     height: 90%;
     padding: 10px;
+    font-size: 18px;
 }
 
 .handicapData, .priceData {
@@ -24,6 +25,7 @@
 .runnerName {
     font-weight: 600;
     font-size: 22px;
+    line-height: 40px;
 }
 
 .buttonContainer {
@@ -32,7 +34,8 @@
 
 .button {
     margin-left: 10px;
-    height: 100%
+    height: 100%;
+    width: 100%;
 }
 
 .runnerData, .runnerName, .noPrices, .priceType, .prices, .priceData, .label, .thContainer, .priceSize, .handicap, .handicapData {
@@ -52,6 +55,7 @@
 .marketBookLabel, .event, .market {
     font-size: 24px;
     font-weight: 600;
+    line-height: 50px;
 }
 
 .marketDescription {
@@ -61,6 +65,10 @@
 
 .priceType {
     font-weight: 600;
-    margin-top: 8px;
+    margin-top: 10px;
     margin-bottom: 5px;
+}
+
+.priceData {
+    line-height: 20px;
 }

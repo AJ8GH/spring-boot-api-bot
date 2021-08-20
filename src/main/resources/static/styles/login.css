@@ -7,7 +7,7 @@
     margin-top: 10px;
     border-radius: 5px;
     font-weight: 600;
-    width: 20%;
+    width: 100%;
 }
 
 .username, .password, .timeout {
@@ -16,7 +16,9 @@
 }
 
 .loginForm {
-    margin-top: 30px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .button {

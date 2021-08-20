@@ -17,11 +17,11 @@
             <section class="marketDescription">
                 <span class="catalogueLabel">Market Catalogue for </span>
                 <span th:text="${ marketCatalogue.get(0).getEventName() }" class="event"></span><br>
-                <div th:text="${ marketCatalogue.get(0).getEventTypeName() }" class="eventType"></div>
                 <div th:unless="${ marketCatalogue.get(0).getCompetitionName() == null ||
                         marketCatalogue.get(0).getCompetitionName().equals(marketCatalogue.get(0).getEventName()) }">
                     <div th:text="${ marketCatalogue.get(0).getCompetitionName() }" class="competition"></div>
                 </div>
+                <div th:text="${ marketCatalogue.get(0).getEventTypeName() }" class="eventType"></div>
             </section>
 
             <div th:each="market : ${ marketCatalogue }" class="market">

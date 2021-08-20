@@ -15,6 +15,7 @@
 .betData {
     padding: 10px;
     width: 80%;
+    font-size: 18px;
 }
 
 .betData, .betDetail, .betDetailLabel, .cancelButton, .marketName, .runnerName, .dateContainer {
@@ -38,7 +39,7 @@
 
 .bet {
     display: flex;
-    min-width: 30%;
+    min-width: 600px;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;

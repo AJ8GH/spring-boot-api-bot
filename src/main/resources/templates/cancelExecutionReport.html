@@ -21,17 +21,31 @@
             </div>
 
             <article class="betData">
-                <span class="label">Event: </span><span class="betDetail" th:text="${ report.get().getEventName() }"></span><br>
-                <span class="label">Market: </span><span class="betDetail" th:text="${ report.get().getMarketName() }"></span><br>
-                <div th:unless="${ report.get().getInstructionReports() == null || report.get().getInstructionReports().size() == 0 }"></div>
-                <span class="label">Runner: </span><span class="betDetail" th:text="${ report.get().getInstructionReports().get(0).getRunnerName() }"></span><br>
+                <span class="label">Event: </span>
+                <span class="betDetail" th:text="${ report.get().getEventName() }"></span>
+                <br>
 
-                <div class="dataContainer" th:if="${ report.get().getStatus().equals('SUCCESS') }">
-                    <span class="label">Size cancelled: </span><span class="data" th:text="${ report.get().getInstructionReports().get(0).getSizeCancelled() }"></span><br>
-                    <span class="label">Cancelled on </span>
-                    <span class="data" th:text="${ report.get().getInstructionReports().get(0).getCancelledDateTime().toLocalDate() }"></span>
-                    <span class="label"> at </span>
-                    <span class="data" th:text="${ report.get().getInstructionReports().get(0).getCancelledDateTime().toLocalTime() }"></span><br>
+                <span class="label">Market: </span>
+                <span class="betDetail" th:text="${ report.get().getMarketName() }"></span>
+                <br>
+
+                <div th:unless="${ report.get().getInstructionReports() == null || report.get().getInstructionReports().size() == 0 }">
+                    <span class="label">Runner: </span>
+                    <span class="betDetail" th:text="${ report.get().getInstructionReports().get(0).getRunnerName() }"></span>
+                    <br>
+
+                    <div class="dataContainer" th:if="${ report.get().getStatus().equals('SUCCESS') }">
+                        <span class="label">Size cancelled: </span>
+                        <span class="data" th:text="${ report.get().getInstructionReports().get(0).getSizeCancelled() }"></span>
+                        <br>
+
+                        <span class="label">Cancelled on </span>
+                        <span class="data" th:text="${ report.get().getInstructionReports().get(0).getCancelledDateTime().toLocalDate() }"></span>
+
+                        <span class="label"> at </span>
+                        <span class="data" th:text="${ report.get().getInstructionReports().get(0).getCancelledDateTime().toLocalTime() }"></span>
+                        <br>
+                    </div>
                 </div>
             </article>
         </div>

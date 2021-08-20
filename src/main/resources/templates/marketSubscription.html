@@ -14,51 +14,80 @@
         <div class="pageContainer">
             <header th:insert="fragments/header.html :: header"></header>
 
-            <h2>Market Subscription</h2>
+            <main class="marketChange" th:each="mc : ${ responseMessage.getMc() }">
+                <section class="marketChangeDescription">
+                    <div class="marketChangeTitle">
+                        <span class="marketSnapshotLabel">Market snapshot for </span>
+                        <span class="event" th:text="${ mc.getEventName() }"></span>
+                        <span class="marketSnapshotLabel"> - </span>
+                        <span class="market" th:text="${ mc.getMarketName() }"></span>
+                    </div>
+                    <div class="eventType" th:text="${ mc.getEventTypeName() }"></div>
+                    <div th:unless="${ mc.getCompetitionName().equals(mc.getEventName()) }">
+                        <div class="competition" th:text="${ mc.getCompetitionName() }"></div>
+                    </div>
+                </section>
 
-            <main th:each="mc : ${ responseMessage.getMc() }">
-                <p th:text="${ mc.getEventTypeName() }"></p>
-                <p th:text="${ mc.getEventName() }"></p>
-                <p th:text="${ mc.getCompetitionName() }"></p>
-                <p th:text="${ mc.getMarketName() }"></p>
-                <div th:each="rc : ${ mc.getRc() }">
-                    <p th:text="${ rc.getRunnerName() }"></p>
+                <div th:if="${ mc.getRc() == null || mc.getRc().size == 0 }">
+                    <article class="noPriceData">No price data available</article>
+                </div>
 
-                    <p>Best available to lay</p>
-                    <section class="data"  th:each="batl : ${ rc.getBatl() }">
-                        <div class="priceLabel">Price: </div>
-                        <div class="priceSize" th:text="${ batl.get(1) }"></div>
-                        <div class="sizeLabel">Size: </div>
-                        <div class="priceSize" th:text="${ batl.get(2) }"></div><br>
-                    </section>
+                <div class="runnerChange" th:each="rc : ${ mc.getRc() }">
+                    <div class="runner" th:text="${ rc.getRunnerName() }"></div>
 
-                    <p>Best available to back</p>
-                    <section class="data" th:each="batb : ${ rc.getBatb() }">
-                        <div class="priceLabel">Price: </div>
-                        <div class="priceSize" th:text="${ batb.get(1) }"></div>
-                        <div class="sizeLabel">Size: </div>
-                        <div class="priceSize" th:text="${ batb.get(2) }"></div><br>
-                    </section>
+                    <div class="priceContainer" th:unless="${ rc.getBatl() == null || rc.getBatl().size() == 0 }">
+                        <div class="priceType">Best available to lay</div>
 
-                    <p>Best virtual available to lay</p>
-                    <section class="data" th:each="bdatl : ${ rc.getBdatl() }">
-                        <div th:unless="${ bdatl.get(1) + bdatl.get(2) == 0 }">
-                            <div class="priceLabel">Price: </div>
-                            <div class="priceSize" th:text="${ bdatl.get(1) }"></div>
-                            <div class="sizeLabel">Size: </div>
-                            <div class="priceSize" th:text="${ bdatl.get(2) }"></div><br>
-                        </div>
-                    </section>
+                        <section class="data"  th:each="batl : ${ rc.getBatl() }">
+                            <span class="priceLabel">Price: </span>
+                            <span class="priceSize" th:text="${ batl.get(1) }"></span>
+                            <br>
 
-                    <p>Best virtual available to back</p>
-                    <section class="data" th:each="bdatb : ${ rc.getBdatb() }">
-                        <div th:unless="${ bdatb.get(1) + bdatb.get(2) == 0 }">
-                            <div class="priceLabel">Price: </div>
-                            <div class="priceSize" th:text="${ bdatb.get(1) }"></div>
-                            <div class="sizeLabel">Size: </div>
-                            <div class="priceSize" th:text="${ bdatb.get(2) }"></div><br>
-                        </div>
-                    </section>
+                            <span class="sizeLabel">Size: </span>
+                            <span class="priceSize" th:text="${ batl.get(2) }"></span>
+                            <br>
+                        </section>
+                    </div>
+
+                    <div class="priceContainer" th:unless="${ rc.getBatb() == null || rc.getBatb().size() == 0 }">
+                        <div class="priceType">Best available to back</div>
+                        <section class="data" th:each="batb : ${ rc.getBatb() }">
+                            <span class="priceLabel">Price: </span>
+                            <span class="priceSize" th:text="${ batb.get(1) }"></span>
+
+                            <span class="sizeLabel">Size: </span>
+                            <span class="priceSize" th:text="${ batb.get(2) }"></span>
+                            <br>
+                        </section>
+                    </div>
+
+                    <div class="priceContainer" th:unless="${ rc.getBdatl() == null || rc.getBdatl().get(0).get(1) == 0 && rc.getBdatl().get(0).get(2) == 0 }">
+                        <div class="priceType">Best virtual available to lay</div>
+                        <section class="data" th:each="bdatl : ${ rc.getBdatl() }">
+                            <div class="priceContainer" th:unless="${ bdatl.get(1) + bdatl.get(2) == 0 }">
+                                <span class="priceLabel">Price: </span>
+                                <span class="priceSize" th:text="${ bdatl.get(1) }"></span>
+
+                                <span class="sizeLabel">Size: </span>
+                                <span class="priceSize" th:text="${ bdatl.get(2) }"></span>
+                                <br>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="priceContainer" th:unless="${ rc.getBdatb() == null || rc.getBdatl().get(0).get(1) == 0 && rc.getBdatb().get(0).get(2) == 0 }">
+                        <div class="priceType">Best virtual available to back</div>
+                        <section class="data" th:each="bdatb : ${ rc.getBdatb() }">
+                            <div class="priceContainer" th:unless="${ bdatb.get(1) + bdatb.get(2) == 0 }">
+                                <span class="priceLabel">Price: </span>
+                                <span class="priceSize" th:text="${ bdatb.get(1) }"></span>
+
+                                <span class="sizeLabel">Size: </span>
+                                <span class="priceSize" th:text="${ bdatb.get(2) }"></span>
+                                <br>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </main>
         </div>

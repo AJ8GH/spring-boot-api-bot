@@ -18,7 +18,7 @@
 .event {
     margin-top: 10px;
     display: flex;
-    width: 40%;
+    max-width: 750px;
 }
 
 .eventName {
