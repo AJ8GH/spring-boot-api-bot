@@ -31,7 +31,7 @@ public class BetController extends AbstractController {
     private final EnrichmentService enricher;
     private final CancelExecutionReportRepository reportRepository;
 
-    @RequestMapping("/listCurrentOrders")
+    @RequestMapping("/bets/list")
     public String listCurrentBets(Model model) throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
@@ -40,7 +40,7 @@ public class BetController extends AbstractController {
         for (Bet bet : bets) enrichBet(bet);
         betRepository.saveAll(bets);
         model.addAttribute("bets", bets);
-        return "listCurrentOrders";
+        return "bets/list";
     }
 
     @RequestMapping("/bets/new/{marketId}/{selectionId}")
@@ -51,10 +51,10 @@ public class BetController extends AbstractController {
         model.addAttribute("selectionId", selectionId);
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
-        return "placeOrders";
+        return "bets/new";
     }
 
-    @PostMapping("/placeOrders")
+    @PostMapping("/bets/new")
     public String placeOrders(Model model,
                               @RequestParam("price") double price,
                               @RequestParam("size") double size,
@@ -65,10 +65,10 @@ public class BetController extends AbstractController {
 
         String response = apiClient.placeOrders(marketId, selectionId, side, size, price);
         Bet bet = jsonDeserialiser.mapToObject(response, Bet.class);
-        return ("redirect:/bets/" + bet.getBetId());
+        return ("redirect:/bets/show/" + bet.getBetId());
     }
 
-    @RequestMapping("/bets/{betId}")
+    @RequestMapping("/bets/show/{betId}")
     public String showBet(Model model, @PathVariable("betId") String betId)
             throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
@@ -79,10 +79,10 @@ public class BetController extends AbstractController {
         betRepository.save(bet);
 
         model.addAttribute("bet", bet);
-        return "showBet";
+        return "bets/show";
     }
 
-    @PostMapping("/cancelOrders")
+    @PostMapping("/bets/delete")
     public String cancelOrders(@RequestParam("marketId") String marketId,
                                @RequestParam("betId") long betId,
                                HttpServletRequest request)
@@ -93,10 +93,10 @@ public class BetController extends AbstractController {
         CancelExecutionReport report = jsonDeserialiser
                 .mapToObject(response, CancelExecutionReport.class);
         reportRepository.save(report);
-        return "redirect:/cancelExecutionReport/" + report.getId();
+        return "redirect:/bets/delete/" + report.getId();
     }
 
-    @RequestMapping("/cancelExecutionReport/{reportId}")
+    @RequestMapping("/bets/delete/{reportId}")
     public String showCancelExecutionReport(
             Model model, @PathVariable("reportId") long reportId) {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
@@ -106,7 +106,7 @@ public class BetController extends AbstractController {
         Bet bet = Bet.findByBetId(betId, betRepository.findAll());
         enricher.enrichCancelExecution(bet, report.get());
         model.addAttribute("report", report);
-        return "cancelExecutionReport";
+        return "bets/delete";
     }
 
     private void enrichBet(Bet bet) throws IOException {

@@ -43,7 +43,7 @@ public class MarketController extends AbstractController {
         this.esaClient = esaClient;
     }
 
-    @RequestMapping("/listMarketCatalogue/{eventId}")
+    @RequestMapping("/markets/listCatalogue/{eventId}")
     public String listMarketCatalogue(@PathVariable("eventId") String eventId,
                                       Model model) throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
@@ -52,10 +52,10 @@ public class MarketController extends AbstractController {
         List<MarketCatalogue> marketCatalogueList = jsonDeserialiser.mapToMarketCatalogue(response);
         marketCatalogueRepository.saveAll(marketCatalogueList);
         model.addAttribute("marketCatalogue", marketCatalogueList);
-        return "listMarketCatalogue";
+        return "markets/listCatalogue";
     }
 
-    @RequestMapping("/listMarketBook/{marketId}")
+    @RequestMapping("/markets/listBook/{marketId}")
     public String listMarketBook(@PathVariable("marketId") String marketId,
                                  Model model) throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
@@ -66,17 +66,17 @@ public class MarketController extends AbstractController {
         enricher.enrichMarketBook(marketBook, marketCatalogueRepository.findAll());
         model.addAttribute("marketBook", marketBook);
 
-        return "listMarketBook";
+        return "markets/listBook";
     }
 
-    @RequestMapping("/marketSubscription/new/{marketId}")
+    @RequestMapping("/markets/subscriptions/new/{marketId}")
     public String newMarketSubscription(@PathVariable("marketId") String marketId,
                                      Model model) {
         model.addAttribute("marketId", marketId);
-        return "newMarketSubscription";
+        return "/markets/subscriptions/new";
     }
 
-    @RequestMapping("/marketSubscription/{marketId}")
+    @RequestMapping("/markets/subscribe/{marketId}")
     public String showMarketSubscription(@PathVariable("marketId") String marketId,
                                      @RequestParam("timeout") int timeout,
                                      Model model) throws IOException {
@@ -96,10 +96,10 @@ public class MarketController extends AbstractController {
         cache.addMessage(message);
         model.addAttribute("snapshot", message);
 
-        return "redirect:/marketChange/" + marketId;
+        return "redirect:/markets/subscriptions/show/" + marketId;
     }
 
-    @RequestMapping("/marketChange/{marketId}")
+    @RequestMapping("/markets/subscriptions/show/{marketId}")
     public String marketChange(Model model) throws IOException {
         if (isTimedOut()) return "redirect:/";
 
@@ -110,7 +110,7 @@ public class MarketController extends AbstractController {
         ResponseMessage currentMarketUpdate = cache.getMessage(message.getId());
         model.addAttribute("responseMessage", currentMarketUpdate);
 
-        return "marketSubscription";
+        return "markets/subscriptions/show";
     }
 
     private boolean isTimedOut() throws IOException {

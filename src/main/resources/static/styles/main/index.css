@@ -1,5 +1,7 @@
 .button {
-    min-width: 20%
+    min-width: 400px;
+
+    margin: 5px;
 }
 
 .indexButtons {

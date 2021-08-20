@@ -59,9 +59,9 @@ class BetControllerTest {
 
     @Test
     void testListCurrentBets() throws Exception {
-        mockMvc.perform(get("/listCurrentOrders"))
+        mockMvc.perform(get("/bets/list"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("listCurrentOrders"))
+                .andExpect(view().name("bets/list"))
                 .andExpect(content().string(containsString("Current Bets")));
     }
 
@@ -69,16 +69,16 @@ class BetControllerTest {
     void testNewBet() throws Exception {
         mockMvc.perform(get("/bets/new/1.123/456"))
         .andExpect(status().isOk())
-        .andExpect(view().name("placeOrders"))
+        .andExpect(view().name("bets/new"))
         .andExpect(content().string(containsString("Place Bet")));
     }
 
     @Test
     void testShowBet() throws Exception {
 
-        mockMvc.perform(get("/bets/1"))
+        mockMvc.perform(get("/bets/show/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("showBet"))
+                .andExpect(view().name("bets/show"))
                 .andExpect(content().string(containsString("Bet Confirmation")));
     }
 
@@ -90,9 +90,9 @@ class BetControllerTest {
         report.setStatus("FAILURE");
         when(reportRepository.findById(1L)).thenReturn(java.util.Optional.of(report));
 
-        mockMvc.perform(get("/cancelExecutionReport/1"))
+        mockMvc.perform(get("/bets/delete/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("cancelExecutionReport"))
+                .andExpect(view().name("bets/delete"))
                 .andExpect(content().string(containsString("Cancel Execution Report")));
     }
 }

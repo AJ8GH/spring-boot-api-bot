@@ -10,10 +10,11 @@
     margin-right: auto;
     margin-bottom: 20px;
     padding: 20px;
+    line-height: 30px;
 }
 
 .betData, .betDetail, .label, .data,
-.dataContainer, .date, .time, .dateContainer {
+.dataContainer, .date, .time, .dateContainer, .thContainer {
     background-color: #C8D8E4;
     color: #2B6777;
     font-size: 20px;
@@ -27,4 +28,12 @@
 
 .data {
     font-weight: 600;
+}
+
+.cancelStatus {
+    color: #C8D8E4;
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }

@@ -5,9 +5,9 @@
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" th:href="@{/styles/main.css}">
-        <link rel="stylesheet" th:href="@{/styles/list.css}">
-        <link rel="stylesheet" th:href="@{/styles/catalogue.css}">
+        <link rel="stylesheet" th:href="@{/styles/main/main.css}">
+        <link rel="stylesheet" th:href="@{/styles/main/list.css}">
+        <link rel="stylesheet" th:href="@{/styles/markets/catalogue.css}">
         <title>Betfair API Bot - Market Catalogue</title>
     </head>
     <body class="body">
@@ -26,8 +26,8 @@
 
             <div th:each="market : ${ marketCatalogue }" class="market">
                 <div th:text="${ market.getMarketName() }" class="marketName"></div>
-                <a th:href="@{/listMarketBook/{marketId}(marketId=${market.getMarketId()})}"><button id="pricesButton" class="button">View Best Prices</button></a>
-                <a th:href="@{/marketSubscription/new/{marketId}(marketId=${market.getMarketId()})}"><button id="subscribeButton" class="button">Subscribe to ESA</button></a>
+                <a th:href="@{/markets/listBook/{marketId}(marketId=${market.getMarketId()})}"><button id="pricesButton" class="button">View Best Prices</button></a>
+                <a th:href="@{/markets/subscriptions/new/{marketId}(marketId=${market.getMarketId()})}"><button id="subscribeButton" class="button">Subscribe to ESA</button></a>
             </div>
         </div>
     </body>

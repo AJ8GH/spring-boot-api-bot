@@ -39,8 +39,7 @@
 
 .bet {
     display: flex;
-    min-width: 600px;
-    max-width: 500px;
+    min-width: 700px;
     margin-left: auto;
     margin-right: auto;
 }

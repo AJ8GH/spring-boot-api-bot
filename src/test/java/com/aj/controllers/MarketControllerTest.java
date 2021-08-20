@@ -61,17 +61,17 @@ class MarketControllerTest {
 
     @Test
     void testListMarketCatalogue() throws Exception {
-        mockMvc.perform(get("/listMarketCatalogue/1"))
+        mockMvc.perform(get("/markets/listCatalogue/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("listMarketCatalogue"))
+                .andExpect(view().name("markets/listCatalogue"))
                 .andExpect(content().string(containsString("Market Catalogue")));
     }
 
     @Test
     void testListMarketBook() throws Exception {
-        mockMvc.perform(get("/listMarketBook/1.567"))
+        mockMvc.perform(get("/markets/listBook/1.567"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("listMarketBook"))
+                .andExpect(view().name("markets/listBook"))
                 .andExpect(content().string(containsString("Market Book")));
     }
 }

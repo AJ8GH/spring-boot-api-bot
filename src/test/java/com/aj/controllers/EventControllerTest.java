@@ -37,17 +37,17 @@ public class EventControllerTest {
 
     @Test
     void testListEventTypes() throws Exception {
-        mockMvc.perform(get("/listEventTypes"))
+        mockMvc.perform(get("/events/listTypes"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("listEventTypes"))
+                .andExpect(view().name("events/listTypes"))
                 .andExpect(content().string(containsString("Event Types")));
     }
 
     @Test
     void testListEvents() throws Exception {
-        mockMvc.perform(get("/listEvents/1"))
+        mockMvc.perform(get("/events/list/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("listEvents"))
+                .andExpect(view().name("events/list"))
                 .andExpect(content().string(containsString("Events")));
     }
 }
