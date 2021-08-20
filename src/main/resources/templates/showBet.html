@@ -13,17 +13,35 @@
         <div class="pageContainer">
             <header th:insert="fragments/header.html :: header"></header>
 
-            <h2>Bet Confirmation</h2>
+            <h2 class="title">Bet Confirmation</h2>
             <div class="bet">
                 <article class="betData">
-                    <span th:text="${ bet.getEventName() }" class="placedBetEvent"></span><br>
-                    <span th:text="${ bet.getMarketName() }" class="placedBetMarket"></span><br>
-                    <span th:text="${ bet.getRunnerName() }" class="placedBetRunner"></span><br>
-                    <span class="label">Status: </span><span class="data" th:text="${ bet.getStatus() }"></span><br>
-                    <span class="label">Side: </span><span class="data" th:text="${ bet.getSide() }"></span><br>
-                    <span class="label">Price: </span><span class="data" th:text="${ bet.getPrice() }"></span><br>
-                    <span class="label">Size: </span><span class="data" th:text="${ bet.getSize() }"></span><br>
-                    <span class="label">Placed on </span><span class="data" th:text="${ bet.getPlacedDate() }"></span><br>
+                    <span class="label">Event: </span>
+                    <span th:text="${ bet.getEventName() }" class="betDetail"></span><br>
+                    <span class="label">Market: </span>
+                    <span th:text="${ bet.getMarketName() }" class="betDetail"></span><br>
+                    <span class="label">Runner: </span>
+                    <span th:text="${ bet.getRunnerName() }" class="betDetail"></span><br>
+                    <span class="label">Side: </span>
+                    <span class="data" th:text="${ bet.getSide() }"></span><br>
+                    <span class="label">Price: </span>
+                    <span class="data" th:text="${ bet.getPrice() }"></span><br>
+                    <span class="label">Size: </span>
+                    <span class="data" th:text="${ bet.getSize() }"></span><br>
+                    <span class="label">Handicap: </span>
+                    <span th:text="${ bet.getHandicap() }" class="betDetail"></span><br>
+                    <span class="label">Size Matched: </span>
+                    <span th:text="${ bet.getSizeMatched() }" class="betDetail"></span><br>
+                    <span class="label">Size Remaining: </span>
+                    <span th:text="${ bet.getSizeRemaining() }" class="betDetail"></span><br>
+                    <span class="label">Status: </span>
+                    <span class="data" th:text="${ bet.getStatus() }"></span><br>
+                    <div class="dateContainer" th:unless="${ bet.getPlacedDate() == null }">
+                        <span class="label">Placed on </span>
+                        <span class="data" th:text="${ bet.placedDateTime().toLocalDate() }"></span>
+                        <span class="label"> at </span>
+                        <span class="data" th:text="${ bet.placedDateTime().toLocalTime() }"></span><br>
+                    </div>
                 </article>
 
                 <form th:action="@{/cancelOrders}" method="post" class="cancelButton">

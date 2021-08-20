@@ -14,17 +14,17 @@
             <header th:insert="fragments/header.html :: header"></header>
 
             <div th:if="${ report.get().getStatus().equals('SUCCESS') }">
-                <div class="cancelStatus">Bet successfully cancelled</div>
+                <h2 class="title">Bet successfully cancelled</h2>
             </div>
             <div th:unless="${ report.get().getStatus().equals('SUCCESS') }">
                 <div class="cancelStatus">Something went wrong, the bet couldn't be cancelled</div>
             </div>
 
             <article class="betData">
-                <span class="cancelledBetEvent" th:text="${ report.get().getEventName() }"></span><br>
-                <span class="label">Market: </span><span class="cancelledBetMarket" th:text="${ report.get().getMarketName() }"></span><br>
+                <span class="label">Event: </span><span class="betDetail" th:text="${ report.get().getEventName() }"></span><br>
+                <span class="label">Market: </span><span class="betDetail" th:text="${ report.get().getMarketName() }"></span><br>
                 <div th:unless="${ report.get().getInstructionReports() == null || report.get().getInstructionReports().size() == 0 }"></div>
-                <span class="label">Selection: </span><span class="cancelledBetRunner" th:text="${ report.get().getInstructionReports().get(0).getRunnerName() }"></span><br>
+                <span class="label">Runner: </span><span class="betDetail" th:text="${ report.get().getInstructionReports().get(0).getRunnerName() }"></span><br>
 
                 <div class="dataContainer" th:if="${ report.get().getStatus().equals('SUCCESS') }">
                     <span class="label">Size cancelled: </span><span class="data" th:text="${ report.get().getInstructionReports().get(0).getSizeCancelled() }"></span><br>

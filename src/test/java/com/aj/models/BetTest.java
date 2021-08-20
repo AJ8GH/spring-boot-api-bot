@@ -2,6 +2,7 @@ package com.aj.models;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +13,7 @@ class BetTest {
     void testToString() {
         Bet bet = new Bet(1L, "0", "1.0", 2L, "marketName",
                 "runnerName", "eventName", "2021-02-25T15:44:53.000Z", 3.0, 4.0,
-                "BACK", 5.0, "EXECUTABLE");
+                "BACK", 5.0, 6.0, 7.0, 8.0, "EXECUTABLE");
 
         assertTrue(bet.toString().contains(bet.getBetId().toString()));
         assertTrue(bet.toString().contains(bet.getMarketId()));
@@ -29,7 +30,7 @@ class BetTest {
     @Test void testBet() {
         Bet bet = new Bet(1L, "0", "1.0", 2L, "marketName",
                 "runnerName", "eventName", "2021-02-25T15:44:53.000Z", 3.0, 4.0,
-                "BACK", 5.0, "EXECUTABLE");
+                "BACK", 5.0, 6.0, 7.0, 8.0, "EXECUTABLE");
 
         assertEquals(1L, bet.getId());
         assertEquals("0", bet.getBetId());
@@ -38,7 +39,7 @@ class BetTest {
         assertEquals(3.0, bet.getPrice());
         assertEquals(4.0, bet.getSize());
         assertEquals("BACK", bet.getSide());
-        assertEquals(5.0, bet.getBspLiability());
+        assertEquals(8.0, bet.getBspLiability());
         assertEquals("EXECUTABLE", bet.getStatus());
         assertEquals("2021-02-25T15:44:53.000Z", bet.getPlacedDate());
     }
@@ -52,5 +53,17 @@ class BetTest {
         Bet foundBet = Bet.findByBetId("456", List.of(bet, bet2, bet3));
 
         assertEquals(bet2, foundBet);
+    }
+
+    @Test
+    void testPlacedDateTime() {
+        Bet bet = Bet.builder()
+                .placedDate("2021-02-25T15:44:53.000Z")
+                .build();
+
+        LocalDateTime dateTime = bet.placedDateTime();
+        LocalDateTime parsedTime = LocalDateTime.parse("2021-02-25T15:44:53.000");
+
+        assertEquals(parsedTime, dateTime);
     }
 }

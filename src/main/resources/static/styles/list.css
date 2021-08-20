@@ -17,10 +17,14 @@
     width: 80%;
 }
 
-.betData, .betDetail, .betDetailLabel, .cancelButton, .marketName, .runnerName {
+.betData, .betDetail, .betDetailLabel, .cancelButton, .marketName, .runnerName, .dateContainer {
     border-radius: 5px;
     background-color: #C8D8E4;
     color: #2B6777;
+}
+
+.betDetail {
+    font-weight: 600;
 }
 
 .cancelButton {

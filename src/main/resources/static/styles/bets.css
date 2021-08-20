@@ -1,79 +1,6 @@
-/*!* Place orders *!*/
-
-/*.price, .size, .side {*/
-/*    display: block;*/
-/*    margin-left: auto;*/
-/*    margin-right: auto;*/
-/*    padding: 20px;*/
-/*    font-size: 20px;*/
-/*    margin-top: 10px;*/
-/*    border-radius: 5px;*/
-/*    font-weight: 600;*/
-/*    width: 20%;*/
-/*    text-align: center;*/
-/*    background-color: #C8D8E4;*/
-/*    color: #2B6777;*/
-/*}*/
-
-/*.side {*/
-/*    text-align-last:center;*/
-/*}*/
-
-/*.side {*/
-/*    margin-bottom: 10px;*/
-/*}*/
-
-/*!* List orders *!*/
-
-/*.bet {*/
-/*    display: flex;*/
-/*    min-width: 30%;*/
-/*    max-width: 500px;*/
-/*    margin-left: auto;*/
-/*    margin-right: auto;*/
-/*}*/
-
-/*.betData {*/
-/*    padding: 10px;*/
-/*    width: 80%;*/
-/*}*/
-
-/*.betData, .betDetail, .betDetailLabel, .cancelButton, .marketName, .runnerName {*/
-/*    border-radius: 5px;*/
-/*    background-color: #C8D8E4;*/
-/*    color: #2B6777;*/
-/*}*/
-
-/*.cancelButton {*/
-/*    background-color: #2B6777;*/
-/*    width: 20%;*/
-/*}*/
-
-/*#cancelButton {*/
-/*    height: 100%;*/
-/*}*/
-
-/*.betData, .cancelButton {*/
-/*    margin: 5px;*/
-/*}*/
-
-/* Show placed bet */
-
-.placedBetEvent, .cancelledBetEvent {
-    font-weight: 900;
-    font-size: 24px;
-}
-
-.placedBetMarket, .placedBetRunner, .cancelledBetMarket, .cancelledBetRunner {
+.betDetail {
     font-weight: 600;
-}
-
-.placedBetMarket, .placedBetRunner, .cancelledBetMarket {
-    font-size: 22px;
-}
-
-.cancelledBetRunner {
-    font-size: 18px;
+    margin-top: 5px;
 }
 
 .betData {
@@ -85,25 +12,17 @@
     padding: 20px;
 }
 
-.betData, .placedBetRunner, .placedBetMarket, .placedBetEvent, .label, .data,
-.cancelledBetEvent, .cancelledBetRunner, .cancelledBetMarket,
-.dataContainer, .date, .time {
+.betData, .betDetail, .label, .data,
+.dataContainer, .date, .time, .dateContainer {
     background-color: #C8D8E4;
     color: #2B6777;
+    font-size: 20px;
 }
 
 /* Cancel report */
 
-.cancelStatus {
-    font-size: 24px;
-    font-weight: 900;
-    margin-top: 30px;
+.title {
     margin-bottom: 40px;
-}
-
-.runnerlabel {
-    font-size: 18px;
-    font-weight: 400;
 }
 
 .data {
