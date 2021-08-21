@@ -84,7 +84,7 @@ public class BetController extends AbstractController {
 
     @PostMapping("/bets/delete")
     public String cancelOrders(@RequestParam("marketId") String marketId,
-                               @RequestParam("betId") long betId,
+                               @RequestParam("betId") String betId,
                                HttpServletRequest request)
             throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";

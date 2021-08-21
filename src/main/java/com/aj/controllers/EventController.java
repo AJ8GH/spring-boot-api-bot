@@ -30,7 +30,7 @@ public class EventController extends AbstractController {
     }
 
     @RequestMapping("/events/list/{eventTypeId}")
-    public String listEvents(@PathVariable("eventTypeId") long eventTypeId,
+    public String listEvents(@PathVariable("eventTypeId") String eventTypeId,
                              Model model) throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 

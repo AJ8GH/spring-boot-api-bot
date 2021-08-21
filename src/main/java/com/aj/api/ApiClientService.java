@@ -9,12 +9,12 @@ public interface ApiClientService {
     public UserSession getUserSession();
     public String login(String username, String password) throws IOException;
     public String listEventTypes() throws IOException;
-    public String listEvents(long eventTypeId) throws IOException;
+    public String listEvents(String eventTypeId) throws IOException;
     public String listMarketCatalogue(String filter, String id) throws IOException;
     public String listMarketBook(String marketId) throws IOException;
     public String listCurrentOrders(String betId) throws IOException;
     public String listCurrentOrders() throws IOException;
     public String placeOrders(String marketId, long selectionId, String side,
                               double size, double price) throws IOException;
-    public String cancelOrders(String marketId, long betId) throws IOException;
+    public String cancelOrders(String marketId, String betId) throws IOException;
 }
