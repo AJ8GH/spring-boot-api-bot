@@ -12,9 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
-@Setter
 @Builder
-@ToString
 public class MarketSubscriptionMessage {
     private String op;
     @Id
