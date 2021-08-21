@@ -1,6 +1,7 @@
 package com.aj.api;
 
 import com.aj.models.UserSession;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -30,11 +31,13 @@ public class ApiClientTest {
     private ApiClient apiClient;
     private UrlBuilder urlBuilder;
     private RequestBodyBuilder requestBodyBuilder;
+    private ObjectMapper objectMapper;
 
     @BeforeEach
     public void setUp() throws IOException {
         urlBuilder = mock(UrlBuilder.class);
         requestBodyBuilder = mock(RequestBodyBuilder.class);
+        objectMapper = mock(ObjectMapper.class);
         apiClient = new ApiClient(urlBuilder, requestBodyBuilder);
 
         UserSession userSession = mock(UserSession.class);
