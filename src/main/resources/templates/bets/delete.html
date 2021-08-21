@@ -35,7 +35,7 @@
 
                 <div class="thContainer" th:unless="${ report.get().getInstructionReports() == null ||
                         report.get().getInstructionReports().size() == 0 }">
-                    <div th:with="instruction=${ report.get().getInstructionReports().get(0) }">
+                    <div class="thContainer" th:with="instruction=${ report.get().getInstructionReports().get(0) }">
                         <span class="label">Runner: </span>
                         <span class="betDetail" th:text="${ instruction.getRunnerName() }"></span>
                         <br>

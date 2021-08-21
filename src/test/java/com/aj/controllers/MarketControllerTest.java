@@ -5,6 +5,8 @@ import com.aj.deserialisation.DeserialisationService;
 import com.aj.enrichment.EnrichmentService;
 import com.aj.esa.EsaClient;
 import com.aj.esa.cache.MarketSubscriptionCache;
+import com.aj.esa.models.MarketChange;
+import com.aj.esa.models.ResponseMessage;
 import com.aj.models.*;
 import com.aj.repositories.MarketBookRepository;
 import com.aj.repositories.MarketCatalogueRepository;
@@ -73,5 +75,48 @@ class MarketControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("markets/listBook"))
                 .andExpect(content().string(containsString("Market Book")));
+    }
+
+    @Test
+    void testNewMarketSubscription() throws Exception {
+        mockMvc.perform(get("/markets/subscriptions/new/1.567"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("markets/subscriptions/new"))
+                .andExpect(content().string(containsString(
+                        "Choose how many seconds to connect")));
+    }
+
+    @Test
+    void testShowMarketSubscriptions() throws Exception {
+        when(esaClient.getLatest()).thenReturn("Response");
+        when(esaClient.getTimeout()).thenReturn(100);
+
+        ResponseMessage message = ResponseMessage.builder()
+                .ct("CT")
+                .build();
+
+        when(cache.getMessage(any())).thenReturn(message);
+        when(jsonDeserialiser.mapToObject(any(), any())).thenReturn(message);
+
+        mockMvc.perform(get("/markets/subscriptions/show/1.567"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("markets/subscriptions/show"));
+    }
+
+    @Test
+    void testShowMarketSubscriptionsSocketTimeout() throws Exception {
+        when(esaClient.getLatest()).thenReturn("Response");
+        when(esaClient.getTimeout()).thenReturn(0);
+
+        ResponseMessage message = ResponseMessage.builder()
+                .ct("CT")
+                .build();
+
+        when(cache.getMessage(any())).thenReturn(message);
+        when(jsonDeserialiser.mapToObject(any(), any())).thenReturn(message);
+
+        mockMvc.perform(get("/markets/subscriptions/show/1.567"))
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/"));
     }
 }

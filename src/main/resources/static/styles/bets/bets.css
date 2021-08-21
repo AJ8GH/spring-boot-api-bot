@@ -5,7 +5,7 @@
 
 .betData {
     border-radius: 5px;
-    max-width: 500px;
+    min-width: 400px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;

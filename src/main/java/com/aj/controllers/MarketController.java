@@ -13,6 +13,7 @@ import com.aj.repositories.MarketCatalogueRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -73,10 +74,10 @@ public class MarketController extends AbstractController {
     public String newMarketSubscription(@PathVariable("marketId") String marketId,
                                      Model model) {
         model.addAttribute("marketId", marketId);
-        return "/markets/subscriptions/new";
+        return "markets/subscriptions/new";
     }
 
-    @RequestMapping("/markets/subscribe/{marketId}")
+    @PostMapping("/markets/subscribe/{marketId}")
     public String showMarketSubscription(@PathVariable("marketId") String marketId,
                                      @RequestParam("timeout") int timeout,
                                      Model model) throws IOException {
