@@ -47,7 +47,7 @@ public class ApiClient implements ApiClientService {
     }
 
     @Override
-    public String listEventTypes() {
+    public String listEventTypes() throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENT_TYPES);
         String body = requestBodyBuilder.listEventTypesBody();
         return createRequestAndMakeCall(url, body);
@@ -61,28 +61,30 @@ public class ApiClient implements ApiClientService {
     }
 
     @Override
-    public String listMarketCatalogue(String filter, String id) {
+    public String listMarketCatalogue(String filter, String id)
+            throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
-        String body = requestBodyBuilder.listMarketCatalogueBody(filter, id);
+        String body = requestBodyBuilder.listMarketCatalogueBody(id);
         return createRequestAndMakeCall(url, body);
     }
 
     @Override
-    public String listMarketBook(String marketId) {
+    public String listMarketBook(String marketId) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_BOOK);
         String body = requestBodyBuilder.listMarketBookBody(marketId);
         return createRequestAndMakeCall(url, body);
     }
 
     @Override
-    public String listCurrentOrders(String betId) {
+    public String listCurrentOrders(String betId)
+            throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
         String body = requestBodyBuilder.listCurrentOrdersBody(betId);
         return createRequestAndMakeCall(url, body);
     }
 
     @Override
-    public String listCurrentOrders() {
+    public String listCurrentOrders() throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
         String body = requestBodyBuilder.listCurrentOrdersBody();
         return createRequestAndMakeCall(url, body);
@@ -90,14 +92,15 @@ public class ApiClient implements ApiClientService {
 
     @Override
     public String placeOrders(String marketId, long selectionId, String side,
-                              double size, double price) {
+                              double size, double price)
+            throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.PLACE_ORDERS);
         String body = requestBodyBuilder.placeOrdersBody(marketId, selectionId, side, size, price);
         return createRequestAndMakeCall(url, body);
     }
 
     @Override
-    public String cancelOrders(String marketId, long betId) {
+    public String cancelOrders(String marketId, String betId) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.CANCEL_ORDERS);
         String body = requestBodyBuilder.cancelOrdersBody(marketId, betId);
         return createRequestAndMakeCall(url, body);

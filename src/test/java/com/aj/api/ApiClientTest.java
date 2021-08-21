@@ -184,12 +184,12 @@ public class ApiClientTest {
         HttpUrl baseUrl = server.url("/listMarketCatalogue");
 
         when(urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE)).thenReturn(baseUrl);
-        when(requestBodyBuilder.listMarketCatalogueBody("eventIds", "999")).thenReturn("{listMarketCatalogue body}");
+        when(requestBodyBuilder.listMarketCatalogueBody("999")).thenReturn("{listMarketCatalogue body}");
 
         String response = apiClient.listMarketCatalogue("eventIds", "999");
         RecordedRequest request = server.takeRequest();
 
-        verify(requestBodyBuilder).listMarketCatalogueBody("eventIds", "999");
+        verify(requestBodyBuilder).listMarketCatalogueBody("999");
         verify(urlBuilder).createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
 
         assertEquals(mockResponse, response);
@@ -257,12 +257,12 @@ public class ApiClientTest {
         HttpUrl baseUrl = server.url("/cancelOrders");
 
         when(urlBuilder.createBettingUrl(urlBuilder.CANCEL_ORDERS)).thenReturn(baseUrl);
-        when(requestBodyBuilder.cancelOrdersBody("1.23", 77L)).thenReturn("{cancelOrders body}");
+        when(requestBodyBuilder.cancelOrdersBody("1.23", "77")).thenReturn("{cancelOrders body}");
 
-        String response = apiClient.cancelOrders("1.23", 77L);
+        String response = apiClient.cancelOrders("1.23", "77");
         RecordedRequest request = server.takeRequest();
 
-        verify(requestBodyBuilder).cancelOrdersBody("1.23", 77L);
+        verify(requestBodyBuilder).cancelOrdersBody("1.23", "77");
         verify(urlBuilder).createBettingUrl(urlBuilder.CANCEL_ORDERS);
 
         assertEquals("{cancelOrders response}", response);

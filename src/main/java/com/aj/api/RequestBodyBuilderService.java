@@ -3,13 +3,13 @@ package com.aj.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface RequestBodyBuilderService {
-    public String listEventTypesBody();
+    public String listEventTypesBody() throws JsonProcessingException;
     public String listEventsBody(String eventTypeId) throws JsonProcessingException;
-    public String listMarketCatalogueBody(String filter, String id);
-    public String listMarketBookBody(String marketId);
-    public String listCurrentOrdersBody();
-    public String listCurrentOrdersBody(String betId);
+    public String listMarketCatalogueBody(String eventId) throws JsonProcessingException;
+    public String listMarketBookBody(String marketId) throws JsonProcessingException;
+    public String listCurrentOrdersBody() throws JsonProcessingException;
+    public String listCurrentOrdersBody(String betId) throws JsonProcessingException;
     public String placeOrdersBody(String marketId, long selectionId,
-                                  String side, double price, double size);
-    public String cancelOrdersBody(String marketId, long betId);
+                                  String side, double price, double size) throws JsonProcessingException;
+    public String cancelOrdersBody(String marketId, String betId) throws JsonProcessingException;
 }

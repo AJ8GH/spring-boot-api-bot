@@ -16,5 +16,5 @@ public interface ApiClientService {
     public String listCurrentOrders() throws IOException;
     public String placeOrders(String marketId, long selectionId, String side,
                               double size, double price) throws IOException;
-    public String cancelOrders(String marketId, long betId) throws IOException;
+    public String cancelOrders(String marketId, String betId) throws IOException;
 }

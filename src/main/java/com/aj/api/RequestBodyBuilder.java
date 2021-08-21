@@ -1,49 +1,36 @@
 package com.aj.api;
 
-import com.aj.api.bettingTypes.MarketFilter;
-import com.aj.api.bettingTypes.RequestBody;
+import com.aj.api.bettingTypes.*;
+import com.aj.api.enumTypes.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-@AllArgsConstructor
 @Service
 public class RequestBodyBuilder implements RequestBodyBuilderService {
-    private final ObjectMapper objectMapper;
+    private final int DEFAULT_MAX_RESULTS = 200;
+    private final boolean DEFAULT_VIRTUALISE = true;
+    private final ObjectMapper mapper;
 
-    private final String LIST_EVENT_TYPES_BODY = "{\"filter\":{}}";
-    private final String LIST_EVENTS_BODY = "{\"filter\":{\"eventTypeIds\":[%s]}}";
-    private final String LIST_ALL_CURRENT_ORDERS_BODY = "{\"orderProjection\": \"EXECUTABLE\"}";
-    private final String LIST_CURRENT_ORDERS_BODY = "{\"orderProjection\": " +
-            "\"EXECUTABLE\",\"betIds\": [\"%s\"]}";
-    private final String LIST_MARKET_CATALOGUE_BODY =
-            "{\"filter\":{\"%s\":[\"%s\"]},\"marketProjection\": " +
-            "[\"RUNNER_DESCRIPTION\", \"COMPETITION\", \"EVENT\", " +
-            "\"EVENT_TYPE\"],\"maxResults\":\"200\"}";
-    private final String LIST_MARKET_BOOK_BODY =
-            "{\"marketIds\": [\"%s\"],\"priceProjection\"" +
-            ": {\"priceData\": [\"EX_BEST_OFFERS\", \"EX_TRADED\"]," +
-            "\"virtualise\": \"true\"}}}";
-    private final String PLACE_ORDERS_BODY =
-            "{\"marketId\": \"%s\"," +
-            "\"instructions\": [{\"selectionId\": %s" +
-            ",\"side\": \"%s\",\"orderType\": \"LIMIT\"," +
-            "\"limitOrder\": {\"size\": %s," +
-            "\"price\": %s}}]}";
-    private final String CANCEL_ORDERS_BODY = "{\"marketId\": \"%s\"," +
-            "\"instructions\": [{\"betId\": %s," +
-            "\"sizeReduction\": null}]}";
-
-    @Override
-    public String listEventTypesBody() {
-        return LIST_EVENT_TYPES_BODY;
+    public RequestBodyBuilder(ObjectMapper mapper) {
+        this.mapper = mapper;
     }
 
     @Override
-    public String listEventsBody(String eventTypeId) throws JsonProcessingException {
+    public String listEventTypesBody() throws JsonProcessingException {
+        MarketFilter filter = MarketFilter.builder().build();
+        RequestBody requestBody = RequestBody.builder()
+                .filter(filter)
+                .build();
+
+        return mapper.writeValueAsString(requestBody);
+    }
+
+    @Override
+    public String listEventsBody(String eventTypeId)
+            throws JsonProcessingException {
         MarketFilter filter = MarketFilter.builder()
                 .eventTypeIds(Set.of(eventTypeId))
                 .build();
@@ -52,38 +39,100 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
                 .filter(filter)
                 .build();
 
-        return objectMapper.writeValueAsString(requestBody);
+        return mapper.writeValueAsString(requestBody);
     }
 
     @Override
-    public String listMarketCatalogueBody(String filter, String id) {
-        return String.format(LIST_MARKET_CATALOGUE_BODY, filter, id);
+    public String listMarketCatalogueBody(String eventId) throws JsonProcessingException {
+        Set<MarketProjection> marketProjection = Set.of(
+                MarketProjection.EVENT,
+                MarketProjection.EVENT_TYPE,
+                MarketProjection.MARKET_DESCRIPTION,
+                MarketProjection.COMPETITION,
+                MarketProjection.RUNNER_DESCRIPTION);
+
+        MarketFilter filter = MarketFilter.builder()
+                .eventIds(Set.of(eventId))
+                .build();
+
+        RequestBody requestBody = RequestBody.builder()
+                .filter(filter)
+                .marketProjection(marketProjection)
+                .maxResults(DEFAULT_MAX_RESULTS)
+                .build();
+
+        return mapper.writeValueAsString(requestBody);
     }
 
     @Override
-    public String listMarketBookBody(String marketId) {
-        return String.format(LIST_MARKET_BOOK_BODY, marketId);
+    public String listMarketBookBody(String marketId) throws JsonProcessingException {
+        PriceProjection priceProjection = PriceProjection.builder()
+                .priceData(Set.of(PriceData.EX_BEST_OFFERS, PriceData.EX_TRADED))
+                .virtualise(DEFAULT_VIRTUALISE)
+                .build();
+
+        RequestBody requestBody = RequestBody.builder()
+                .marketIds(Set.of(marketId))
+                .priceProjection(priceProjection)
+                .build();
+
+        return mapper.writeValueAsString(requestBody);
     }
 
     @Override
     public String placeOrdersBody(String marketId, long selectionId,
-                                  String side, double size, double price) {
-        return String.format(PLACE_ORDERS_BODY,
-                marketId, selectionId, side, size, price);
+                                  String side, double size, double price) throws JsonProcessingException {
+
+        LimitOrder limitOrder = LimitOrder.builder()
+                .price(price)
+                .size(size)
+                .build();
+
+        PlaceInstruction placeInstruction = PlaceInstruction.builder()
+                .selectionId(selectionId)
+                .side(Side.valueOf(side))
+                .orderType(OrderType.LIMIT)
+                .limitOrder(limitOrder)
+                .build();
+
+        RequestBody requestBody = RequestBody.builder()
+                .marketId(marketId)
+                .instructions(Set.of(placeInstruction))
+                .build();
+
+        return mapper.writeValueAsString(requestBody);
     }
 
     @Override
-    public String cancelOrdersBody(String marketId, long betId) {
-        return String.format(CANCEL_ORDERS_BODY, marketId, betId);
+    public String cancelOrdersBody(String marketId, String betId) throws JsonProcessingException {
+        CancelInstruction cancelInstruction = CancelInstruction.builder()
+                .betId(betId)
+                .build();
+
+        RequestBody requestBody = RequestBody.builder()
+                .marketId(marketId)
+                .instructions(Set.of(cancelInstruction))
+                .build();
+
+        return mapper.writeValueAsString(requestBody);
     }
 
     @Override
-    public String listCurrentOrdersBody(String betId) {
-        return String.format(LIST_CURRENT_ORDERS_BODY, betId);
+    public String listCurrentOrdersBody(String betId) throws JsonProcessingException {
+        RequestBody requestBody = RequestBody.builder()
+                .betIds(Set.of(betId))
+                .orderProjection(OrderProjection.EXECUTABLE)
+                .build();
+
+        return mapper.writeValueAsString(requestBody);
     }
 
     @Override
-    public String listCurrentOrdersBody() {
-        return LIST_ALL_CURRENT_ORDERS_BODY;
+    public String listCurrentOrdersBody() throws JsonProcessingException {
+        RequestBody requestBody = RequestBody.builder()
+                .orderProjection(OrderProjection.EXECUTABLE)
+                .build();
+
+        return mapper.writeValueAsString(requestBody);
     }
 }

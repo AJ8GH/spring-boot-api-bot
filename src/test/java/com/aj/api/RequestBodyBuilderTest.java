@@ -1,7 +1,7 @@
 package com.aj.api;
 
-import com.aj.api.bettingTypes.MarketFilter;
-import com.aj.api.bettingTypes.RequestBody;
+import com.aj.api.bettingTypes.*;
+import com.aj.api.enumTypes.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ public class RequestBodyBuilderTest {
     }
 
     @Test
-    void testListEventTypesBody() {
+    void testListEventTypesBody() throws JsonProcessingException {
         String body = "{\"filter\":{}}";
 
         assertEquals(body, requestBodyBuilder.listEventTypesBody());
@@ -46,68 +46,115 @@ public class RequestBodyBuilderTest {
     }
 
     @Test
-    void testListMarketCatalogueBody() {
+    void testListMarketCatalogueBody() throws JsonProcessingException {
         String eventId = "999";
-        String filterType = "eventIds";
-        String body = "{\"filter\":{\"" + filterType + "\":[\"" + eventId +
-                "\"]},\"marketProjection\": [\"RUNNER_DESCRIPTION\", " +
-                "\"COMPETITION\", \"EVENT\", \"EVENT_TYPE\"]," +
-                "\"maxResults\":\"200\"}";
+        Set<MarketProjection> marketProjection = Set.of(
+                MarketProjection.EVENT,
+                MarketProjection.EVENT_TYPE,
+                MarketProjection.MARKET_DESCRIPTION,
+                MarketProjection.COMPETITION,
+                MarketProjection.RUNNER_DESCRIPTION);
 
-        assertEquals(body, requestBodyBuilder.listMarketCatalogueBody(filterType, eventId));
+        MarketFilter filter = MarketFilter.builder()
+                .eventIds(Set.of(eventId))
+                .build();
+
+        RequestBody requestBody = RequestBody.builder()
+                .filter(filter)
+                .marketProjection(marketProjection)
+                .maxResults(200)
+                .build();
+
+        String body = mapper.writeValueAsString(requestBody);
+
+        assertEquals(body, requestBodyBuilder.listMarketCatalogueBody(eventId));
     }
 
     @Test
-    void testListMarketBookBody() {
+    void testListMarketBookBody() throws JsonProcessingException {
         String marketId = "1.23456789";
 
-        String body = "{\"marketIds\": [\"" + marketId + "\"],\"priceProjection\"" +
-                ": {\"priceData\": [\"EX_BEST_OFFERS\", \"EX_TRADED\"]," +
-                "\"virtualise\": \"true\"}}}";
+        PriceProjection priceProjection = PriceProjection.builder()
+                .priceData(Set.of(PriceData.EX_BEST_OFFERS, PriceData.EX_TRADED))
+                .virtualise(true)
+                .build();
+
+        RequestBody requestBody = RequestBody.builder()
+                .marketIds(Set.of(marketId))
+                .priceProjection(priceProjection)
+                .build();
+
+        String body = mapper.writeValueAsString(requestBody);
 
         assertEquals(body, requestBodyBuilder.listMarketBookBody(marketId));
     }
 
     @Test
-    void testListCurrentOrdersBody() {
-        String body = "{\"orderProjection\": \"EXECUTABLE\"}";
+    void testListCurrentOrdersBody() throws JsonProcessingException {
+        String body = "{\"orderProjection\":\"EXECUTABLE\"}";
 
         assertEquals(body, requestBodyBuilder.listCurrentOrdersBody());
     }
 
     @Test
-    void testListCurrentOrdersBodyWithBetId() {
-        String body = "{\"orderProjection\": \"EXECUTABLE\",\"betIds\": [\"9292\"]}";
+    void testListCurrentOrdersBodyWithBetId() throws JsonProcessingException {
+        String betId = "9292";
+        RequestBody requestBody = RequestBody.builder()
+                .betIds(Set.of(betId))
+                .orderProjection(OrderProjection.EXECUTABLE)
+                .build();
 
-        assertEquals(body, requestBodyBuilder.listCurrentOrdersBody("9292"));
+        String body = mapper.writeValueAsString(requestBody);
+
+        assertEquals(body, requestBodyBuilder.listCurrentOrdersBody(betId));
     }
 
     @Test
-    void testPlaceOrdersBody() {
+    void testPlaceOrdersBody() throws JsonProcessingException {
         String marketId = "1.23456789";
         long selectionId = 2345L;
         String side = "BACK";
         double price = 5.0;
         double size = 7.0;
 
-        String body = "{\"marketId\": \"" + marketId + "\"," +
-                "\"instructions\": [{\"selectionId\": " + selectionId +
-                ",\"side\": \"" + side + "\",\"orderType\": \"LIMIT\"," +
-                "\"limitOrder\": {\"size\": " + size + "," +
-                "\"price\": " + price + "}}]}";
+        LimitOrder limitOrder = LimitOrder.builder()
+                .price(price)
+                .size(size)
+                .build();
+
+        PlaceInstruction placeInstruction = PlaceInstruction.builder()
+                .selectionId(selectionId)
+                .side(Side.valueOf(side))
+                .orderType(OrderType.LIMIT)
+                .limitOrder(limitOrder)
+                .build();
+
+        RequestBody requestBody = RequestBody.builder()
+                .marketId(marketId)
+                .instructions(Set.of(placeInstruction))
+                .build();
+
+        String body = mapper.writeValueAsString(requestBody);
 
         assertEquals(body, requestBodyBuilder.placeOrdersBody(
                 marketId, selectionId, side, size, price));
     }
 
     @Test
-    void testCancelOrdersBody() {
-        long betId = 234234L;
+    void testCancelOrdersBody() throws JsonProcessingException {
+        String betId = "234234";
         String marketId = "1.837454";
 
-        String body = "{\"marketId\": \"" + marketId + "\"," +
-                "\"instructions\": [{\"betId\": " + betId + "," +
-                "\"sizeReduction\": null}]}";
+        CancelInstruction cancelInstruction = CancelInstruction.builder()
+                .betId(betId)
+                .build();
+
+        RequestBody requestBody = RequestBody.builder()
+                .marketId(marketId)
+                .instructions(Set.of(cancelInstruction))
+                .build();
+
+        String body = mapper.writeValueAsString(requestBody);
 
         assertEquals(body, requestBodyBuilder.cancelOrdersBody(marketId, betId));
     }
