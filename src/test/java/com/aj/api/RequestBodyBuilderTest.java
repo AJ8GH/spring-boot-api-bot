@@ -1,33 +1,52 @@
 package com.aj.api;
 
+import com.aj.api.bettingTypes.MarketFilter;
+import com.aj.api.bettingTypes.RequestBody;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RequestBodyBuilderTest {
 
+    private RequestBodyBuilder requestBodyBuilder;
+    private ObjectMapper mapper;
+
+    @BeforeEach
+    void setUp() {
+        requestBodyBuilder = new RequestBodyBuilder(new ObjectMapper());
+        mapper = new ObjectMapper();
+    }
+
     @Test
     void testListEventTypesBody() {
-        var requestBodyBuilder = new RequestBodyBuilder();
         String body = "{\"filter\":{}}";
 
         assertEquals(body, requestBodyBuilder.listEventTypesBody());
     }
 
     @Test
-    void testListEventsBody() {
-        RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
+    void testListEventsBody() throws JsonProcessingException {
+        String eventTypeId = "1";
 
-        long eventTypeId = 1L;
-        String body = "{\"filter\":{\"eventTypeIds\":[" + eventTypeId + "]}}";
+        MarketFilter filter = MarketFilter.builder()
+                .eventTypeIds(Set.of(eventTypeId))
+                .build();
+        RequestBody requestBody = RequestBody.builder()
+                .filter(filter)
+                .build();
+
+        String body = mapper.writeValueAsString(requestBody);
 
         assertEquals(body, requestBodyBuilder.listEventsBody(eventTypeId));
     }
 
     @Test
     void testListMarketCatalogueBody() {
-        RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
-
         String eventId = "999";
         String filterType = "eventIds";
         String body = "{\"filter\":{\"" + filterType + "\":[\"" + eventId +
@@ -40,7 +59,6 @@ public class RequestBodyBuilderTest {
 
     @Test
     void testListMarketBookBody() {
-        RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
         String marketId = "1.23456789";
 
         String body = "{\"marketIds\": [\"" + marketId + "\"],\"priceProjection\"" +
@@ -52,7 +70,6 @@ public class RequestBodyBuilderTest {
 
     @Test
     void testListCurrentOrdersBody() {
-        RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
         String body = "{\"orderProjection\": \"EXECUTABLE\"}";
 
         assertEquals(body, requestBodyBuilder.listCurrentOrdersBody());
@@ -60,7 +77,6 @@ public class RequestBodyBuilderTest {
 
     @Test
     void testListCurrentOrdersBodyWithBetId() {
-        RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
         String body = "{\"orderProjection\": \"EXECUTABLE\",\"betIds\": [\"9292\"]}";
 
         assertEquals(body, requestBodyBuilder.listCurrentOrdersBody("9292"));
@@ -68,8 +84,6 @@ public class RequestBodyBuilderTest {
 
     @Test
     void testPlaceOrdersBody() {
-        RequestBodyBuilder requestBodyBuilder = new RequestBodyBuilder();
-
         String marketId = "1.23456789";
         long selectionId = 2345L;
         String side = "BACK";
@@ -88,8 +102,6 @@ public class RequestBodyBuilderTest {
 
     @Test
     void testCancelOrdersBody() {
-        var requestBodyBuilder = new RequestBodyBuilder();
-
         long betId = 234234L;
         String marketId = "1.837454";
 

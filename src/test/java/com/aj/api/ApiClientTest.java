@@ -161,12 +161,12 @@ public class ApiClientTest {
         HttpUrl baseUrl = server.url("/listEvents");
 
         when(urlBuilder.createBettingUrl(urlBuilder.LIST_EVENTS)).thenReturn(baseUrl);
-        when(requestBodyBuilder.listEventsBody(1L)).thenReturn("{listEvents body}");
+        when(requestBodyBuilder.listEventsBody("1")).thenReturn("{listEvents body}");
 
-        String response = apiClient.listEvents(1L);
+        String response = apiClient.listEvents("1");
         RecordedRequest request = server.takeRequest();
 
-        verify(requestBodyBuilder).listEventsBody(1L);
+        verify(requestBodyBuilder).listEventsBody("1");
         assertEquals(mockResponse, response);
         assertEquals(baseUrl, request.getRequestUrl());
         assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));

@@ -9,7 +9,7 @@ public interface ApiClientService {
     public UserSession getUserSession();
     public String login(String username, String password) throws IOException;
     public String listEventTypes() throws IOException;
-    public String listEvents(long eventTypeId) throws IOException;
+    public String listEvents(String eventTypeId) throws IOException;
     public String listMarketCatalogue(String filter, String id) throws IOException;
     public String listMarketBook(String marketId) throws IOException;
     public String listCurrentOrders(String betId) throws IOException;

@@ -1,8 +1,10 @@
 package com.aj.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 public interface RequestBodyBuilderService {
     public String listEventTypesBody();
-    public String listEventsBody(long eventTypeId);
+    public String listEventsBody(String eventTypeId) throws JsonProcessingException;
     public String listMarketCatalogueBody(String filter, String id);
     public String listMarketBookBody(String marketId);
     public String listCurrentOrdersBody();

@@ -1,10 +1,18 @@
 package com.aj.api;
 
-import lombok.Builder;
+import com.aj.api.bettingTypes.MarketFilter;
+import com.aj.api.bettingTypes.RequestBody;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
+@AllArgsConstructor
 @Service
 public class RequestBodyBuilder implements RequestBodyBuilderService {
+    private final ObjectMapper objectMapper;
 
     private final String LIST_EVENT_TYPES_BODY = "{\"filter\":{}}";
     private final String LIST_EVENTS_BODY = "{\"filter\":{\"eventTypeIds\":[%s]}}";
@@ -35,8 +43,16 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
     }
 
     @Override
-    public String listEventsBody(long eventTypeId) {
-        return String.format(LIST_EVENTS_BODY, eventTypeId);
+    public String listEventsBody(String eventTypeId) throws JsonProcessingException {
+        MarketFilter filter = MarketFilter.builder()
+                .eventTypeIds(Set.of(eventTypeId))
+                .build();
+
+        RequestBody requestBody = RequestBody.builder()
+                .filter(filter)
+                .build();
+
+        return objectMapper.writeValueAsString(requestBody);
     }
 
     @Override

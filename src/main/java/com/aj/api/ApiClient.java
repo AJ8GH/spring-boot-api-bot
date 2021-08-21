@@ -1,6 +1,7 @@
 package com.aj.api;
 
 import com.aj.models.UserSession;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +54,7 @@ public class ApiClient implements ApiClientService {
     }
 
     @Override
-    public String listEvents(long eventTypeId) {
+    public String listEvents(String eventTypeId) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENTS);
         String body = requestBodyBuilder.listEventsBody(eventTypeId);
         return createRequestAndMakeCall(url, body);
