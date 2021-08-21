@@ -40,48 +40,48 @@ public class ApiClient implements ApiClientService {
     }
 
     @Override
-    public String login(String username, String password) throws IOException {
+    public String login(String username, String password) {
         HttpUrl url = urlBuilder.createLoginUrl(username, password);
         return createRequestAndMakeLoginCall(url);
     }
 
     @Override
-    public String listEventTypes() throws IOException {
+    public String listEventTypes() {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENT_TYPES);
         String body = requestBodyBuilder.listEventTypesBody();
         return createRequestAndMakeCall(url, body);
     }
 
     @Override
-    public String listEvents(long eventTypeId) throws IOException {
+    public String listEvents(long eventTypeId) {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENTS);
         String body = requestBodyBuilder.listEventsBody(eventTypeId);
         return createRequestAndMakeCall(url, body);
     }
 
     @Override
-    public String listMarketCatalogue(String filter, String id) throws IOException {
+    public String listMarketCatalogue(String filter, String id) {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
         String body = requestBodyBuilder.listMarketCatalogueBody(filter, id);
         return createRequestAndMakeCall(url, body);
     }
 
     @Override
-    public String listMarketBook(String marketId) throws IOException {
+    public String listMarketBook(String marketId) {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_BOOK);
         String body = requestBodyBuilder.listMarketBookBody(marketId);
         return createRequestAndMakeCall(url, body);
     }
 
     @Override
-    public String listCurrentOrders(String betId) throws IOException {
+    public String listCurrentOrders(String betId) {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
         String body = requestBodyBuilder.listCurrentOrdersBody(betId);
         return createRequestAndMakeCall(url, body);
     }
 
     @Override
-    public String listCurrentOrders() throws IOException {
+    public String listCurrentOrders() {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
         String body = requestBodyBuilder.listCurrentOrdersBody();
         return createRequestAndMakeCall(url, body);
@@ -89,35 +89,41 @@ public class ApiClient implements ApiClientService {
 
     @Override
     public String placeOrders(String marketId, long selectionId, String side,
-                              double size, double price) throws IOException {
+                              double size, double price) {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.PLACE_ORDERS);
         String body = requestBodyBuilder.placeOrdersBody(marketId, selectionId, side, size, price);
         return createRequestAndMakeCall(url, body);
     }
 
     @Override
-    public String cancelOrders(String marketId, long betId) throws IOException {
+    public String cancelOrders(String marketId, long betId) {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.CANCEL_ORDERS);
         String body = requestBodyBuilder.cancelOrdersBody(marketId, betId);
         return createRequestAndMakeCall(url, body);
     }
 
-    private String createRequestAndMakeCall(HttpUrl url, String body)
-            throws IOException {
+    private String createRequestAndMakeCall(HttpUrl url, String body) {
         Request request = createBettingRequest(url, body);
         return makeCall(request);
     }
 
-    private String createRequestAndMakeLoginCall(HttpUrl url)
-            throws IOException {
+    private String createRequestAndMakeLoginCall(HttpUrl url) {
         Request request = createLoginRequest(url);
         return makeCall(request);
     }
 
-    private String makeCall(Request request) throws IOException {
-        String response = CLIENT.newCall(request).execute().body().string();
-        LOGGER.info("Response: {}", response);
-        return response;
+    private String makeCall(Request request) {
+        try {
+            Response response = CLIENT.newCall(request).execute();
+            String body = response.body().string();
+            LOGGER.info("Response: {}", response);
+            LOGGER.info("Body: {}", body);
+            if (response.isSuccessful()) return body;
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return null;
     }
 
     private Request createLoginRequest(HttpUrl url) {

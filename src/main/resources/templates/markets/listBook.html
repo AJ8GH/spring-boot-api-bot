@@ -55,7 +55,7 @@
 
                             <div class="thContainer" th:unless="${ runner.getTradedVolume().size == 0 }">
                                 <div class="priceType">Traded volume</div>
-                                <div th:each="price : ${ runner.getTradedVolume() }">
+                                <div class="priceSize" th:each="price : ${ runner.getTradedVolume() }">
                                     <span class="label">Price: </span>
                                     <span class="priceData" th:text="${ price.getPrice() }"></span>
                                     <span class="label">, Size: </span>
