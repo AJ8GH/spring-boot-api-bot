@@ -85,11 +85,16 @@ public class BetController extends AbstractController {
     @PostMapping("/bets/delete")
     public String cancelOrders(@RequestParam("marketId") String marketId,
                                @RequestParam("betId") String betId,
-                               HttpServletRequest request)
-            throws IOException {
+                               HttpServletRequest request) throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
         String response = apiClient.cancelOrders(marketId, betId);
+        System.out.println("CONTROLLER");
+        System.out.println("CONTROLLER");
+        System.out.println("CONTROLLER");
+        System.out.println("CONTROLLER");
+        System.out.println(response);
+
         CancelExecutionReport report = jsonDeserialiser
                 .mapToObject(response, CancelExecutionReport.class);
         reportRepository.save(report);
@@ -111,7 +116,7 @@ public class BetController extends AbstractController {
 
     private void enrichBet(Bet bet) throws IOException {
         String response = apiClient
-                .listMarketCatalogue("marketIds", bet.getMarketId());
+                .catalogueByMarketId(bet.getMarketId());
 
         List<MarketCatalogue> catalogues = jsonDeserialiser
                 .mapToMarketCatalogue(response);

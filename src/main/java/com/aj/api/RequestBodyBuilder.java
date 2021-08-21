@@ -43,7 +43,7 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
     }
 
     @Override
-    public String listMarketCatalogueBody(String eventId) throws JsonProcessingException {
+    public String catalogueByEventIdBody(String eventId) throws JsonProcessingException {
         Set<MarketProjection> marketProjection = Set.of(
                 MarketProjection.EVENT,
                 MarketProjection.EVENT_TYPE,
@@ -53,6 +53,28 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
 
         MarketFilter filter = MarketFilter.builder()
                 .eventIds(Set.of(eventId))
+                .build();
+
+        RequestBody requestBody = RequestBody.builder()
+                .filter(filter)
+                .marketProjection(marketProjection)
+                .maxResults(DEFAULT_MAX_RESULTS)
+                .build();
+
+        return mapper.writeValueAsString(requestBody);
+    }
+
+    @Override
+    public String catalogueByMarketIdBody(String marketId) throws JsonProcessingException {
+        Set<MarketProjection> marketProjection = Set.of(
+                MarketProjection.EVENT,
+                MarketProjection.EVENT_TYPE,
+                MarketProjection.MARKET_DESCRIPTION,
+                MarketProjection.COMPETITION,
+                MarketProjection.RUNNER_DESCRIPTION);
+
+        MarketFilter filter = MarketFilter.builder()
+                .marketIds(Set.of(marketId))
                 .build();
 
         RequestBody requestBody = RequestBody.builder()
@@ -131,6 +153,8 @@ public class RequestBodyBuilder implements RequestBodyBuilderService {
     public String listCurrentOrdersBody() throws JsonProcessingException {
         RequestBody requestBody = RequestBody.builder()
                 .orderProjection(OrderProjection.EXECUTABLE)
+                .orderBy(OrderBy.BY_PLACE_TIME)
+                .sortDir(SortDir.LATEST_TO_EARLIEST)
                 .build();
 
         return mapper.writeValueAsString(requestBody);

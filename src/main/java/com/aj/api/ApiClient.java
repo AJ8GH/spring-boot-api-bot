@@ -61,10 +61,9 @@ public class ApiClient implements ApiClientService {
     }
 
     @Override
-    public String listMarketCatalogue(String filter, String id)
-            throws JsonProcessingException {
+    public String catalogueByMarketId(String marketId) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
-        String body = requestBodyBuilder.listMarketCatalogueBody(id);
+        String body = requestBodyBuilder.catalogueByMarketIdBody(marketId);
         return createRequestAndMakeCall(url, body);
     }
 
@@ -76,8 +75,7 @@ public class ApiClient implements ApiClientService {
     }
 
     @Override
-    public String listCurrentOrders(String betId)
-            throws JsonProcessingException {
+    public String listCurrentOrders(String betId) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
         String body = requestBodyBuilder.listCurrentOrdersBody(betId);
         return createRequestAndMakeCall(url, body);
@@ -92,8 +90,7 @@ public class ApiClient implements ApiClientService {
 
     @Override
     public String placeOrders(String marketId, long selectionId, String side,
-                              double size, double price)
-            throws JsonProcessingException {
+                              double size, double price) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.PLACE_ORDERS);
         String body = requestBodyBuilder.placeOrdersBody(marketId, selectionId, side, size, price);
         return createRequestAndMakeCall(url, body);
@@ -122,9 +119,9 @@ public class ApiClient implements ApiClientService {
             String body = response.body().string();
             LOGGER.info("Response: {}", response);
             LOGGER.info("Body: {}", body);
-            if (response.isSuccessful()) return body;
+            return body;
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             LOGGER.error(e.getMessage());
         }
         return null;

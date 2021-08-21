@@ -67,7 +67,32 @@ public class RequestBodyBuilderTest {
 
         String body = mapper.writeValueAsString(requestBody);
 
-        assertEquals(body, requestBodyBuilder.listMarketCatalogueBody(eventId));
+        assertEquals(body, requestBodyBuilder.catalogueByEventIdBody(eventId));
+    }
+
+    @Test
+    void testCatalogueByMarketId() throws JsonProcessingException {
+        String marketId = "1.2345";
+        Set<MarketProjection> marketProjection = Set.of(
+                MarketProjection.EVENT,
+                MarketProjection.EVENT_TYPE,
+                MarketProjection.MARKET_DESCRIPTION,
+                MarketProjection.COMPETITION,
+                MarketProjection.RUNNER_DESCRIPTION);
+
+        MarketFilter filter = MarketFilter.builder()
+                .marketIds(Set.of(marketId))
+                .build();
+
+        RequestBody requestBody = RequestBody.builder()
+                .filter(filter)
+                .marketProjection(marketProjection)
+                .maxResults(200)
+                .build();
+
+        String body = mapper.writeValueAsString(requestBody);
+
+        assertEquals(body, requestBodyBuilder.catalogueByMarketIdBody(marketId));
     }
 
     @Test
@@ -91,7 +116,13 @@ public class RequestBodyBuilderTest {
 
     @Test
     void testListCurrentOrdersBody() throws JsonProcessingException {
-        String body = "{\"orderProjection\":\"EXECUTABLE\"}";
+        RequestBody requestBody = RequestBody.builder()
+                .orderProjection(OrderProjection.EXECUTABLE)
+                .orderBy(OrderBy.BY_PLACE_TIME)
+                .sortDir(SortDir.LATEST_TO_EARLIEST)
+                .build();
+
+        String body = mapper.writeValueAsString(requestBody);
 
         assertEquals(body, requestBodyBuilder.listCurrentOrdersBody());
     }
