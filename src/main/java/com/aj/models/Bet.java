@@ -17,7 +17,7 @@ import java.util.Map;
 @Setter
 @ToString
 @Builder
-public class Bet {
+public class Bet extends DateTimeParser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,14 +41,6 @@ public class Bet {
     public static Bet findByBetId(String betId, Iterable<Bet> bets) {
         for (Bet bet : bets) {
             if (bet.getBetId().equals(betId)) return bet;
-        }
-        return null;
-    }
-
-    public LocalDateTime placedDateTime() {
-        if (placedDate != null) {
-            return LocalDateTime.parse(
-                    placedDate.substring(0, placedDate.length() - 1));
         }
         return null;
     }

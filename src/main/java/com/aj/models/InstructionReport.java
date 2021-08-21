@@ -14,7 +14,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class InstructionReport {
+public class InstructionReport extends DateTimeParser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,11 +23,6 @@ public class InstructionReport {
     private String RunnerName;
     private Double sizeCancelled;
     private String cancelledDate;
-
-    public LocalDateTime getCancelledDateTime() {
-        return LocalDateTime.parse(
-                cancelledDate.substring(0, cancelledDate.length() - 1));
-    }
 
     @JsonProperty("instruction")
     private void unpackBetId(Map<String, Object> instruction) {

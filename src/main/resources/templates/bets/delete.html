@@ -33,22 +33,25 @@
                 <br>
 
 
-                <div class="thContainer" th:unless="${ report.get().getInstructionReports() == null || report.get().getInstructionReports().size() == 0 }">
-                    <span class="label">Runner: </span>
-                    <span class="betDetail" th:text="${ report.get().getInstructionReports().get(0).getRunnerName() }"></span>
-                    <br>
-
-                    <div class="dataContainer" th:if="${ report.get().getStatus().equals('SUCCESS') }">
-                        <span class="label">Size cancelled: </span>
-                        <span class="data" th:text="${ report.get().getInstructionReports().get(0).getSizeCancelled() }"></span>
+                <div class="thContainer" th:unless="${ report.get().getInstructionReports() == null ||
+                        report.get().getInstructionReports().size() == 0 }">
+                    <div th:with="instruction=${ report.get().getInstructionReports().get(0) }">
+                        <span class="label">Runner: </span>
+                        <span class="betDetail" th:text="${ instruction.getRunnerName() }"></span>
                         <br>
 
-                        <span class="label">Cancelled on </span>
-                        <span class="data" th:text="${ report.get().getInstructionReports().get(0).getCancelledDateTime().toLocalDate() }"></span>
+                        <div class="dataContainer" th:if="${ report.get().getStatus().equals('SUCCESS') }">
+                            <span class="label">Size cancelled: </span>
+                            <span class="data" th:text="${ instruction.getSizeCancelled() }"></span>
+                            <br>
 
-                        <span class="label"> at </span>
-                        <span class="data" th:text="${ report.get().getInstructionReports().get(0).getCancelledDateTime().toLocalTime() }"></span>
-                        <br>
+                            <span class="label">Cancelled on </span>
+                            <span class="data" th:text="${ instruction.parse(instruction.getCancelledDate()).toLocalDate() }"></span>
+
+                            <span class="label"> at </span>
+                            <span class="data" th:text="${ instruction.parse(instruction.getCancelledDate()).toLocalTime() }"></span>
+                            <br>
+                        </div>
                     </div>
                 </div>
 

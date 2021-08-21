@@ -96,7 +96,7 @@ class JsonDeserialiserTest {
 
         String date = "2021-08-15T13:00:00.000Z";
         LocalDateTime parsedDate = LocalDateTime.parse(date.substring(0, date.length() - 1));
-        assertEquals(parsedDate, events.get(0).getDateTime());
+        assertEquals(parsedDate, events.get(0).parse(events.get(0).getOpenDate()));
         assertEquals(date, events.get(0).getOpenDate());
 
         assertEquals(29865701L, events.get(1).getId());
@@ -107,7 +107,7 @@ class JsonDeserialiserTest {
 
         date = "2021-06-22T16:15:00.000Z";
         parsedDate = LocalDateTime.parse(date.substring(0, date.length() - 1));
-        assertEquals(parsedDate, events.get(1).getDateTime());
+        assertEquals(parsedDate, events.get(1).parse(events.get(1).getOpenDate()));
         assertEquals(date, events.get(1).getOpenDate());
     }
 

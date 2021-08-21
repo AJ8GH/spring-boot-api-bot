@@ -65,10 +65,10 @@
 
                     <div class="dateContainer" th:unless="${ bet.getPlacedDate() == null }">
                         <span class="betDetailLabel">Placed on </span>
-                        <span th:text="${ bet.placedDateTime().toLocalDate() }" class="betDetail"></span>
+                        <span th:text="${ bet.parse(bet.getPlacedDate()).toLocalDate() }" class="betDetail"></span>
 
                         <span class="betDetailLabel"> at </span>
-                        <span th:text="${ bet.placedDateTime().toLocalTime() }" class="betDetail"></span>
+                        <span th:text="${ bet.parse(bet.getPlacedDate()).toLocalTime() }" class="betDetail"></span>
                         <br>
                     </div>
                 </div>

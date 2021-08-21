@@ -14,7 +14,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
-public class Event {
+public class Event extends DateTimeParser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,9 +32,5 @@ public class Event {
         this.countryCode = (String) event.get("countryCode");
         this.timezone = (String) event.get("timezone");
         this.openDate = (String) event.get("openDate");
-    }
-
-    public LocalDateTime getDateTime() {
-        return LocalDateTime.parse(openDate.substring(0, openDate.length() - 1));
     }
 }
