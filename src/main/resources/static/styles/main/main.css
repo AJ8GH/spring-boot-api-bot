@@ -57,7 +57,7 @@ a {
     padding: 0 0 50px;
 }
 
-.button, .home {
+.button, .home, .back {
     padding: 20px;
     background-color: #52AB98;
     color: #F2F2F2;
@@ -66,21 +66,30 @@ a {
     border-radius: 5px;
 }
 
-.button:hover, .home:hover, .side:hover {
+.button:hover, .home:hover, .side:hover, .back:hover {
     opacity: 0.5;
     cursor: pointer;
 }
 
 .button, .username, .password, .betData, .eventTypeData, .marketName,
 .timeout, .price, .size, .side, .home, .betData, .runnerData, .runnerChange,
-.eventData, .noPriceData {
+.eventData, .noPriceData, .back {
     box-shadow: 1px 2px 8px 1px rgba(0,0,0,0.4);
 }
 
 .home {
     right: 20px;
-    position: absolute;
 }
+
+.back {
+    right: 140px;
+}
+
+.home, .back {
+    position: absolute;
+    min-width: 95px;
+}
+
 
 .home, .mainTitle {
     display: inline;
