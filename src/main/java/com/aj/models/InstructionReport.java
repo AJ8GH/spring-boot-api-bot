@@ -20,7 +20,7 @@ public class InstructionReport extends DateTimeParser {
     private Long id;
     private String status;
     private String betId;
-    private String RunnerName;
+    private String runnerName;
     private Double sizeCancelled;
     private String cancelledDate;
 
