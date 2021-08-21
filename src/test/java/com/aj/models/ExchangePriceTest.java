@@ -8,20 +8,14 @@ class ExchangePriceTest {
 
     @Test
     void testExchangePrice() {
-        ExchangePrice exchangePrice = new ExchangePrice(1L, 2.0, 5.0);
+        ExchangePrice exchangePrice = ExchangePrice.builder()
+                .id(1L)
+                .price(2.0)
+                .size(5.0)
+                .build();
 
-        assertEquals(1L, exchangePrice.getId());
-        assertEquals(2.0, exchangePrice.getPrice());
-        assertEquals(5.0, exchangePrice.getSize());
-    }
-
-    @Test
-    void testToString() {
-        ExchangePrice exchangePrice = new ExchangePrice(1L, 2.0, 5.0);
-        String toString = exchangePrice.toString();
-
-        assertTrue(toString.contains(exchangePrice.getPrice().toString()));
-        assertTrue(toString.contains(exchangePrice.getId().toString()));
-        assertTrue(toString.contains(exchangePrice.getSize().toString()));
+        assertTrue(exchangePrice.toString().contains(exchangePrice.getPrice().toString()));
+        assertTrue(exchangePrice.toString().contains(exchangePrice.getId().toString()));
+        assertTrue(exchangePrice.toString().contains(exchangePrice.getSize().toString()));
     }
 }

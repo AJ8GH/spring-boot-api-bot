@@ -15,6 +15,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
+@Builder
 public class EventType {
 
     @Id

@@ -16,6 +16,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
+@Builder
 public class Runner {
 
     @Id

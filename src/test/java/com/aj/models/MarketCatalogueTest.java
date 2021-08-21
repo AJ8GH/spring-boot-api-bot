@@ -12,26 +12,23 @@ class MarketCatalogueTest {
     @Test
     void testMarketCatalogue() {
         List<Runner> runners = new ArrayList<>();
-        MarketCatalogue marketCatalogue = new MarketCatalogue(9L, "1.23",
-                "name", 0.0, runners, "eventType", "event", "competition");
-
-        assertEquals("1.23", marketCatalogue.getMarketId());
-        assertEquals("name", marketCatalogue.getMarketName());
-        assertEquals(runners, marketCatalogue.getRunners());
-        assertEquals(9L, marketCatalogue.getId());
-        assertEquals(0.0, marketCatalogue.getTotalMatched());
-    }
-
-    @Test
-    void testToString() {
-        List<Runner> runners = new ArrayList<>();
-        MarketCatalogue marketCatalogue = new MarketCatalogue(9L, "1.23",
-                "name", 0.0, runners, "eventType", "event", "competition");
+        MarketCatalogue marketCatalogue = MarketCatalogue.builder()
+                .id(9L)
+                .marketId("1.23")
+                .marketName("market")
+                .competitionName("competition")
+                .eventTypeName("eventType")
+                .eventName("event")
+                .totalMatched(0.0)
+                .build();
 
         String toString = marketCatalogue.toString();
-        assertTrue(toString.contains(marketCatalogue.getMarketId()));
-        assertTrue(toString.contains(marketCatalogue.getMarketName()));
-        assertTrue(toString.contains(marketCatalogue.getId().toString()));
-        assertTrue(toString.contains(marketCatalogue.getTotalMatched().toString()));
+        assertTrue(marketCatalogue.toString().contains(marketCatalogue.getMarketId()));
+        assertTrue(marketCatalogue.toString().contains(marketCatalogue.getMarketName()));
+        assertTrue(marketCatalogue.toString().contains(marketCatalogue.getId().toString()));
+        assertTrue(marketCatalogue.toString().contains(marketCatalogue.getTotalMatched().toString()));
+        assertTrue(marketCatalogue.toString().contains(marketCatalogue.getEventName().toString()));
+        assertTrue(marketCatalogue.toString().contains(marketCatalogue.getEventTypeName().toString()));
+        assertTrue(marketCatalogue.toString().contains(marketCatalogue.getCompetitionName().toString()));
     }
 }

@@ -15,29 +15,16 @@ class RunnerTest {
 
     @Test
     void testRunner() {
-        List<ExchangePrice> prices = new ArrayList<>();
-        Runner runner = new Runner(9L, 22L, "name", 0.0,
-                prices, prices, prices);
+        Runner runner = Runner.builder()
+                .id(9L)
+                .selectionId(22L)
+                .runnerName("runner")
+                .handicap(0.0)
+                .build();
 
-        assertEquals(9L, runner.getId());
-        assertEquals(22L, runner.getSelectionId());
-        assertEquals("name", runner.getRunnerName());
-        assertEquals(0.0, runner.getHandicap());
-        assertEquals(prices, runner.getAvailableToBack());
-        assertEquals(prices, runner.getAvailableToLay());
-        assertEquals(prices, runner.getTradedVolume());
-    }
-
-    @Test
-    void testToString() {
-        List<ExchangePrice> prices = new ArrayList<>();
-        Runner runner = new Runner(9L, 22L, "name", 0.0,
-                prices, prices, prices);
-        String toString = runner.toString();
-
-        assertTrue(toString.contains(runner.getRunnerName()));
-        assertTrue(toString.contains(runner.getHandicap().toString()));
-        assertTrue(toString.contains(runner.getId().toString()));
-        assertTrue(toString.contains(runner.getSelectionId().toString()));
+        assertTrue(runner.toString().contains(runner.getRunnerName()));
+        assertTrue(runner.toString().contains(runner.getHandicap().toString()));
+        assertTrue(runner.toString().contains(runner.getId().toString()));
+        assertTrue(runner.toString().contains(runner.getSelectionId().toString()));
     }
 }

@@ -11,9 +11,13 @@ class CancelExecutionReportTest {
 
     @Test
     void testCancelExecutionReport() {
-        List<InstructionReport> reports = List.of(new InstructionReport());
-        CancelExecutionReport report = new CancelExecutionReport(9L, "status", "1.23",
-                "eventName", "marketName", reports);
+        CancelExecutionReport report = CancelExecutionReport.builder()
+                .id(9L)
+                .status("status")
+                .marketId("1.23")
+                .marketName("marketName")
+                .eventName("eventName")
+                .build();
 
         assertEquals(9L, report.getId());
         assertEquals("status", report.getStatus());

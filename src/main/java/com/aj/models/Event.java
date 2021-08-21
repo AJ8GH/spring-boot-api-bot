@@ -14,6 +14,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
+@Builder
 public class Event extends DateTimeParser {
 
     @Id

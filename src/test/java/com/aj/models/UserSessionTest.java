@@ -10,17 +10,23 @@ class UserSessionTest {
 
     @Test
     void testUserSession() {
-        UserSession userSession = new UserSession(9L, "status", "token",
-                "appKey", "esaAppKey", "product", "error", "props");
+        UserSession userSession = UserSession.builder()
+                .id(9L)
+                .status("status")
+                .token("token")
+                .appKey("appKey")
+                .esaAppKey("esaAppKey")
+                .product("product")
+                .error("error")
+                .props("props")
+                .build();
 
-        assertEquals(9L, userSession.getId());
-        assertEquals("status", userSession.getStatus());
-        assertEquals("token", userSession.getToken());
-        assertEquals("appKey", userSession.getAppKey());
-        assertEquals("esaAppKey", userSession.getEsaAppKey());
-        assertEquals("product", userSession.getProduct());
-        assertEquals("error", userSession.getError());
-        assertEquals("props", userSession.getProps());
+        assertTrue(userSession.toString().contains(userSession.getId().toString()));
+        assertTrue(userSession.toString().contains(userSession.getStatus()));
+        assertTrue(userSession.toString().contains(userSession.getToken()));
+        assertTrue(userSession.toString().contains(userSession.getAppKey()));
+        assertTrue(userSession.toString().contains(userSession.getEsaAppKey()));
+        assertTrue(userSession.toString().contains(userSession.getError()));
     }
 
     @Test
@@ -29,19 +35,6 @@ class UserSessionTest {
         userSession.setId(9L);
 
         assertEquals(9L, userSession.getId());
-    }
-
-    @Test
-    void testToString() {
-        UserSession userSession = new UserSession(9L, "status", "token",
-                "appKey", "esaAppKey", "product", "error", "props");
-
-        assertTrue(userSession.toString().contains(userSession.getId().toString()));
-        assertTrue(userSession.toString().contains(userSession.getStatus()));
-        assertTrue(userSession.toString().contains(userSession.getToken()));
-        assertTrue(userSession.toString().contains(userSession.getAppKey()));
-        assertTrue(userSession.toString().contains(userSession.getEsaAppKey()));
-        assertTrue(userSession.toString().contains(userSession.getError()));
     }
 
     @Test

@@ -13,6 +13,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @ToString
+@Builder
 public class ExchangePrice {
 
     @Id

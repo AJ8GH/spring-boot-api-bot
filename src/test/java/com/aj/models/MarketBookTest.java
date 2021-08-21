@@ -12,34 +12,27 @@ class MarketBookTest {
     @Test
     void testMarketBook() {
         List<Runner> runners = new ArrayList<>();
-        MarketBook marketBook = new MarketBook(9L, "1.23", "name", "status", true, 10,
-                0.0, 1.1, runners, "eventType", "event", "competition");
+        MarketBook marketBook = MarketBook.builder()
+                .id(9L)
+                .marketId("1.23")
+                .marketName("name")
+                .status("status")
+                .complete(true)
+                .numberOfActiveRunners(10)
+                .totalMatched(0.0)
+                .totalAvailable(1.1)
+                .eventName("event")
+                .eventTypeName("eventType")
+                .competitionName("competition")
+                .build();
 
-        assertEquals(9L, marketBook.getId());
-        assertEquals("1.23", marketBook.getMarketId());
-        assertEquals("status", marketBook.getStatus());
-        assertEquals(true, marketBook.getComplete());
-        assertEquals(0.0, marketBook.getTotalMatched());
-        assertEquals(1.1, marketBook.getTotalAvailable());
-        assertEquals(10, marketBook.getNumberOfActiveRunners());
-        assertEquals(runners, marketBook.getRunners());
-    }
-
-    @Test
-    void testToString() {
-        List<Runner> runners = new ArrayList<>();
-        MarketBook marketBook = new MarketBook(9L, "1.23", "name", "status", true, 10,
-                0.0, 1.1, runners, "eventType", "event", "competition");
-
-        String toString = marketBook.toString();
-
-        assertTrue(toString.contains(marketBook.getMarketId()));
-        assertTrue(toString.contains(marketBook.getStatus()));
-        assertTrue(toString.contains(marketBook.getMarketName()));
-        assertTrue(toString.contains(marketBook.getComplete().toString()));
-        assertTrue(toString.contains(marketBook.getId().toString()));
-        assertTrue(toString.contains(marketBook.getTotalMatched().toString()));
-        assertTrue(toString.contains(marketBook.getNumberOfActiveRunners().toString()));
-        assertTrue(toString.contains(marketBook.getTotalAvailable().toString()));
+        assertTrue(marketBook.toString().contains(marketBook.getMarketId()));
+        assertTrue(marketBook.toString().contains(marketBook.getStatus()));
+        assertTrue(marketBook.toString().contains(marketBook.getMarketName()));
+        assertTrue(marketBook.toString().contains(marketBook.getComplete().toString()));
+        assertTrue(marketBook.toString().contains(marketBook.getId().toString()));
+        assertTrue(marketBook.toString().contains(marketBook.getTotalMatched().toString()));
+        assertTrue(marketBook.toString().contains(marketBook.getNumberOfActiveRunners().toString()));
+        assertTrue(marketBook.toString().contains(marketBook.getTotalAvailable().toString()));
     }
 }

@@ -16,6 +16,7 @@ import java.util.Properties;
 @Getter
 @Setter
 @ToString
+@Builder
 public class UserSession {
 
     @Id
