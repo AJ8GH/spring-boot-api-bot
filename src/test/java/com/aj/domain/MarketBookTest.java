@@ -1,5 +1,8 @@
 package com.aj.domain;
 
+import com.aj.domain.bettingenums.MarketStatus;
+import com.aj.domain.bettingtypes.MarketBook;
+import com.aj.domain.bettingtypes.Runner;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

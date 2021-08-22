@@ -2,8 +2,8 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
-import com.aj.domain.Event;
-import com.aj.domain.EventType;
+import com.aj.domain.bettingtypes.Event;
+import com.aj.domain.bettingtypes.EventType;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

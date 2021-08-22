@@ -1,5 +1,6 @@
 package com.aj.domain;
 
+import com.aj.domain.bettingtypes.UserSession;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

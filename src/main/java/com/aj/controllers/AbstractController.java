@@ -1,6 +1,6 @@
 package com.aj.controllers;
 
-import com.aj.domain.UserSession;
+import com.aj.domain.bettingtypes.UserSession;
 import org.springframework.stereotype.Controller;
 
 import java.util.Objects;

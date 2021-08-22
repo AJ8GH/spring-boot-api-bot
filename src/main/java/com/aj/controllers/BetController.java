@@ -3,10 +3,10 @@ package com.aj.controllers;
 import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
 import com.aj.enrichment.EnrichmentService;
-import com.aj.domain.Bet;
-import com.aj.domain.CancelExecutionReport;
+import com.aj.domain.bettingtypes.Bet;
+import com.aj.domain.bettingtypes.CancelExecutionReport;
 
-import com.aj.domain.MarketCatalogue;
+import com.aj.domain.bettingtypes.MarketCatalogue;
 import com.aj.repositories.BetRepository;
 import com.aj.repositories.CancelExecutionReportRepository;
 import lombok.AllArgsConstructor;

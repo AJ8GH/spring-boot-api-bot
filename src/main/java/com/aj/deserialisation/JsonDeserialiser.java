@@ -1,6 +1,6 @@
 package com.aj.deserialisation;
 
-import com.aj.domain.*;
+import com.aj.domain.bettingtypes.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;

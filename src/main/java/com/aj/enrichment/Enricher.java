@@ -1,9 +1,9 @@
 package com.aj.enrichment;
 
+import com.aj.domain.bettingtypes.*;
 import com.aj.domain.esa.MarketChange;
 import com.aj.domain.esa.ResponseMessage;
 import com.aj.domain.esa.RunnerChange;
-import com.aj.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;

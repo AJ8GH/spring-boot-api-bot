@@ -1,5 +1,6 @@
 package com.aj.domain;
 
+import com.aj.domain.bettingtypes.InstructionReport;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

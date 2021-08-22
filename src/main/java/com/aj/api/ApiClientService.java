@@ -1,6 +1,6 @@
 package com.aj.api;
 
-import com.aj.domain.UserSession;
+import com.aj.domain.bettingtypes.UserSession;
 
 import java.io.IOException;
 

@@ -1,6 +1,7 @@
 package com.aj.api;
 
-import com.aj.domain.*;
+import com.aj.domain.bettingenums.*;
+import com.aj.domain.bettingtypes.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;

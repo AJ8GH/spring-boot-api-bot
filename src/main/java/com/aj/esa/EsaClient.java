@@ -2,7 +2,7 @@ package com.aj.esa;
 
 import com.aj.domain.esa.AuthenticationMessage;
 import com.aj.domain.esa.MarketSubscriptionMessage;
-import com.aj.domain.UserSession;
+import com.aj.domain.bettingtypes.UserSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
