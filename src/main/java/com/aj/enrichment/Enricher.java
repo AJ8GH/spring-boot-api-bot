@@ -15,26 +15,39 @@ public class Enricher implements EnrichmentService {
     public void enrichMarketBook(MarketBook book, Iterable<MarketCatalogue> catalogues) {
         MarketCatalogue catalogue = findById(book.getMarketId(), catalogues);
         if (catalogue == null) return;
-
-        book.setMarketName(catalogue.getMarketName());
-        book.setEventName(catalogue.getEventName());
-        book.setEventTypeName(catalogue.getEventTypeName());
-        book.setCompetitionName(catalogue.getCompetitionName());
-
-        if (book.getRunners() != null) enrichRunners(book, catalogue);
+        enrichMarket(book, catalogue);
+        if (book.getRunners() != null) {
+            for (EnrichableRunner runner : book.getRunners()) {
+                enrichRunner(runner, catalogue);
+            }
+        }
     }
 
     public void enrichMessage(ResponseMessage message, Iterable<MarketCatalogue> catalogues) {
         for (MarketChange marketChange : message.getMc()) {
             MarketCatalogue catalogue = findById(marketChange.getMarketId(), catalogues);
             if (catalogue == null) return;
+            enrichMarket(marketChange, catalogue);
+            if (marketChange.getRc() != null) {
+                for (EnrichableRunner runnerChange : marketChange.getRc()) {
+                    enrichRunner(runnerChange, catalogue);
+                }
+            }
+        }
+    }
 
-            marketChange.setMarketName(catalogue.getMarketName());
-            marketChange.setEventName(catalogue.getEventName());
-            marketChange.setEventTypeName(catalogue.getEventTypeName());
-            marketChange.setCompetitionName(catalogue.getCompetitionName());
+    private void enrichMarket(EnrichableMarket enrichable, MarketCatalogue catalogue) {
+        enrichable.setMarketName(catalogue.getMarketName());
+        enrichable.setEventName(catalogue.getEventName());
+        enrichable.setEventTypeName(catalogue.getEventTypeName());
+        enrichable.setCompetitionName(catalogue.getCompetitionName());
+    }
 
-            if (marketChange.getRc() != null) enrichRc(marketChange, catalogue);
+    private void enrichRunner(EnrichableRunner runner, MarketCatalogue marketCatalogue) {
+        for (Runner catalogueRunner : marketCatalogue.getRunners()) {
+            if (runner.getSelectionId() == catalogueRunner.getSelectionId()) {
+                runner.setRunnerName(catalogueRunner.getRunnerName());
+            }
         }
     }
 
@@ -54,28 +67,6 @@ public class Enricher implements EnrichmentService {
         report.setMarketName(bet.getMarketName());
         if (report.getInstructionReports() != null && report.getInstructionReports().size() > 0) {
             report.getInstructionReports().get(0).setRunnerName(bet.getRunnerName());
-        }
-    }
-
-    private void enrichRunners(
-            MarketBook marketBook, MarketCatalogue marketCatalogue) {
-        for (Runner bookRunner : marketBook.getRunners()) {
-            for (Runner catalogueRunner : marketCatalogue.getRunners()) {
-                if (bookRunner.getSelectionId().equals(catalogueRunner.getSelectionId())) {
-                    bookRunner.setRunnerName(catalogueRunner.getRunnerName());
-                }
-            }
-        }
-    }
-
-    private void enrichRc(
-            MarketChange marketChange, MarketCatalogue catalogue) {
-        for (RunnerChange runnerChange : marketChange.getRc()) {
-            for (Runner runner : catalogue.getRunners()) {
-                if (runnerChange.getSelectionId().equals(runner.getSelectionId())) {
-                    runnerChange.setRunnerName(runner.getRunnerName());
-                }
-            }
         }
     }
 

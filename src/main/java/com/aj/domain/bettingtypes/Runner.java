@@ -1,6 +1,7 @@
 package com.aj.domain.bettingtypes;
 
 import com.aj.domain.bettingenums.RunnerStatus;
+import com.aj.enrichment.EnrichableRunner;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -17,12 +18,12 @@ import java.util.Map;
 @Setter
 @ToString
 @Builder
-public class Runner {
+public class Runner implements EnrichableRunner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long selectionId;
+    private long selectionId;
     private double handicap;
     private RunnerStatus status;
     private double adjustmentFactor;
@@ -46,5 +47,15 @@ public class Runner {
         setAvailableToBack(ex.get("availableToBack"));
         setAvailableToLay(ex.get("availableToLay"));
         setTradedVolume(ex.get("tradedVolume"));
+    }
+
+    @Override
+    public long getSelectionId() {
+        return selectionId;
+    }
+
+    @Override
+    public void setRunnerName(String runnerName) {
+        this.runnerName = runnerName;
     }
 }

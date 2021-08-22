@@ -1,6 +1,7 @@
 package com.aj.domain.bettingtypes;
 
 import com.aj.domain.bettingenums.MarketStatus;
+import com.aj.enrichment.EnrichableMarket;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class MarketBook {
+public class MarketBook implements EnrichableMarket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,4 +45,29 @@ public class MarketBook {
     private String competitionName;
     private String eventTypeName;
     private String eventName;
+
+    @Override
+    public String getMarketId() {
+        return marketId;
+    }
+
+    @Override
+    public void setMarketName(String marketName) {
+        this.marketName = marketName;
+    }
+
+    @Override
+    public void setEventTypeName(String eventTypeName) {
+        this.eventTypeName = eventTypeName;
+    }
+
+    @Override
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    @Override
+    public void setCompetitionName(String competitionName) {
+        this.competitionName = competitionName;
+    }
 }

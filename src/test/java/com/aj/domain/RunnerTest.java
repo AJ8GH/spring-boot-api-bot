@@ -20,6 +20,6 @@ class RunnerTest {
         assertTrue(runner.toString().contains(runner.getRunnerName()));
         assertTrue(runner.toString().contains(String.valueOf(runner.getHandicap())));
         assertTrue(runner.toString().contains(runner.getId().toString()));
-        assertTrue(runner.toString().contains(runner.getSelectionId().toString()));
+        assertTrue(runner.toString().contains(String.valueOf(runner.getSelectionId())));
     }
 }
