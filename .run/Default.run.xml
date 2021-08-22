@@ -1,7 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Default" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="com.aj.BetfairApiBot1Application" />
-    <module name="betfair-api-bot-1" />
-    <method v="2" />
-  </configuration>
-</component>

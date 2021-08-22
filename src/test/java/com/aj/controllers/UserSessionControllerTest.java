@@ -9,7 +9,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.containsString;
@@ -42,7 +44,7 @@ class UserSessionControllerTest {
         when(apiClient.getUserSession()).thenReturn(userSession);
 
         mockMvc.perform(get("/"))
-                .andExpect(status().is(302))
+                .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/login"));
     }
 
@@ -56,5 +58,14 @@ class UserSessionControllerTest {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"));
+    }
+
+    @Test
+    void testSessionsNew() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/sessions/new")
+                .param("username", "username")
+                .param("password", "password"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
     }
 }

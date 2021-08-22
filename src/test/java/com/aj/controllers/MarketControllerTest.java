@@ -25,6 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -114,5 +115,21 @@ class MarketControllerTest {
         mockMvc.perform(get("/markets/subscriptions/show/1.567"))
                 .andExpect(status().is(302))
                 .andExpect(view().name("redirect:/"));
+    }
+
+    @Test
+    void testMarketsSubscribe() throws Exception {
+        ResponseMessage message = ResponseMessage.builder()
+                .ct("CT")
+                .build();
+
+        when(esaClient.getLatest()).thenReturn("Response");
+        when(jsonDeserialiser.mapToObject(any(), any())).thenReturn(message);
+
+        mockMvc.perform(post("/markets/subscribe/1.567")
+                .param("timeout", "20"))
+                .andExpect(view().name("redirect:/markets/subscriptions/show/1.567"));
+
+
     }
 }
