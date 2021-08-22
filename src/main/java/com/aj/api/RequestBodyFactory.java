@@ -2,6 +2,7 @@ package com.aj.api;
 
 import com.aj.domain.bettingenums.*;
 import com.aj.domain.bettingtypes.*;
+import com.aj.domain.bettingtypes.RequestBody.RequestBodyBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
                 .filter(filter)
                 .build();
 
-        return mapper.writeValueAsString(requestBody);
+        return serialise(requestBody);
     }
 
     @Override
@@ -39,51 +40,31 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
                 .filter(filter)
                 .build();
 
-        return mapper.writeValueAsString(requestBody);
+        return serialise(requestBody);
     }
 
     @Override
     public String catalogueByEventIdBody(String eventId) throws JsonProcessingException {
-        Set<MarketProjection> marketProjection = Set.of(
-                MarketProjection.EVENT,
-                MarketProjection.EVENT_TYPE,
-                MarketProjection.MARKET_DESCRIPTION,
-                MarketProjection.COMPETITION,
-                MarketProjection.RUNNER_DESCRIPTION);
-
         MarketFilter filter = MarketFilter.builder()
                 .eventIds(Set.of(eventId))
                 .build();
-
-        RequestBody requestBody = RequestBody.builder()
+        RequestBody requestBody = createCatalogueRequestBuilder()
                 .filter(filter)
-                .marketProjection(marketProjection)
-                .maxResults(DEFAULT_MAX_RESULTS)
                 .build();
 
-        return mapper.writeValueAsString(requestBody);
+        return serialise(requestBody);
     }
 
     @Override
     public String catalogueByMarketIdBody(String marketId) throws JsonProcessingException {
-        Set<MarketProjection> marketProjection = Set.of(
-                MarketProjection.EVENT,
-                MarketProjection.EVENT_TYPE,
-                MarketProjection.MARKET_DESCRIPTION,
-                MarketProjection.COMPETITION,
-                MarketProjection.RUNNER_DESCRIPTION);
-
         MarketFilter filter = MarketFilter.builder()
                 .marketIds(Set.of(marketId))
                 .build();
-
-        RequestBody requestBody = RequestBody.builder()
+        RequestBody requestBody = createCatalogueRequestBuilder()
                 .filter(filter)
-                .marketProjection(marketProjection)
-                .maxResults(DEFAULT_MAX_RESULTS)
                 .build();
 
-        return mapper.writeValueAsString(requestBody);
+        return serialise(requestBody);
     }
 
     @Override
@@ -92,13 +73,12 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
                 .priceData(Set.of(PriceData.EX_BEST_OFFERS, PriceData.EX_TRADED))
                 .virtualise(DEFAULT_VIRTUALISE)
                 .build();
-
         RequestBody requestBody = RequestBody.builder()
                 .marketIds(Set.of(marketId))
                 .priceProjection(priceProjection)
                 .build();
 
-        return mapper.writeValueAsString(requestBody);
+        return serialise(requestBody);
     }
 
     @Override
@@ -109,20 +89,18 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
                 .price(price)
                 .size(size)
                 .build();
-
         PlaceInstruction placeInstruction = PlaceInstruction.builder()
                 .selectionId(selectionId)
                 .side(Side.valueOf(side))
                 .orderType(OrderType.LIMIT)
                 .limitOrder(limitOrder)
                 .build();
-
         RequestBody requestBody = RequestBody.builder()
                 .marketId(marketId)
                 .instructions(Set.of(placeInstruction))
                 .build();
 
-        return mapper.writeValueAsString(requestBody);
+        return serialise(requestBody);
     }
 
     @Override
@@ -130,13 +108,12 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
         CancelInstruction cancelInstruction = CancelInstruction.builder()
                 .betId(betId)
                 .build();
-
         RequestBody requestBody = RequestBody.builder()
                 .marketId(marketId)
                 .instructions(Set.of(cancelInstruction))
                 .build();
 
-        return mapper.writeValueAsString(requestBody);
+        return serialise(requestBody);
     }
 
     @Override
@@ -146,7 +123,7 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
                 .orderProjection(OrderProjection.EXECUTABLE)
                 .build();
 
-        return mapper.writeValueAsString(requestBody);
+        return serialise(requestBody);
     }
 
     @Override
@@ -157,6 +134,24 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
                 .sortDir(SortDir.LATEST_TO_EARLIEST)
                 .build();
 
-        return mapper.writeValueAsString(requestBody);
+        return serialise(requestBody);
+    }
+
+    private RequestBodyBuilder createCatalogueRequestBuilder() {
+        Set<MarketProjection> marketProjection = Set.of(
+                MarketProjection.EVENT,
+                MarketProjection.EVENT_TYPE,
+                MarketProjection.MARKET_DESCRIPTION,
+                MarketProjection.COMPETITION,
+                MarketProjection.RUNNER_DESCRIPTION);
+
+        return RequestBody.builder()
+                .marketProjection(marketProjection)
+                .maxResults(DEFAULT_MAX_RESULTS);
+    }
+
+    private String serialise(RequestBody payload)
+            throws JsonProcessingException {
+        return mapper.writeValueAsString(payload);
     }
 }
