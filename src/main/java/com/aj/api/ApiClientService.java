@@ -10,7 +10,8 @@ public interface ApiClientService {
     public String login(String username, String password) throws IOException;
     public String listEventTypes() throws IOException;
     public String listEvents(String eventTypeId) throws IOException;
-    public String catalogueByMarketId(String marketId) throws IOException;
+    public String catalogueByEvent(String marketId) throws IOException;
+    public String catalogueByMarket(String marketId) throws IOException;
     public String listMarketBook(String marketId) throws IOException;
     public String listCurrentOrders(String betId) throws IOException;
     public String listCurrentOrders() throws IOException;

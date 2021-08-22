@@ -116,7 +116,7 @@ public class BetController extends AbstractController {
 
     private void enrichBet(Bet bet) throws IOException {
         String response = apiClient
-                .catalogueByMarketId(bet.getMarketId());
+                .catalogueByMarket(bet.getMarketId());
 
         List<MarketCatalogue> catalogues = jsonDeserialiser
                 .mapToMarketCatalogue(response);

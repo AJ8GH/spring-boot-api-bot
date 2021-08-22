@@ -186,10 +186,35 @@ public class ApiClientTest {
         when(urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE)).thenReturn(baseUrl);
         when(requestBodyBuilder.catalogueByEventIdBody("999")).thenReturn("{listMarketCatalogue body}");
 
-        String response = apiClient.catalogueByMarketId("999");
+        String response = apiClient.catalogueByEvent("999");
         RecordedRequest request = server.takeRequest();
 
         verify(requestBodyBuilder).catalogueByEventIdBody("999");
+        verify(urlBuilder).createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
+
+        assertEquals(mockResponse, response);
+        assertEquals(baseUrl, request.getRequestUrl());
+        assertEquals(APP_KEY, request.getHeader(X_APPLICATION_HEADER));
+        assertEquals(TOKEN, request.getHeader(X_AUTHENTICATION_HEADER));
+        assertTrue(request.getBody().toString().contains("{listMarketCatalogue body}"));
+        assertTrue(request.getHeader(CONTENT_TYPE_HEADER).contains(CONTENT_TYPE_VALUE));
+        assertEquals(ACCEPT_VALUE, request.getHeader(ACCEPT_HEADER));
+        assertEquals(X_IP_VALUE, request.getHeader(X_IP_HEADER));
+    }
+
+    @Test
+    void testCatalogueByMarket() throws Exception {
+        String mockResponse = "{list market catalogue response}";
+        server.enqueue(new MockResponse().setBody(mockResponse));
+        HttpUrl baseUrl = server.url("/listMarketCatalogue");
+
+        when(urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE)).thenReturn(baseUrl);
+        when(requestBodyBuilder.catalogueByMarketIdBody("1.23")).thenReturn("{listMarketCatalogue body}");
+
+        String response = apiClient.catalogueByMarket("1.23");
+        RecordedRequest request = server.takeRequest();
+
+        verify(requestBodyBuilder).catalogueByMarketIdBody("1.23");
         verify(urlBuilder).createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
 
         assertEquals(mockResponse, response);

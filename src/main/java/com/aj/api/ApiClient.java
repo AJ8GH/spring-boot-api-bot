@@ -54,16 +54,23 @@ public class ApiClient implements ApiClientService {
     }
 
     @Override
-    public String listEvents(String eventTypeId) throws JsonProcessingException {
-        HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENTS);
-        String body = requestBodyBuilder.listEventsBody(eventTypeId);
+    public String catalogueByMarket(String marketId) throws JsonProcessingException {
+        HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
+        String body = requestBodyBuilder.catalogueByMarketIdBody(marketId);
         return createRequestAndMakeCall(url, body);
     }
 
     @Override
-    public String catalogueByMarketId(String marketId) throws JsonProcessingException {
+    public String catalogueByEvent(String eventId) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
-        String body = requestBodyBuilder.catalogueByMarketIdBody(marketId);
+        String body = requestBodyBuilder.catalogueByEventIdBody(eventId);
+        return createRequestAndMakeCall(url, body);
+    }
+
+    @Override
+    public String listEvents(String eventTypeId) throws JsonProcessingException {
+        HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENTS);
+        String body = requestBodyBuilder.listEventsBody(eventTypeId);
         return createRequestAndMakeCall(url, body);
     }
 

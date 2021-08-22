@@ -49,7 +49,7 @@ public class MarketController extends AbstractController {
                                       Model model) throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
-        String response = apiClient.catalogueByMarketId(eventId);
+        String response = apiClient.catalogueByMarket(eventId);
         List<MarketCatalogue> marketCatalogueList = jsonDeserialiser.mapToMarketCatalogue(response);
         marketCatalogueRepository.saveAll(marketCatalogueList);
         model.addAttribute("marketCatalogue", marketCatalogueList);
