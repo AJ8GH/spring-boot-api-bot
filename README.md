@@ -54,39 +54,69 @@ http://localhost:8080/
 If needed a different port can be specified in `application.properties`:
 
 ```properties
-server.port=yourSpecifiedPort
+server.port=PORT
 ```
 
 ## Purpose
 
-The goal of this project was to create a functional bot which can run operations through the Betfair Exchange Developer API. Operations include placing and cancelling bets, viewing events and markets, and retrieving best prices for individual markets.  
-
-The wider aim was to learn about Java, Spring and the betfair domain whilst applying OOP principles.
+The goal of this project was to create a bot which can get data, place and cancel bets through the Betfair Exchange API, whilst learning Java, Spring and the Betfair domain.
 
 ## Design
 
-### Beans
-
-- `ApiClient` - responsible for making calls to the API
-- `RequestBodyBuilder` - dependency of ApiClient, creates a String of the correct request body for each api call
-- `UrlBuilder`  dependency of ApiClient, creates an HttpUrl Url with the correct endpoint for each api call
-    
-### Controllers
-
-Each controller handles mapping requests for their corresponding domain:
-- `EventTypeController`
-- `BetController`
-- `SessionController`
+The app is built with an MVC architecture using Spring Boot and Spring MVC. 
 
 ### Models
 
-- `EventType` - represents an individual sport
-- `Bet` - a user's bet placed on the exchange
-- `Session` - encapsulates session information, including token and app key
+The Betfair domain is modelled into Java objects and Enums in the domain package. 
+
+### Views
+
+Thymeleaf templates are used in the view layer to display data through the UI.
+
+### Controllers
+
+Each controller handles mapping requests for their corresponding domain:
+- `SessionController` - maps login and index routes
+- `EventTypeController` - maps routes for listing events and event types
+- `BetController` - maps routes for placing, listing and cancelling bets
+- `MarketController` - maps routes for listing market books and market catalogues, as well as ESA market subscriptions
+- `AppErrorController` - default mapping for exceptions.
+
+### API Client
+
+The `ApiClient` class interacts with the API and returns a json response string.
+
+It relies on 2 dependencies, in the `UrlBuilder` and the `requestBodyFactory` classes.
+The url builder constructs the correct endpoint for each operation. The request body factory, builds a `RequestBody` object and returns it as a serialised JSON payload. 
+
+### Enrichment
+
+The `Enricher` is used to enrich objects with additional fields which they don't contain by default. It takes an object to enrich and uses a `MarketCatalogue` to populate the event type name, event name, market name and runner name.
+
+### Serialisation & Deserialisation
+
+Jackson ObjectMapper is used in the `JsonDeserialiser` class, to provide an interface for custom deserialisation.
+
+### ESA Client
+
+The `EsaClient` provides an interface to connect via websocket to the Exchange Stream API. It handles connection, authentication and market subscription operations. It can be extended to perform additional operations if needed.
+
+### Persistence
+
+JPA repositories are used to persist data, along with a Cache, which is used to cache the market change data from the esa stream.
 
 ### CI
 
 Travis CI runs a build on each push, sending test coverage stats to codecov on a successful build.
+CodeCov and Jacoco track test coverage.
+
+### Testing
+
+Classes and methods are unit tested with JUnit, dependencies are mocked using Mockito.
+
+The controller layer is tested using Springs MockMvc library, allowing integration tests of the web routing, whilst injecting mock beans to mock dependencies.
+
+API calls are mocked using OkHttp's MockWebServer library.
 
 ## Dependencies
 
@@ -97,10 +127,4 @@ Travis CI runs a build on each push, sending test coverage stats to codecov on a
 - 11.0.11
 
 ### Artifacts
-- junit-jupiter
-- mockwebserver
-- okhttp
-- mockito-core
-- mockito-junit-jupiter
-- jackson-databind
-- jackson-core
+- Full list of dependencies can be found in the `pom.xml` file in the root directory

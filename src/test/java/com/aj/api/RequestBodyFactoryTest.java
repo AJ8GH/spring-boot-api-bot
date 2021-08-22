@@ -11,14 +11,14 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class RequestBodyBuilderTest {
+public class RequestBodyFactoryTest {
 
-    private RequestBodyBuilder requestBodyBuilder;
+    private RequestBodyFactory requestBodyFactory;
     private ObjectMapper mapper;
 
     @BeforeEach
     void setUp() {
-        requestBodyBuilder = new RequestBodyBuilder(new ObjectMapper());
+        requestBodyFactory = new RequestBodyFactory(new ObjectMapper());
         mapper = new ObjectMapper();
     }
 
@@ -26,7 +26,7 @@ public class RequestBodyBuilderTest {
     void testListEventTypesBody() throws JsonProcessingException {
         String body = "{\"filter\":{}}";
 
-        assertEquals(body, requestBodyBuilder.listEventTypesBody());
+        assertEquals(body, requestBodyFactory.listEventTypesBody());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class RequestBodyBuilderTest {
 
         String body = mapper.writeValueAsString(requestBody);
 
-        assertEquals(body, requestBodyBuilder.listEventsBody(eventTypeId));
+        assertEquals(body, requestBodyFactory.listEventsBody(eventTypeId));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class RequestBodyBuilderTest {
 
         String body = mapper.writeValueAsString(requestBody);
 
-        assertEquals(body, requestBodyBuilder.catalogueByEventIdBody(eventId));
+        assertEquals(body, requestBodyFactory.catalogueByEventIdBody(eventId));
     }
 
     @Test
@@ -92,7 +92,7 @@ public class RequestBodyBuilderTest {
 
         String body = mapper.writeValueAsString(requestBody);
 
-        assertEquals(body, requestBodyBuilder.catalogueByMarketIdBody(marketId));
+        assertEquals(body, requestBodyFactory.catalogueByMarketIdBody(marketId));
     }
 
     @Test
@@ -111,7 +111,7 @@ public class RequestBodyBuilderTest {
 
         String body = mapper.writeValueAsString(requestBody);
 
-        assertEquals(body, requestBodyBuilder.listMarketBookBody(marketId));
+        assertEquals(body, requestBodyFactory.listMarketBookBody(marketId));
     }
 
     @Test
@@ -124,7 +124,7 @@ public class RequestBodyBuilderTest {
 
         String body = mapper.writeValueAsString(requestBody);
 
-        assertEquals(body, requestBodyBuilder.listCurrentOrdersBody());
+        assertEquals(body, requestBodyFactory.listCurrentOrdersBody());
     }
 
     @Test
@@ -137,7 +137,7 @@ public class RequestBodyBuilderTest {
 
         String body = mapper.writeValueAsString(requestBody);
 
-        assertEquals(body, requestBodyBuilder.listCurrentOrdersBody(betId));
+        assertEquals(body, requestBodyFactory.listCurrentOrdersBody(betId));
     }
 
     @Test
@@ -167,7 +167,7 @@ public class RequestBodyBuilderTest {
 
         String body = mapper.writeValueAsString(requestBody);
 
-        assertEquals(body, requestBodyBuilder.placeOrdersBody(
+        assertEquals(body, requestBodyFactory.placeOrdersBody(
                 marketId, selectionId, side, size, price));
     }
 
@@ -187,6 +187,6 @@ public class RequestBodyBuilderTest {
 
         String body = mapper.writeValueAsString(requestBody);
 
-        assertEquals(body, requestBodyBuilder.cancelOrdersBody(marketId, betId));
+        assertEquals(body, requestBodyFactory.cancelOrdersBody(marketId, betId));
     }
 }

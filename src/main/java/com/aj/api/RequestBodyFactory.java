@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class RequestBodyBuilder implements RequestBodyBuilderService {
+public class RequestBodyFactory implements RequestBodyFactoryService {
     private final int DEFAULT_MAX_RESULTS = 200;
     private final boolean DEFAULT_VIRTUALISE = true;
     private final ObjectMapper mapper;
 
-    public RequestBodyBuilder(ObjectMapper mapper) {
+    public RequestBodyFactory(ObjectMapper mapper) {
         this.mapper = mapper;
     }
 
