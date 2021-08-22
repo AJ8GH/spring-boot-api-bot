@@ -1,9 +1,9 @@
 package com.aj.enrichment;
 
-import com.aj.models.esa.MarketChange;
-import com.aj.models.esa.ResponseMessage;
-import com.aj.models.esa.RunnerChange;
-import com.aj.models.*;
+import com.aj.domain.esa.MarketChange;
+import com.aj.domain.esa.ResponseMessage;
+import com.aj.domain.esa.RunnerChange;
+import com.aj.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

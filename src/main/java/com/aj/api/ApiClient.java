@@ -1,6 +1,6 @@
 package com.aj.api;
 
-import com.aj.models.UserSession;
+import com.aj.domain.UserSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import okhttp3.*;
 import org.slf4j.Logger;

@@ -1,10 +1,10 @@
 package com.aj.deserialisation;
 
-import com.aj.models.esa.ResponseMessage;
+import com.aj.domain.esa.ResponseMessage;
 import com.aj.helpers.ListMarketBookResponse;
 import com.aj.helpers.ListMarketCatalogueResponse;
 import com.aj.helpers.ListOrdersResponse;
-import com.aj.models.*;
+import com.aj.domain.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -142,8 +142,9 @@ class JsonDeserialiserTest {
         String json = ListMarketBookResponse.JSON;
 
         MarketBook marketBook = jsonDeserialiser.mapToMarketBook(json);
+
         assertEquals("1.179465437", marketBook.getMarketId());
-        assertEquals("OPEN", marketBook.getStatus());
+        assertEquals("OPEN", marketBook.getStatus().toString());
         assertEquals(true, marketBook.getComplete());
         assertEquals(19, marketBook.getNumberOfActiveRunners());
         assertEquals(0.0, marketBook.getTotalMatched());

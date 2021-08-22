@@ -1,6 +1,6 @@
 package com.aj.deserialisation;
 
-import com.aj.models.*;
+import com.aj.domain.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;

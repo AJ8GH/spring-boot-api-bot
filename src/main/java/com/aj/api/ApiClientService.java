@@ -1,6 +1,6 @@
 package com.aj.api;
 
-import com.aj.models.UserSession;
+import com.aj.domain.UserSession;
 
 import java.io.IOException;
 

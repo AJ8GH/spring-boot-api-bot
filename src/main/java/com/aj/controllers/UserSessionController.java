@@ -2,15 +2,13 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
-import com.aj.models.UserSession;
+import com.aj.domain.UserSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.time.LocalDateTime;
 
 @Controller
 @AllArgsConstructor

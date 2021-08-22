@@ -1,6 +1,6 @@
 package com.aj.repositories;
 
-import com.aj.models.InstructionReport;
+import com.aj.domain.InstructionReport;
 import org.springframework.data.repository.CrudRepository;
 
 public interface InstructionReportRepository extends CrudRepository<InstructionReport, Long> {

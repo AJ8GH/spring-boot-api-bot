@@ -1,6 +1,6 @@
 package com.aj.deserialisation;
 
-import com.aj.models.*;
+import com.aj.domain.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;

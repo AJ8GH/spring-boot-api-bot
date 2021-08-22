@@ -1,6 +1,6 @@
 package com.aj.esa.models;
 
-import com.aj.models.esa.RunnerChange;
+import com.aj.domain.esa.RunnerChange;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
