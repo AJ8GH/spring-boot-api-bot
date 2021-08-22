@@ -4,4 +4,4 @@ coverage:
       default:
         target: 90%
 ignore:
-  - "src/main/java/com/aj/api/enumTypes"
+  - "src/main/java/com/aj/domain/bettingenums"

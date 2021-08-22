@@ -23,6 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -63,7 +64,7 @@ class BetControllerTest {
     }
 
     @Test
-    void testNewBet() throws Exception {
+    void testGetBetsNew() throws Exception {
         mockMvc.perform(get("/bets/new/1.123/456"))
         .andExpect(status().isOk())
         .andExpect(view().name("bets/new"))
@@ -71,8 +72,22 @@ class BetControllerTest {
     }
 
     @Test
-    void testShowBet() throws Exception {
+    void testPostBetsNew() throws Exception {
+        Bet bet = Bet.builder().betId("99").build();
+        when(jsonDeserialiser.mapToObject(any(), any())).thenReturn(bet);
 
+        mockMvc.perform(post("/bets/new")
+                        .param("price", "3")
+                        .param("size", "2")
+                        .param("marketId", "1.2345")
+                        .param("selectionId", "3427")
+                        .param("side", "BACK"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/bets/show/99"));
+    }
+
+    @Test
+    void testShowBet() throws Exception {
         mockMvc.perform(get("/bets/show/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bets/show"))

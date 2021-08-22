@@ -2,6 +2,7 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
+import com.aj.domain.bettingtypes.Bet;
 import com.aj.domain.bettingtypes.MarketCatalogue;
 import com.aj.domain.bettingtypes.UserSession;
 import com.aj.enrichment.EnrichmentService;
@@ -128,8 +129,7 @@ class MarketControllerTest {
 
         mockMvc.perform(post("/markets/subscribe/1.567")
                 .param("timeout", "20"))
+                .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/markets/subscriptions/show/1.567"));
-
-
     }
 }
