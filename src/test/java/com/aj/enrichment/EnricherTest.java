@@ -118,9 +118,9 @@ class EnricherTest {
                 .runnerName("Runner Name")
                 .build();
 
-        List<InstructionReport> reports = List.of(new InstructionReport());
-        CancelExecutionReport report = new CancelExecutionReport();
-        report.setInstructionReports(reports);
+        CancelExecutionReport report = CancelExecutionReport.builder()
+                .instructionReports(List.of(new CancelInstructionReport()))
+                .build();
 
         Enricher enricher = new Enricher();
         enricher.enrichCancelExecution(bet, report);

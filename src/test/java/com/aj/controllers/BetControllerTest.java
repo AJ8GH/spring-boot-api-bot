@@ -2,6 +2,7 @@ package com.aj.controllers;
 
 import com.aj.api.ApiClientService;
 import com.aj.deserialisation.DeserialisationService;
+import com.aj.domain.bettingenums.ExecutionReportStatus;
 import com.aj.domain.bettingtypes.*;
 import com.aj.enrichment.EnrichmentService;
 import com.aj.repositories.BetRepository;
@@ -87,6 +88,21 @@ class BetControllerTest {
     }
 
     @Test
+    void testPostBetsDelete() throws Exception {
+        CancelExecutionReport executionReport = CancelExecutionReport.builder()
+                .id(99L)
+                .build();
+
+        when(jsonDeserialiser.mapToObject(any(), any())).thenReturn(executionReport);
+
+        mockMvc.perform(post("/bets/delete")
+                        .param("marketId", "9.8765")
+                        .param("betId", "27"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/bets/delete/99"));
+    }
+
+    @Test
     void testShowBet() throws Exception {
         mockMvc.perform(get("/bets/show/1"))
                 .andExpect(status().isOk())
@@ -96,10 +112,11 @@ class BetControllerTest {
 
     @Test
     void testShowCancelExecutionReport() throws Exception {
-        List<InstructionReport> instructions = List.of(new InstructionReport());
-        var report = new CancelExecutionReport();
-        report.setInstructionReports(instructions);
-        report.setStatus("FAILURE");
+        CancelExecutionReport report = CancelExecutionReport.builder()
+                .instructionReports(List.of(new CancelInstructionReport()))
+                .status(ExecutionReportStatus.FAILURE)
+                .build();
+
         when(reportRepository.findById(1L)).thenReturn(java.util.Optional.of(report));
 
         mockMvc.perform(get("/bets/delete/1"))

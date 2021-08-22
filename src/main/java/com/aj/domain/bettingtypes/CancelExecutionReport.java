@@ -1,5 +1,7 @@
 package com.aj.domain.bettingtypes;
 
+import com.aj.domain.bettingenums.ExecutionReportErrorCode;
+import com.aj.domain.bettingenums.ExecutionReportStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -17,10 +19,11 @@ public class CancelExecutionReport {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String status;
+    private ExecutionReportStatus status;
+    private ExecutionReportErrorCode errorCode;
     private String marketId;
     private String eventName;
     private String marketName;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<InstructionReport> instructionReports;
+    private List<CancelInstructionReport> instructionReports;
 }

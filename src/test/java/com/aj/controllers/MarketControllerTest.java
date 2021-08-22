@@ -128,7 +128,7 @@ class MarketControllerTest {
         when(jsonDeserialiser.mapToObject(any(), any())).thenReturn(message);
 
         mockMvc.perform(post("/markets/subscribe/1.567")
-                .param("timeout", "20"))
+                        .param("timeout", "20"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/markets/subscriptions/show/1.567"));
     }

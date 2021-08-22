@@ -63,8 +63,8 @@ class UserSessionControllerTest {
     @Test
     void testSessionsNew() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/sessions/new")
-                .param("username", "username")
-                .param("password", "password"))
+                        .param("username", "username")
+                        .param("password", "password"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
     }

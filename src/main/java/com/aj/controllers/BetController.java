@@ -89,12 +89,6 @@ public class BetController extends AbstractController {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
         String response = apiClient.cancelOrders(marketId, betId);
-        System.out.println("CONTROLLER");
-        System.out.println("CONTROLLER");
-        System.out.println("CONTROLLER");
-        System.out.println("CONTROLLER");
-        System.out.println(response);
-
         CancelExecutionReport report = jsonDeserialiser
                 .mapToObject(response, CancelExecutionReport.class);
         reportRepository.save(report);

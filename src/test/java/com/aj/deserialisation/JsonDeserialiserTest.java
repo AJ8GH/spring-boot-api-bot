@@ -1,5 +1,6 @@
 package com.aj.deserialisation;
 
+import com.aj.domain.bettingenums.ExecutionReportStatus;
 import com.aj.domain.bettingtypes.*;
 import com.aj.domain.esa.ResponseMessage;
 import com.aj.helpers.ListMarketBookResponse;
@@ -195,13 +196,15 @@ class JsonDeserialiserTest {
                 "{\"betId\":\"10883830194\"},\"sizeCancelled\":0.1," +
                 "\"cancelledDate\":\"2021-08-07T18:59:28.000Z\"}]}";
 
-        var cancelExecutionReport = jsonDeserialiser.mapToObject(json, CancelExecutionReport.class);
+        var cancelExecutionReport = jsonDeserialiser
+                .mapToObject(json, CancelExecutionReport.class);
 
-        assertEquals("SUCCESS", cancelExecutionReport.getStatus());
+        assertEquals(ExecutionReportStatus.SUCCESS, cancelExecutionReport.getStatus());
         assertEquals("1.179344550", cancelExecutionReport.getMarketId());
         assertEquals(0.1, cancelExecutionReport.getInstructionReports().get(0).getSizeCancelled());
         assertEquals("2021-08-07T18:59:28.000Z", cancelExecutionReport.getInstructionReports().get(0).getCancelledDate());
     }
+
 
     @Test
     void testMapToResponseMessageObject() throws JsonProcessingException {

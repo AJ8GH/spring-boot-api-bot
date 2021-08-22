@@ -1,15 +1,15 @@
 package com.aj.domain;
 
-import com.aj.domain.bettingtypes.InstructionReport;
+import com.aj.domain.bettingtypes.CancelInstructionReport;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InstructionReportTest {
+class CancelInstructionReportTest {
 
     @Test
     void instructionReport() {
-        InstructionReport report = InstructionReport.builder()
+        CancelInstructionReport report = CancelInstructionReport.builder()
                 .betId("123")
                 .cancelledDate("date")
                 .runnerName("runner")
