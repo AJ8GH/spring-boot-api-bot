@@ -1,20 +1,17 @@
 package com.aj.enrichment;
 
-import com.aj.esa.models.MarketChange;
-import com.aj.esa.models.ResponseMessage;
-import com.aj.esa.models.RunnerChange;
+import com.aj.models.esa.MarketChange;
+import com.aj.models.esa.ResponseMessage;
+import com.aj.models.esa.RunnerChange;
 import com.aj.models.*;
-import com.aj.repositories.MarketCatalogueRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.yaml.snakeyaml.error.Mark;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class EnricherTest {
 

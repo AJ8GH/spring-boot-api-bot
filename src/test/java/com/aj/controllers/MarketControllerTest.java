@@ -5,22 +5,17 @@ import com.aj.deserialisation.DeserialisationService;
 import com.aj.enrichment.EnrichmentService;
 import com.aj.esa.EsaClient;
 import com.aj.esa.cache.MarketSubscriptionCache;
-import com.aj.esa.models.MarketChange;
-import com.aj.esa.models.ResponseMessage;
+import com.aj.models.esa.ResponseMessage;
 import com.aj.models.*;
-import com.aj.repositories.MarketBookRepository;
 import com.aj.repositories.MarketCatalogueRepository;
-import com.aj.repositories.RunnerRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.yaml.snakeyaml.error.Mark;
 
 import java.util.List;
 

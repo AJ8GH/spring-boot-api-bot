@@ -1,6 +1,6 @@
 package com.aj.esa.cache;
 
-import com.aj.esa.models.ResponseMessage;
+import com.aj.models.esa.ResponseMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

@@ -1,7 +1,9 @@
 package com.aj.api;
 
-import com.aj.api.bettingTypes.*;
-import com.aj.api.enumTypes.*;
+import com.aj.models.bettingTypes.*;
+import com.aj.models.enumTypes.*;
+import com.aj.models.CancelInstruction;
+import com.aj.models.PlaceInstruction;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;

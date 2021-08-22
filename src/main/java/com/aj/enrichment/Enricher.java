@@ -1,13 +1,10 @@
 package com.aj.enrichment;
 
-import com.aj.esa.models.MarketChange;
-import com.aj.esa.models.ResponseMessage;
-import com.aj.esa.models.RunnerChange;
+import com.aj.models.esa.MarketChange;
+import com.aj.models.esa.ResponseMessage;
+import com.aj.models.esa.RunnerChange;
 import com.aj.models.*;
-import com.aj.repositories.MarketCatalogueRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.error.Mark;
 
 import java.util.Objects;
 

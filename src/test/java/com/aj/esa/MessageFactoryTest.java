@@ -1,7 +1,7 @@
 package com.aj.esa;
 
-import com.aj.esa.models.AuthenticationMessage;
-import com.aj.esa.models.MarketSubscriptionMessage;
+import com.aj.models.esa.AuthenticationMessage;
+import com.aj.models.esa.MarketSubscriptionMessage;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

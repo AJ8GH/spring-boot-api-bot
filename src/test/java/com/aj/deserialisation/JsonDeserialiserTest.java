@@ -1,6 +1,6 @@
 package com.aj.deserialisation;
 
-import com.aj.esa.models.ResponseMessage;
+import com.aj.models.esa.ResponseMessage;
 import com.aj.helpers.ListMarketBookResponse;
 import com.aj.helpers.ListMarketCatalogueResponse;
 import com.aj.helpers.ListOrdersResponse;

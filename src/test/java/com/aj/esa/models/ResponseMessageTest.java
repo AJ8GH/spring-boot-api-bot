@@ -1,5 +1,6 @@
 package com.aj.esa.models;
 
+import com.aj.models.esa.ResponseMessage;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

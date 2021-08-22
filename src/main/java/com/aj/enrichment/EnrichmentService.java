@@ -1,6 +1,6 @@
 package com.aj.enrichment;
 
-import com.aj.esa.models.ResponseMessage;
+import com.aj.models.esa.ResponseMessage;
 import com.aj.models.Bet;
 import com.aj.models.CancelExecutionReport;
 import com.aj.models.MarketBook;

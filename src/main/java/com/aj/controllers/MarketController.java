@@ -5,7 +5,7 @@ import com.aj.deserialisation.DeserialisationService;
 import com.aj.enrichment.EnrichmentService;
 import com.aj.esa.EsaClient;
 import com.aj.esa.cache.MarketSubscriptionCache;
-import com.aj.esa.models.ResponseMessage;
+import com.aj.models.esa.ResponseMessage;
 import com.aj.models.MarketBook;
 import com.aj.models.MarketCatalogue;
 import com.aj.models.UserSession;

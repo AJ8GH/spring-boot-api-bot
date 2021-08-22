@@ -1,7 +1,7 @@
 package com.aj.esa;
 
-import com.aj.esa.models.AuthenticationMessage;
-import com.aj.esa.models.MarketSubscriptionMessage;
+import com.aj.models.esa.AuthenticationMessage;
+import com.aj.models.esa.MarketSubscriptionMessage;
 import com.aj.models.UserSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -11,9 +11,6 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class EsaClient {
