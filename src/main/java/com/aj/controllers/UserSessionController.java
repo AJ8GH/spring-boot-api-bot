@@ -40,7 +40,8 @@ public class UserSessionController extends AbstractController {
             throws Exception {
 
         String response = apiClient.login(username, password);
-        UserSession userSession = jsonDeserialiser.mapToObject(response, UserSession.class);
+        UserSession userSession = jsonDeserialiser
+                .mapToObject(response, UserSession.class);
         apiClient.setUserSession(userSession);
         return REDIRECT + INDEX_ROUTE;
     }
