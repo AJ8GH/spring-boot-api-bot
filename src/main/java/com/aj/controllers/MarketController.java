@@ -119,13 +119,19 @@ public class MarketController extends AbstractController {
         return "markets/subscriptions/show";
     }
 
+    @PostMapping("/markets/subscriptions/delete/{marketId}")
+    public String disconnect(@PathVariable("marketId") String marketId) throws IOException {
+        closeConnection();
+        return "redirect:/markets/listBook/" + marketId;
+    }
+
     private boolean isTimedOut() throws IOException {
         return esaClient.getTimeout() <= (heartbeatCount - 1) * 5000;
     }
 
     private void closeConnection() throws IOException {
         esaClient.close();
-        heartbeatCount = 0;
+        heartbeatCount = 0  ;
     }
 
     private void incrementHeartbeatCount() {
