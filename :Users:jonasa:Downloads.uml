@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/jonasa/projects/betfair-api-bot-1/src/main/java/com/aj/esa</OriginalElement>
+  <nodes>
+    <node x="1184.0" y="0.0">com.aj.api.UrlBuilderService</node>
+    <node x="622.0" y="1356.5">com.aj.controllers.UserSessionController</node>
+    <node x="0.0" y="376.0">com.aj.api.ApiClient</node>
+    <node x="575.0" y="0.0">com.aj.api.RequestBodyFactoryService</node>
+    <node x="0.0" y="0.0">com.aj.api.ApiClientService</node>
+    <node x="525.0" y="940.0">com.aj.enrichment.Enricher</node>
+    <node x="1546.0" y="1318.0">com.aj.controllers.MarketController</node>
+    <node x="937.0" y="1318.0">com.aj.controllers.BetController</node>
+    <node x="575.0" y="323.0">com.aj.api.RequestBodyFactory</node>
+    <node x="642.5" y="1232.0">com.aj.controllers.AbstractController</node>
+    <node x="525.0" y="747.0">com.aj.enrichment.EnrichmentService</node>
+    <node x="0.0" y="747.0">com.aj.deserialisation.DeserialisationService</node>
+    <node x="1263.0" y="888.0">com.aj.esa.MessageFactory.MarketDataFilter</node>
+    <node x="0.0" y="1558.0">com.aj.esa.EsaClient</node>
+    <node x="0.0" y="992.0">com.aj.deserialisation.JsonDeserialiser</node>
+    <node x="672.0" y="1558.0">com.aj.esa.SocketFactory</node>
+    <node x="382.0" y="1558.0">com.aj.enrichment.EnrichableMarket</node>
+    <node x="1184.0" y="141.0">com.aj.api.UrlBuilder</node>
+    <node x="1293.0" y="1558.0">com.aj.enrichment.EnrichableRunner</node>
+    <node x="1150.0" y="747.0">com.aj.esa.MessageFactory</node>
+    <node x="919.0" y="1558.0">com.aj.esa.cache.MarketSubscriptionCache</node>
+    <node x="348.0" y="1383.0">com.aj.controllers.AppErrorController</node>
+    <node x="0.0" y="1370.0">com.aj.controllers.EventController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.aj.enrichment.Enricher" target="com.aj.enrichment.EnrichmentService" relationship="REALIZATION">
+      <point x="0.0" y="-71.5" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="com.aj.controllers.BetController" target="com.aj.controllers.AbstractController" relationship="GENERALIZATION">
+      <point x="0.0" y="-97.5" />
+      <point x="1231.5" y="1293.0" />
+      <point x="769.5" y="1293.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.aj.api.RequestBodyFactory" target="com.aj.api.RequestBodyFactoryService" relationship="REALIZATION">
+      <point x="0.0" y="-136.5" />
+      <point x="0.0" y="136.5" />
+    </edge>
+    <edge source="com.aj.controllers.AppErrorController" target="com.aj.controllers.AbstractController" relationship="GENERALIZATION">
+      <point x="0.0" y="-32.5" />
+      <point x="475.0" y="1293.0" />
+      <point x="769.5" y="1293.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.aj.deserialisation.JsonDeserialiser" target="com.aj.deserialisation.DeserialisationService" relationship="REALIZATION">
+      <point x="0.0" y="-97.5" />
+      <point x="0.0" y="97.5" />
+    </edge>
+    <edge source="com.aj.api.ApiClient" target="com.aj.api.ApiClientService" relationship="REALIZATION">
+      <point x="0.0" y="-163.0" />
+      <point x="0.0" y="163.0" />
+    </edge>
+    <edge source="com.aj.controllers.EventController" target="com.aj.controllers.AbstractController" relationship="GENERALIZATION">
+      <point x="0.0" y="-45.5" />
+      <point x="164.0" y="1293.0" />
+      <point x="769.5" y="1293.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.aj.controllers.UserSessionController" target="com.aj.controllers.AbstractController" relationship="GENERALIZATION">
+      <point x="0.0" y="-59.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.aj.api.UrlBuilder" target="com.aj.api.UrlBuilderService" relationship="REALIZATION">
+      <point x="0.0" y="-163.0" />
+      <point x="0.0" y="45.5" />
+    </edge>
+    <edge source="com.aj.controllers.MarketController" target="com.aj.controllers.AbstractController" relationship="GENERALIZATION">
+      <point x="0.0" y="-97.5" />
+      <point x="1781.5" y="1293.0" />
+      <point x="769.5" y="1293.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.aj.esa.MessageFactory.MarketDataFilter" target="com.aj.esa.MessageFactory" relationship="INNER_CLASS">
+      <point x="0.0" y="-85.0" />
+      <point x="0.0" y="45.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.8500000000000001" showDependencies="false" x="919.7112299465239" y="303.54545454545473" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+
