@@ -22,7 +22,7 @@
             <div>
                 <form th:action="@{/markets/subscribe/{marketId}(marketId=${marketId})}" class="timeoutForm" method="post">
                     <input type="number" max="600" min="5" step="1" name="timeout" class="timeout">
-                    <input type="submit" value="Submit" class="button">
+                    <input type="submit" value="Submit" class="button" id="timeoutButton">
                 </form>
             </div>
         </div>
