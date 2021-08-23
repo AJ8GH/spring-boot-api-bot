@@ -132,4 +132,11 @@ class MarketControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/markets/subscriptions/show/1.567"));
     }
+
+    @Test
+    void testMarketsSubscriptionDelete() throws Exception {
+        mockMvc.perform(post("/markets/subscriptions/delete/1.567"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/markets/listBook/1.567"));
+    }
 }

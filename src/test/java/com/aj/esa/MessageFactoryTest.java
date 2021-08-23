@@ -1,7 +1,7 @@
 package com.aj.esa;
 
 import com.aj.domain.esa.AuthenticationMessage;
-import com.aj.domain.esa.MarketSubscriptionMessage;
+import com.aj.domain.esa.SubscriptionMessage;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +22,7 @@ class MessageFactoryTest {
     @Test
     void marketSubscriptionMessage() {
         MessageFactory messageFactory = new MessageFactory();
-        MarketSubscriptionMessage message = messageFactory
+        SubscriptionMessage message = messageFactory
                 .marketSubscriptionMessage("1.2345");
 
         assertEquals("1.2345", message.getMarketFilter()

@@ -94,6 +94,10 @@
                             </section>
                         </div>
                     </div>
+
+                    <form method="post" th:action="@{/markets/subscriptions/delete/{marketId}(marketId=${mc.getMarketId()})}">
+                        <input type="submit" value="Disconnect" class="button">
+                    </form>
                 </main>
             </div>
         </div>

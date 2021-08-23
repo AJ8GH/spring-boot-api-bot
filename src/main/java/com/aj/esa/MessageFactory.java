@@ -1,7 +1,7 @@
 package com.aj.esa;
 
 import com.aj.domain.esa.AuthenticationMessage;
-import com.aj.domain.esa.MarketSubscriptionMessage;
+import com.aj.domain.esa.SubscriptionMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,6 +16,7 @@ public class MessageFactory {
     private final String marketSubscription = "marketSubscription";
     private final String marketIdFilter = "marketIds";
     private final String marketDataFieldsFilter = "fields";
+    private final int DEFAULT_HEARTBEAT = 500;
 
     public enum MarketDataFilter {
         EX_BEST_OFFERS_DISP,
@@ -30,7 +31,7 @@ public class MessageFactory {
                 .session(token).build();
     }
 
-    public MarketSubscriptionMessage marketSubscriptionMessage(String marketId) {
+    public SubscriptionMessage marketSubscriptionMessage(String marketId) {
         Map<String, List<String>> marketFilter = new HashMap<>();
 
         List<String> marketIds = List.of(marketId);
@@ -43,10 +44,11 @@ public class MessageFactory {
         Map<String, List<String>> marketDataFilter = new HashMap<>();
         marketDataFilter.put(marketDataFieldsFilter, fields);
 
-        return MarketSubscriptionMessage.builder()
+        return SubscriptionMessage.builder()
                 .op(marketSubscription)
                 .marketFilter(marketFilter)
                 .marketDataFilter(marketDataFilter)
+                .heartbeatMs(DEFAULT_HEARTBEAT)
                 .build();
     }
 }

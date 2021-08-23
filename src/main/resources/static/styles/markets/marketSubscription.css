@@ -44,11 +44,9 @@
 
 .runnerChange, .noPriceData {
     border-radius: 5px;
+    width: 100%;
     padding: 20px;
     margin-top: 10px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .marketChangeDescription {
@@ -78,4 +76,14 @@
     color: #C8D8E4;
     font-size: 20px;
     margin-bottom: 30px;
+}
+
+.marketChange {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button {
+    width: 100%;
 }

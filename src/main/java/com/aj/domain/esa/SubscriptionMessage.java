@@ -11,11 +11,12 @@ import java.util.Map;
 
 @Getter
 @Builder
-public class MarketSubscriptionMessage {
+public class SubscriptionMessage {
     private String op;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private Map<String, List<String>> marketFilter;
     private Map<String, List<String>> marketDataFilter;
+    private int heartbeatMs;
 }
