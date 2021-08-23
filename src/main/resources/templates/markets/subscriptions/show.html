@@ -26,15 +26,14 @@
                             <span class="marketSnapshotLabel"> - </span>
                             <span class="market" th:text="${ mc.getMarketName() }"></span>
                         </div>
-
-                        <div class="eventType" th:text="${ mc.getEventTypeName() }"></div>
-
                         <div th:unless="${ mc.getCompetitionName().equals(mc.getEventName()) }">
                             <div class="competition" th:text="${ mc.getCompetitionName() }"></div>
                         </div>
+                        <div class="eventType" th:text="${ mc.getEventTypeName() }"></div>
                     </section>
 
-                    <div th:if="${ mc.getRc() == null || mc.getRc().size == 0 }">
+                    <div th:if="${ mc.getRc() == null || mc.getRc().size == 0 ||
+                    (mc.getRc().get(0).getBatl() == null && mc.getRc().get(0).getBatb() == null) }">
                         <article class="noPriceData">No price data available</article>
                     </div>
 

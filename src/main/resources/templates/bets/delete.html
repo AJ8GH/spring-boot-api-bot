@@ -16,10 +16,10 @@
         <div class="pageContainer">
             <header th:insert="fragments/header.html :: header"></header>
 
-            <div th:if="${ report.get().getStatus().equals('SUCCESS') }">
+            <div th:if="${ report.get().getStatus().toString().equals('SUCCESS') }">
                 <h2 class="title">Bet successfully cancelled</h2>
             </div>
-            <div th:unless="${ report.get().getStatus().equals('SUCCESS') }">
+            <div th:unless="${ report.get().getStatus().toString().equals('SUCCESS') }">
                 <div class="cancelStatus">Something went wrong, the bet couldn't be cancelled</div>
             </div>
 
