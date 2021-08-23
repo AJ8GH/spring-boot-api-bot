@@ -1,7 +1,7 @@
 package com.aj.esa;
 
 import com.aj.domain.esa.AuthenticationMessage;
-import com.aj.domain.esa.MarketSubscriptionMessage;
+import com.aj.domain.esa.SubscriptionMessage;
 import com.aj.domain.bettingtypes.UserSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
@@ -97,7 +97,7 @@ class EsaClientTest {
         Map<String, List<String>> marketDataFilter = new HashMap<>();
         marketDataFilter.put("fields", fields);
 
-        MarketSubscriptionMessage message = MarketSubscriptionMessage.builder()
+        SubscriptionMessage message = SubscriptionMessage.builder()
                 .op("marketSubscription")
                 .marketFilter(marketFilter)
                 .marketDataFilter(marketDataFilter)
@@ -108,7 +108,7 @@ class EsaClientTest {
         ObjectMapper om = new ObjectMapper();
         String payLoad = om.writeValueAsString(message);
 
-        when(mapper.writeValueAsString(any(MarketSubscriptionMessage.class)))
+        when(mapper.writeValueAsString(any(SubscriptionMessage.class)))
                 .thenReturn(payLoad);
 
         client.connect(3);

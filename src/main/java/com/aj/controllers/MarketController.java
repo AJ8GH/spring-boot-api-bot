@@ -102,7 +102,12 @@ public class MarketController extends AbstractController {
 
     @RequestMapping("/markets/subscriptions/show/{marketId}")
     public String marketChange(Model model) throws IOException {
-        if (isTimedOut()) return "redirect:/";
+        incrementHeartbeatCount();
+
+        if (isTimedOut()) {
+            closeConnection();
+            return "redirect:/";
+        }
 
         String response = esaClient.getLatest();
         ResponseMessage message = jsonDeserialiser.mapToObject(response, ResponseMessage.class);
@@ -115,12 +120,15 @@ public class MarketController extends AbstractController {
     }
 
     private boolean isTimedOut() throws IOException {
+        return esaClient.getTimeout() <= (heartbeatCount - 1) * 5000;
+    }
+
+    private void closeConnection() throws IOException {
+        esaClient.close();
+        heartbeatCount = 0;
+    }
+
+    private void incrementHeartbeatCount() {
         heartbeatCount += 1;
-        if (esaClient.getTimeout() <= (heartbeatCount - 1) * 5000) {
-            esaClient.close();
-            heartbeatCount = 0;
-            return true;
-        }
-        return false;
     }
 }
