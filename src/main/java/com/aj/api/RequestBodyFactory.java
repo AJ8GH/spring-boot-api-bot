@@ -40,6 +40,7 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
                 .filter(filter)
                 .build();
 
+        System.out.println(serialise(requestBody));
         return serialise(requestBody);
     }
 

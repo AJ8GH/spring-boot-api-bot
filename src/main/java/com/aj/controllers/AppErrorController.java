@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AppErrorController
         extends AbstractController
         implements ErrorController {
+    private final String ERROR = "/error";
 
-    @RequestMapping("/error")
+    @RequestMapping(ERROR)
     public String error() {
-        return "/error";
+        return ERROR;
     }
 }

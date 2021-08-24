@@ -13,11 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @AllArgsConstructor
 public class UserSessionController extends AbstractController {
-    private final String REDIRECT = "redirect:";
-    private final String LOGIN = "/login";
-    private final String SESSIONS_NEW = "/sessions/new";
-    private final String INDEX_ROUTE = "/";
-    private final String INDEX_VIEW = "index";
+    private final String SESSIONS_NEW_ROUTE = "/sessions/new";
 
     private final ApiClientService apiClient;
     private final DeserialisationService jsonDeserialiser;
@@ -34,7 +30,7 @@ public class UserSessionController extends AbstractController {
         return LOGIN;
     }
 
-    @PostMapping(SESSIONS_NEW)
+    @PostMapping(SESSIONS_NEW_ROUTE)
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password)
             throws Exception {
@@ -43,6 +39,6 @@ public class UserSessionController extends AbstractController {
         UserSession userSession = jsonDeserialiser
                 .mapToObject(response, UserSession.class);
         apiClient.setUserSession(userSession);
-        return REDIRECT + INDEX_ROUTE;
+        return REDIRECT;
     }
 }

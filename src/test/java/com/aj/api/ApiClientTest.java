@@ -31,13 +31,11 @@ public class ApiClientTest {
     private ApiClient apiClient;
     private UrlBuilder urlBuilder;
     private RequestBodyFactory requestBodyFactory;
-    private ObjectMapper objectMapper;
 
     @BeforeEach
     public void setUp() throws IOException {
         urlBuilder = mock(UrlBuilder.class);
         requestBodyFactory = mock(RequestBodyFactory.class);
-        objectMapper = mock(ObjectMapper.class);
         apiClient = new ApiClient(urlBuilder, requestBodyFactory);
 
         UserSession userSession = mock(UserSession.class);
