@@ -10,6 +10,6 @@ class BetfairApiBot1ApplicationTests {
 
     @Test
     void contextLoads() {
-        // BetfairApiBot1Application.main(new String[] {});
+        BetfairApiBot1Application.main(new String[] {});
     }
 }

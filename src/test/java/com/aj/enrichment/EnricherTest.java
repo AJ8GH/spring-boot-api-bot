@@ -130,4 +130,24 @@ class EnricherTest {
         assertEquals("Runner Name", report.getInstructionReports()
                 .get(0).getRunnerName());
     }
+
+    @Test
+    void enrichWhenCatalogueIsNull() {
+
+        MarketBook marketBook = MarketBook.builder()
+                .marketId("8.8")
+                .marketName("Should Not Change")
+                .eventName("Should Not Change")
+                .eventTypeName("Should Not Change")
+                .competitionName("Should Not Change")
+                .build();
+
+        Enricher enricher = new Enricher();
+        enricher.enrichMarketBook(marketBook, List.of(marketCatalogue));
+
+        assertEquals("Should Not Change", marketBook.getMarketName());
+        assertEquals("Should Not Change", marketBook.getCompetitionName());
+        assertEquals("Should Not Change", marketBook.getEventName());
+        assertEquals("Should Not Change", marketBook.getEventTypeName());
+    }
 }

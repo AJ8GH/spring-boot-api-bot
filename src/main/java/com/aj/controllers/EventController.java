@@ -18,6 +18,7 @@ import java.util.List;
 public class EventController extends AbstractController {
     private final String EVENTS_LIST_TYPES = "events/listTypes";
     private final String EVENTS_LIST = "events/list";
+
     private final ApiClientService apiClient;
     private final DeserialisationService jsonDeserialiser;
 
