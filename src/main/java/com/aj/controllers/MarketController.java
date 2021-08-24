@@ -22,6 +22,13 @@ import java.util.List;
 
 @Controller
 public class MarketController extends AbstractController {
+    private final String MARKETS_LIST_CATALOGUE = "markets/listCatalogue";
+    private final String MARKETS_LIST_BOOK = "markets/listBook";
+    private final String MARKETS_SUBSCRIPTIONS_NEW = "markets/subscriptions/new";
+    private final String MARKETS_SUBSCRIBE = "markets/subscribe";
+    private final String MARKETS_SUBSCRIPTIONS_SHOW = "markets/subscriptions/show";
+    private final String MARKETS_SUBSCRIPTIONS_DELETE = "markets/subscriptions/delete";
+
     private final ApiClientService apiClient;
     private final DeserialisationService jsonDeserialiser;
     private final EnrichmentService enricher;
@@ -44,7 +51,7 @@ public class MarketController extends AbstractController {
         this.esaClient = esaClient;
     }
 
-    @RequestMapping("/markets/listCatalogue/{eventId}")
+        @RequestMapping(INDEX_ROUTE + MARKETS_LIST_CATALOGUE + "/{eventId}")
     public String listMarketCatalogue(@PathVariable("eventId") String eventId,
                                       Model model) throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
@@ -53,10 +60,10 @@ public class MarketController extends AbstractController {
         List<MarketCatalogue> marketCatalogueList = jsonDeserialiser.mapToMarketCatalogue(response);
         marketCatalogueRepository.saveAll(marketCatalogueList);
         model.addAttribute("marketCatalogue", marketCatalogueList);
-        return "markets/listCatalogue";
+        return MARKETS_LIST_CATALOGUE;
     }
 
-    @RequestMapping("/markets/listBook/{marketId}")
+    @RequestMapping(INDEX_ROUTE + MARKETS_LIST_BOOK + "/{marketId}")
     public String listMarketBook(@PathVariable("marketId") String marketId,
                                  Model model) throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
@@ -67,17 +74,17 @@ public class MarketController extends AbstractController {
         enricher.enrichMarketBook(marketBook, marketCatalogueRepository.findAll());
         model.addAttribute("marketBook", marketBook);
 
-        return "markets/listBook";
+        return MARKETS_LIST_BOOK;
     }
 
-    @RequestMapping("/markets/subscriptions/new/{marketId}")
+    @RequestMapping(INDEX_ROUTE + MARKETS_SUBSCRIPTIONS_NEW + "/{marketId}")
     public String newMarketSubscription(@PathVariable("marketId") String marketId,
                                      Model model) {
         model.addAttribute("marketId", marketId);
-        return "markets/subscriptions/new";
+        return MARKETS_SUBSCRIPTIONS_NEW;
     }
 
-    @PostMapping("/markets/subscribe/{marketId}")
+    @PostMapping(INDEX_ROUTE + MARKETS_SUBSCRIBE + "/{marketId}")
     public String showMarketSubscription(@PathVariable("marketId") String marketId,
                                      @RequestParam("timeout") int timeout,
                                      Model model) throws IOException {
@@ -97,16 +104,16 @@ public class MarketController extends AbstractController {
         cache.addMessage(message);
         model.addAttribute("snapshot", message);
 
-        return "redirect:/markets/subscriptions/show/" + marketId;
+        return REDIRECT + MARKETS_SUBSCRIPTIONS_SHOW + INDEX_ROUTE + marketId;
     }
 
-    @RequestMapping("/markets/subscriptions/show/{marketId}")
+    @RequestMapping(INDEX_ROUTE + MARKETS_SUBSCRIPTIONS_SHOW + "/{marketId}")
     public String marketChange(Model model) throws IOException {
         incrementHeartbeatCount();
 
         if (isTimedOut()) {
             closeConnection();
-            return "redirect:/";
+            return REDIRECT;
         }
 
         String response = esaClient.getLatest();
@@ -116,13 +123,13 @@ public class MarketController extends AbstractController {
         ResponseMessage currentMarketUpdate = cache.getMessage(message.getId());
         model.addAttribute("responseMessage", currentMarketUpdate);
 
-        return "markets/subscriptions/show";
+        return MARKETS_SUBSCRIPTIONS_SHOW;
     }
 
-    @PostMapping("/markets/subscriptions/delete/{marketId}")
+    @PostMapping(INDEX_ROUTE + MARKETS_SUBSCRIPTIONS_DELETE + "/{marketId}")
     public String disconnect(@PathVariable("marketId") String marketId) throws IOException {
         closeConnection();
-        return "redirect:/markets/listBook/" + marketId;
+        return REDIRECT + MARKETS_LIST_BOOK + INDEX_ROUTE + marketId;
     }
 
     private boolean isTimedOut() throws IOException {

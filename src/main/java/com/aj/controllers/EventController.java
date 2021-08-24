@@ -16,22 +16,22 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class EventController extends AbstractController {
-    private final String EVENTS_LIST_TYPES_VIEW = "events/listTypes";
-    private final String EVENTS_LIST_VIEW = "events/list";
+    private final String EVENTS_LIST_TYPES = "events/listTypes";
+    private final String EVENTS_LIST = "events/list";
     private final ApiClientService apiClient;
     private final DeserialisationService jsonDeserialiser;
 
-    @RequestMapping(INDEX_ROUTE + EVENTS_LIST_TYPES_VIEW)
+    @RequestMapping(INDEX_ROUTE + EVENTS_LIST_TYPES)
     public String listEventTypes(Model model) throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
         String response = apiClient.listEventTypes();
         List<EventType> eventTypes = jsonDeserialiser.mapToEventTypeList(response);
         model.addAttribute("eventTypes", eventTypes);
-        return EVENTS_LIST_TYPES_VIEW;
+        return EVENTS_LIST_TYPES;
     }
 
-    @RequestMapping(INDEX_ROUTE + EVENTS_LIST_VIEW + "/{eventTypeId}")
+    @RequestMapping(INDEX_ROUTE + EVENTS_LIST + "/{eventTypeId}")
     public String listEvents(@PathVariable("eventTypeId") String eventTypeId,
                              Model model) throws IOException {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
@@ -39,6 +39,6 @@ public class EventController extends AbstractController {
         String response = apiClient.listEvents(eventTypeId);
         List<Event> events = jsonDeserialiser.mapToEventList(response);
         model.addAttribute("events", events);
-        return EVENTS_LIST_VIEW;
+        return EVENTS_LIST;
     }
 }
