@@ -12,6 +12,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,10 +114,10 @@ class EsaClientTest {
 
         client.connect(3);
         client.authenticate();
+        outputStream.close();
         String response = client.subscribeToMarkets("1.111");
 
-        // assertArrayEquals((payLoad + "\n").getBytes(), outputStream.toByteArray());
-        // assertEquals(response, client.getReader().readLine());
+        assertEquals(response, client.getReader().readLine());
     }
 
     @Test
