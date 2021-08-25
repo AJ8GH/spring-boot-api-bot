@@ -1,6 +1,7 @@
 package com.aj.esa;
 
 import com.aj.domain.esa.AuthenticationMessage;
+import com.aj.domain.esa.EsaMessage;
 import com.aj.domain.esa.SubscriptionMessage;
 import com.aj.domain.bettingtypes.UserSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +15,9 @@ import java.net.SocketException;
 
 @Service
 public class EsaClient {
+    private final String SUBSCRIPTION_LOG_MESSAGE = "Subscribing to Market: {}";
+    private final String AUTHENTICATION_LOG_MESSAGE = "Authenticating: {}";
+    private final String INPUT_LOG_MESSAGE = "Message received: {}";
     private final Logger LOGGER = LoggerFactory.getLogger(EsaClient.class);
     private final SocketFactory socketFactory;
     private final ObjectMapper mapper;
@@ -48,7 +52,7 @@ public class EsaClient {
         reader = new BufferedReader(in);
         writer = new PrintWriter(client.getOutputStream());
         isConnected = true;
-        getLatest();
+        pollStream();
     }
 
     public String authenticate() throws IOException {
@@ -56,25 +60,17 @@ public class EsaClient {
                 userSession.getEsaAppKey(),
                 userSession.getToken());
 
-        String payLoad = mapper.writeValueAsString(message);
-        writer.println(payLoad);
-        LOGGER.info("Authenticating: {}", payLoad);
-        writer.flush();
-        return getLatest();
+        return writeToStream(AUTHENTICATION_LOG_MESSAGE, message);
     }
 
     public String subscribeToMarkets(String marketId) throws IOException {
         SubscriptionMessage message = messageFactory
                 .marketSubscriptionMessage(marketId);
 
-        String payload = mapper.writeValueAsString(message);
-        writer.println(payload);
-        LOGGER.info("Subscribing to Market: {}", payload);
-        writer.flush();
-        return getLatest();
+        return writeToStream(SUBSCRIPTION_LOG_MESSAGE, message);
     }
 
-    public String getLatest() throws IOException {
+    public String pollStream() throws IOException {
         String data = reader.readLine();
         LOGGER.info("Message received: {}", data);
         return data;
@@ -91,5 +87,14 @@ public class EsaClient {
 
     public int getTimeout() throws SocketException {
         return client.getSoTimeout();
+    }
+
+    private String writeToStream(String logMessage, EsaMessage message)
+            throws IOException {
+        String payload = mapper.writeValueAsString(message);
+        writer.println(payload);
+        LOGGER.info(logMessage, payload);
+        writer.flush();
+        return pollStream();
     }
 }

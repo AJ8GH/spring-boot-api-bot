@@ -1,8 +1,8 @@
 package com.aj.controllers;
 
-import com.aj.api.ApiClientService;
-import com.aj.deserialisation.DeserialisationService;
-import com.aj.enrichment.EnrichmentService;
+import com.aj.api.ApiClient;
+import com.aj.deserialisation.JsonDeserialiser;
+import com.aj.enrichment.Enricher;
 import com.aj.esa.EsaClient;
 import com.aj.esa.cache.MarketSubscriptionCache;
 import com.aj.domain.esa.ResponseMessage;
@@ -29,17 +29,17 @@ public class MarketController extends AbstractController {
     private final String MARKETS_SUBSCRIPTIONS_SHOW = "markets/subscriptions/show";
     private final String MARKETS_SUBSCRIPTIONS_DELETE = "markets/subscriptions/delete";
 
-    private final ApiClientService apiClient;
-    private final DeserialisationService jsonDeserialiser;
-    private final EnrichmentService enricher;
-    private final MarketCatalogueRepository marketCatalogueRepository;
-    private final MarketSubscriptionCache cache;
+    private final ApiClient apiClient;
+    private final JsonDeserialiser jsonDeserialiser;
+    private final Enricher enricher;
     private final EsaClient esaClient;
+    private final MarketSubscriptionCache cache;
+    private final MarketCatalogueRepository marketCatalogueRepository;
     private int heartbeatCount;
 
-    public MarketController(ApiClientService apiClient,
-                            DeserialisationService jsonDeserialiser,
-                            EnrichmentService enricher,
+    public MarketController(ApiClient apiClient,
+                            JsonDeserialiser jsonDeserialiser,
+                            Enricher enricher,
                             MarketCatalogueRepository marketCatalogueRepository,
                             MarketSubscriptionCache cache,
                             EsaClient esaClient) {
@@ -57,7 +57,8 @@ public class MarketController extends AbstractController {
         if (isNotLoggedIn(apiClient.getUserSession())) return "redirect:/login";
 
         String response = apiClient.catalogueByEvent(eventId);
-        List<MarketCatalogue> marketCatalogueList = jsonDeserialiser.mapToMarketCatalogue(response);
+        List<MarketCatalogue> marketCatalogueList = jsonDeserialiser
+                .mapToMarketCatalogue(response);
         marketCatalogueRepository.saveAll(marketCatalogueList);
         model.addAttribute("marketCatalogue", marketCatalogueList);
         return MARKETS_LIST_CATALOGUE;
@@ -80,6 +81,8 @@ public class MarketController extends AbstractController {
     @RequestMapping(INDEX_ROUTE + MARKETS_SUBSCRIPTIONS_NEW + "/{marketId}")
     public String newMarketSubscription(@PathVariable("marketId") String marketId,
                                      Model model) {
+        if (isNotLoggedIn(apiClient.getUserSession())) return REDIRECT + LOGIN;
+
         model.addAttribute("marketId", marketId);
         return MARKETS_SUBSCRIPTIONS_NEW;
     }
@@ -88,14 +91,16 @@ public class MarketController extends AbstractController {
     public String showMarketSubscription(@PathVariable("marketId") String marketId,
                                      @RequestParam("timeout") int timeout,
                                      Model model) throws IOException {
+        if (isNotLoggedIn(apiClient.getUserSession())) return REDIRECT + LOGIN;
 
         esaClient.setUserSession(UserSession.getCurrentSession());
         esaClient.connect(timeout);
         esaClient.authenticate();
         esaClient.subscribeToMarkets(marketId);
 
-        String response2 = esaClient.getLatest();
-        ResponseMessage message = jsonDeserialiser.mapToObject(response2, ResponseMessage.class);
+        String response2 = esaClient.pollStream();
+        ResponseMessage message = jsonDeserialiser
+                .mapToObject(response2, ResponseMessage.class);
 
         if (message.getMc() != null) {
             enricher.enrichMessage(message, marketCatalogueRepository.findAll());
@@ -109,16 +114,20 @@ public class MarketController extends AbstractController {
 
     @RequestMapping(INDEX_ROUTE + MARKETS_SUBSCRIPTIONS_SHOW + "/{marketId}")
     public String marketChange(Model model) throws IOException {
-        incrementHeartbeatCount();
+        if (isNotLoggedIn(apiClient.getUserSession())) return REDIRECT + LOGIN;
 
+        incrementHeartbeatCount();
         if (isTimedOut()) {
             closeConnection();
             return REDIRECT;
         }
 
-        String response = esaClient.getLatest();
+        String response = esaClient.pollStream();
         ResponseMessage message = jsonDeserialiser.mapToObject(response, ResponseMessage.class);
-        if (message.getCt().equals("SUB_IMAGE")) cache.addMessage(message);
+        if (message.getMc() != null) {
+            enricher.enrichMessage(message, marketCatalogueRepository.findAll());
+            cache.addMessage(message);
+        }
 
         ResponseMessage currentMarketUpdate = cache.getMessage(message.getId());
         model.addAttribute("responseMessage", currentMarketUpdate);
@@ -127,13 +136,16 @@ public class MarketController extends AbstractController {
     }
 
     @PostMapping(INDEX_ROUTE + MARKETS_SUBSCRIPTIONS_DELETE + "/{marketId}")
-    public String disconnect(@PathVariable("marketId") String marketId) throws IOException {
+    public String disconnect(@PathVariable("marketId") String marketId)
+            throws IOException {
+        if (isNotLoggedIn(apiClient.getUserSession())) return REDIRECT + LOGIN;
+
         closeConnection();
         return REDIRECT + MARKETS_LIST_BOOK + INDEX_ROUTE + marketId;
     }
 
     private boolean isTimedOut() throws IOException {
-        return esaClient.getTimeout() <= (heartbeatCount - 1) * 5000;
+        return esaClient.getTimeout() <= (heartbeatCount - 1) * 500;
     }
 
     private void closeConnection() throws IOException {

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class RequestBodyFactory implements RequestBodyFactoryService {
+public class RequestBodyFactory {
     private final int DEFAULT_MAX_RESULTS = 200;
     private final boolean DEFAULT_VIRTUALISE = true;
     private final ObjectMapper mapper;
@@ -19,7 +19,6 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
         this.mapper = mapper;
     }
 
-    @Override
     public String listEventTypesBody() throws JsonProcessingException {
         MarketFilter filter = MarketFilter.builder().build();
         RequestBody requestBody = RequestBody.builder()
@@ -29,7 +28,6 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
         return serialise(requestBody);
     }
 
-    @Override
     public String listEventsBody(String eventTypeId)
             throws JsonProcessingException {
         MarketFilter filter = MarketFilter.builder()
@@ -44,7 +42,6 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
         return serialise(requestBody);
     }
 
-    @Override
     public String catalogueByEventIdBody(String eventId) throws JsonProcessingException {
         MarketFilter filter = MarketFilter.builder()
                 .eventIds(Set.of(eventId))
@@ -56,7 +53,6 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
         return serialise(requestBody);
     }
 
-    @Override
     public String catalogueByMarketIdBody(String marketId) throws JsonProcessingException {
         MarketFilter filter = MarketFilter.builder()
                 .marketIds(Set.of(marketId))
@@ -68,7 +64,6 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
         return serialise(requestBody);
     }
 
-    @Override
     public String listMarketBookBody(String marketId) throws JsonProcessingException {
         PriceProjection priceProjection = PriceProjection.builder()
                 .priceData(Set.of(PriceData.EX_BEST_OFFERS, PriceData.EX_TRADED))
@@ -82,7 +77,6 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
         return serialise(requestBody);
     }
 
-    @Override
     public String placeOrdersBody(String marketId, long selectionId,
                                   String side, double size, double price) throws JsonProcessingException {
 
@@ -104,7 +98,6 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
         return serialise(requestBody);
     }
 
-    @Override
     public String cancelOrdersBody(String marketId, String betId) throws JsonProcessingException {
         CancelInstruction cancelInstruction = CancelInstruction.builder()
                 .betId(betId)
@@ -117,7 +110,6 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
         return serialise(requestBody);
     }
 
-    @Override
     public String listCurrentOrdersBody(String betId) throws JsonProcessingException {
         RequestBody requestBody = RequestBody.builder()
                 .betIds(Set.of(betId))
@@ -127,7 +119,6 @@ public class RequestBodyFactory implements RequestBodyFactoryService {
         return serialise(requestBody);
     }
 
-    @Override
     public String listCurrentOrdersBody() throws JsonProcessingException {
         RequestBody requestBody = RequestBody.builder()
                 .orderProjection(OrderProjection.EXECUTABLE)

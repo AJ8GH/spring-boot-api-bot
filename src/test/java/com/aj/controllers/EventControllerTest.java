@@ -1,7 +1,7 @@
 package com.aj.controllers;
 
-import com.aj.api.ApiClientService;
-import com.aj.deserialisation.DeserialisationService;
+import com.aj.api.ApiClient;
+import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.domain.bettingtypes.UserSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,9 +24,9 @@ public class EventControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    ApiClientService apiClient;
+    ApiClient apiClient;
     @MockBean
-    DeserialisationService jsonDeserialiser;
+    JsonDeserialiser jsonDeserialiser;
 
     @BeforeEach
     void setup() {

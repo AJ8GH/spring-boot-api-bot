@@ -1,7 +1,7 @@
 package com.aj.controllers;
 
-import com.aj.api.ApiClientService;
-import com.aj.deserialisation.DeserialisationService;
+import com.aj.api.ApiClient;
+import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.domain.bettingtypes.UserSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserSessionController extends AbstractController {
     private final String SESSIONS_NEW_ROUTE = "/sessions/new";
 
-    private final ApiClientService apiClient;
-    private final DeserialisationService jsonDeserialiser;
+    private final ApiClient apiClient;
+    private final JsonDeserialiser jsonDeserialiser;
 
     @RequestMapping(INDEX_ROUTE)
     public String getIndex() {

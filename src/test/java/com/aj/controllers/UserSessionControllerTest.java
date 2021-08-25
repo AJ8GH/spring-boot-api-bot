@@ -1,7 +1,7 @@
 package com.aj.controllers;
 
-import com.aj.api.ApiClientService;
-import com.aj.deserialisation.DeserialisationService;
+import com.aj.api.ApiClient;
+import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.domain.bettingtypes.UserSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.containsString;
@@ -24,9 +23,9 @@ class UserSessionControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    ApiClientService apiClient;
+    ApiClient apiClient;
     @MockBean
-    DeserialisationService jsonDeserialiser;
+    JsonDeserialiser jsonDeserialiser;
 
     @Test
     void testLogIn() throws Exception {

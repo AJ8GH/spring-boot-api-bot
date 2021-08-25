@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Getter
 @Builder
-public class SubscriptionMessage {
+public class SubscriptionMessage extends EsaMessage {
     private String op;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

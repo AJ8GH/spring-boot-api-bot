@@ -5,7 +5,7 @@
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta http-equiv="refresh" content="5">
+        <meta http-equiv="refresh" content="0.5">
 
         <link rel="stylesheet" th:href="@{/styles/main/main.css}">
         <link rel="stylesheet" th:href="@{/styles/markets/marketSubscription.css}">
@@ -33,15 +33,16 @@
                             <div class="eventType" th:text="${ mc.getEventTypeName() }"></div>
                         </section>
 
-                        <div th:if="${ mc.getRc() == null || mc.getRc().size == 0 ||
-                        (mc.getRc().get(0).getBatl() == null && mc.getRc().get(0).getBatb() == null) }">
+                        <div th:if="${ mc.getRc() == null || mc.getRc().size == 0 }">
+<!--                        || (mc.getRc().get(0).getBatl() == null && mc.getRc().get(0).getBatb() == null) }">&ndash;&gt;-->
                             <article class="noPriceData">No price data available</article>
                         </div>
 
                         <div class="runnerChange" th:each="rc : ${ mc.getRc() }">
                             <div class="runner" th:text="${ rc.getRunnerName() }"></div>
 
-                            <div class="priceContainer" th:unless="${ rc.getBatl() == null || rc.getBatl().size() == 0 }">
+                            <div class="priceContainer" th:unless="${ rc.getBatl() == null }">
+<!--                            || rc.getBatl().size() == 0 }">-->
                                 <div class="priceType">Best available to lay</div>
 
                                 <section class="data"  th:each="batl : ${ rc.getBatl() }">
@@ -54,7 +55,8 @@
                                 </section>
                             </div>
 
-                            <div class="priceContainer" th:unless="${ rc.getBatb() == null || rc.getBatb().size() == 0 }">
+                            <div class="priceContainer" th:unless="${ rc.getBatb() == null }">
+<!--                            || rc.getBatb().size() == 0 }">-->
                                 <div class="priceType">Best available to back</div>
                                 <section class="data" th:each="batb : ${ rc.getBatb() }">
                                     <span class="priceLabel">Price: </span>
@@ -66,7 +68,8 @@
                                 </section>
                             </div>
 
-                            <div class="priceContainer" th:unless="${ rc.getBdatl() == null || rc.getBdatl().get(0).get(1) == 0 && rc.getBdatl().get(0).get(2) == 0 }">
+                            <div class="priceContainer" th:unless="${ rc.getBdatl() == null }">
+<!--                            || rc.getBdatl().get(0).get(1) == 0 && rc.getBdatl().get(0).get(2) == 0 }">-->
                                 <div class="priceType">Best virtual available to lay</div>
                                 <section class="data" th:each="bdatl : ${ rc.getBdatl() }">
                                     <div class="priceContainer" th:unless="${ bdatl.get(1) + bdatl.get(2) == 0 }">
@@ -80,8 +83,8 @@
                                 </section>
                             </div>
 
-                            <div class="priceContainer" th:unless="${ rc.getBdatb() == null ||
-                                    rc.getBdatl().get(0).get(1) == 0 && rc.getBdatb().get(0).get(2) == 0 }">
+                            <div class="priceContainer" th:unless="${ rc.getBdatb() == null }">
+<!--                                    || rc.getBdatl().get(0).get(1) == 0 && rc.getBdatb().get(0).get(2) == 0 }">-->
                                 <div class="priceType">Best virtual available to back</div>
                                 <section class="data" th:each="bdatb : ${ rc.getBdatb() }">
                                     <div class="priceContainer" th:unless="${ bdatb.get(1) + bdatb.get(2) == 0 }">

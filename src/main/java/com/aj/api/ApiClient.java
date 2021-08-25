@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class ApiClient implements ApiClientService {
+public class ApiClient {
     private UserSession userSession;
     private final Logger LOGGER = LoggerFactory.getLogger(ApiClient.class);
     private final UrlBuilder urlBuilder;
@@ -40,62 +40,53 @@ public class ApiClient implements ApiClientService {
         return userSession;
     }
 
-    @Override
     public String login(String username, String password) {
         HttpUrl url = urlBuilder.createLoginUrl(username, password);
         return createRequestAndMakeLoginCall(url);
     }
 
-    @Override
     public String listEventTypes() throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENT_TYPES);
         String body = requestBodyFactory.listEventTypesBody();
         return createRequestAndMakeCall(url, body);
     }
 
-    @Override
     public String catalogueByMarket(String marketId) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
         String body = requestBodyFactory.catalogueByMarketIdBody(marketId);
         return createRequestAndMakeCall(url, body);
     }
 
-    @Override
     public String catalogueByEvent(String eventId) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_CATALOGUE);
         String body = requestBodyFactory.catalogueByEventIdBody(eventId);
         return createRequestAndMakeCall(url, body);
     }
 
-    @Override
     public String listEvents(String eventTypeId) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_EVENTS);
         String body = requestBodyFactory.listEventsBody(eventTypeId);
         return createRequestAndMakeCall(url, body);
     }
 
-    @Override
     public String listMarketBook(String marketId) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_MARKET_BOOK);
         String body = requestBodyFactory.listMarketBookBody(marketId);
         return createRequestAndMakeCall(url, body);
     }
 
-    @Override
     public String listCurrentOrders(String betId) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
         String body = requestBodyFactory.listCurrentOrdersBody(betId);
         return createRequestAndMakeCall(url, body);
     }
 
-    @Override
     public String listCurrentOrders() throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.LIST_CURRENT_ORDERS);
         String body = requestBodyFactory.listCurrentOrdersBody();
         return createRequestAndMakeCall(url, body);
     }
 
-    @Override
     public String placeOrders(String marketId, long selectionId, String side,
                               double size, double price) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.PLACE_ORDERS);
@@ -103,7 +94,6 @@ public class ApiClient implements ApiClientService {
         return createRequestAndMakeCall(url, body);
     }
 
-    @Override
     public String cancelOrders(String marketId, String betId) throws JsonProcessingException {
         HttpUrl url = urlBuilder.createBettingUrl(urlBuilder.CANCEL_ORDERS);
         String body = requestBodyFactory.cancelOrdersBody(marketId, betId);

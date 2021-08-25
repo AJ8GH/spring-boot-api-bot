@@ -1,11 +1,10 @@
 package com.aj.controllers;
 
-import com.aj.api.ApiClientService;
-import com.aj.deserialisation.DeserialisationService;
-import com.aj.domain.bettingtypes.Bet;
+import com.aj.api.ApiClient;
+import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.domain.bettingtypes.MarketCatalogue;
 import com.aj.domain.bettingtypes.UserSession;
-import com.aj.enrichment.EnrichmentService;
+import com.aj.enrichment.Enricher;
 import com.aj.esa.EsaClient;
 import com.aj.esa.cache.MarketSubscriptionCache;
 import com.aj.domain.esa.ResponseMessage;
@@ -36,11 +35,11 @@ class MarketControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    ApiClientService apiClient;
+    ApiClient apiClient;
     @MockBean
-    DeserialisationService jsonDeserialiser;
+    JsonDeserialiser jsonDeserialiser;
     @MockBean
-    EnrichmentService enricher;
+    Enricher enricher;
     @MockBean
     MarketCatalogueRepository marketCatalogueRepository;
     @MockBean
@@ -86,7 +85,7 @@ class MarketControllerTest {
 
     @Test
     void testShowMarketSubscriptions() throws Exception {
-        when(esaClient.getLatest()).thenReturn("Response");
+        when(esaClient.pollStream()).thenReturn("Response");
         when(esaClient.getTimeout()).thenReturn(100);
 
         ResponseMessage message = ResponseMessage.builder()
@@ -103,7 +102,7 @@ class MarketControllerTest {
 
     @Test
     void testShowMarketSubscriptionsSocketTimeout() throws Exception {
-        when(esaClient.getLatest()).thenReturn("Response");
+        when(esaClient.pollStream()).thenReturn("Response");
         when(esaClient.getTimeout()).thenReturn(0);
 
         ResponseMessage message = ResponseMessage.builder()
@@ -124,7 +123,7 @@ class MarketControllerTest {
                 .ct("CT")
                 .build();
 
-        when(esaClient.getLatest()).thenReturn("Response");
+        when(esaClient.pollStream()).thenReturn("Response");
         when(jsonDeserialiser.mapToObject(any(), any())).thenReturn(message);
 
         mockMvc.perform(post("/markets/subscribe/1.567")

@@ -9,9 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 @Service
-public class Enricher implements EnrichmentService {
+public class Enricher {
 
-    @Override
     public void enrichMarketBook(MarketBook book, Iterable<MarketCatalogue> catalogues) {
         MarketCatalogue catalogue = findById(book.getMarketId(), catalogues);
         if (catalogue == null) return;

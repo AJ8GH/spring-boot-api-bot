@@ -1,7 +1,7 @@
 package com.aj.controllers;
 
-import com.aj.api.ApiClientService;
-import com.aj.deserialisation.DeserialisationService;
+import com.aj.api.ApiClient;
+import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.domain.bettingtypes.Event;
 import com.aj.domain.bettingtypes.EventType;
 import lombok.AllArgsConstructor;
@@ -19,8 +19,8 @@ public class EventController extends AbstractController {
     private final String EVENTS_LIST_TYPES = "events/listTypes";
     private final String EVENTS_LIST = "events/list";
 
-    private final ApiClientService apiClient;
-    private final DeserialisationService jsonDeserialiser;
+    private final ApiClient apiClient;
+    private final JsonDeserialiser jsonDeserialiser;
 
     @RequestMapping(INDEX_ROUTE + EVENTS_LIST_TYPES)
     public String listEventTypes(Model model) throws IOException {

@@ -1,12 +1,12 @@
 package com.aj.controllers;
 
-import com.aj.api.ApiClientService;
-import com.aj.deserialisation.DeserialisationService;
-import com.aj.enrichment.EnrichmentService;
+import com.aj.api.ApiClient;
+import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.domain.bettingtypes.Bet;
 import com.aj.domain.bettingtypes.CancelExecutionReport;
 
 import com.aj.domain.bettingtypes.MarketCatalogue;
+import com.aj.enrichment.Enricher;
 import com.aj.repositories.BetRepository;
 import com.aj.repositories.CancelExecutionReportRepository;
 import lombok.AllArgsConstructor;
@@ -30,10 +30,10 @@ public class BetController extends AbstractController {
     private final String BETS_SHOW_VIEW = "bets/show";
     private final String BETS_DELETE_VIEW = "bets/delete";
 
-    private final ApiClientService apiClient;
+    private final ApiClient apiClient;
+    private final JsonDeserialiser jsonDeserialiser;
+    private final Enricher enricher;
     private final BetRepository betRepository;
-    private final DeserialisationService jsonDeserialiser;
-    private final EnrichmentService enricher;
     private final CancelExecutionReportRepository reportRepository;
 
     @RequestMapping(INDEX_ROUTE + BETS_LIST_VIEW)

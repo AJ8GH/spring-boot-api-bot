@@ -1,10 +1,10 @@
 package com.aj.controllers;
 
-import com.aj.api.ApiClientService;
-import com.aj.deserialisation.DeserialisationService;
+import com.aj.api.ApiClient;
+import com.aj.deserialisation.JsonDeserialiser;
 import com.aj.domain.bettingenums.ExecutionReportStatus;
 import com.aj.domain.bettingtypes.*;
-import com.aj.enrichment.EnrichmentService;
+import com.aj.enrichment.Enricher;
 import com.aj.repositories.BetRepository;
 import com.aj.repositories.CancelExecutionReportRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -34,15 +34,15 @@ class BetControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    ApiClientService apiClient;
+    ApiClient apiClient;
     @MockBean
-    DeserialisationService jsonDeserialiser;
+    JsonDeserialiser jsonDeserialiser;
     @MockBean
     CancelExecutionReportRepository reportRepository;
     @MockBean
     BetRepository betRepository;
     @MockBean
-    EnrichmentService enricher;
+    Enricher enricher;
 
     @BeforeEach
     void setup() throws JsonProcessingException {
