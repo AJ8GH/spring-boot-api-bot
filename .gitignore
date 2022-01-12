@@ -33,5 +33,7 @@ build/
 .vscode/
 
 ### Properties ###
-src/main/resources/application.properties
+src/main/resources/conf/application.properties
 **/application.properties
+src/main/resources/conf/overrides.properties
+**/overrides.properties

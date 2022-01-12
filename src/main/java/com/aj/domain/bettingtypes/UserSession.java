@@ -28,7 +28,7 @@ public class UserSession {
     private String esaAppKey;
     private String product;
     private String error;
-    private String props = "application.properties";
+    private String props = "conf/application.properties";
     private static UserSession currentSession;
 
     public static UserSession getCurrentSession() {
